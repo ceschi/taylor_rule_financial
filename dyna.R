@@ -19,26 +19,26 @@ run_matlab_script('./simulations_pi/models_main.m',
 
 # move plots
 
-file.rename(from='./simulations_pi/nkdtc_notp_mp.pdf',
-            to='./Plots/nkdtc_notp_mp.pdf')
-file.rename(from='./simulations_pi/nkdtc_notp_tfp.pdf',
-            to='./Plots/nkdtc_notp_tfp.pdf')
-file.rename(from='./simulations_pi/nkdtc_tp_mp.pdf',
-            to='./Plots/nkdtc_tp_mp.pdf')
-file.rename(from='./simulations_pi/nkdtc_tp_tfp.pdf',
-            to='./Plots/nkdtc_tp_tfp.pdf')
-file.rename(from='./simulations_pi/nkdsge_mp.pdf',
-            to='./Plots/nkdsge_mp.pdf')
-file.rename(from='./simulations_pi/nkdsge_tfp.pdf',
-            to='./Plots/nkdsge_tfp.pdf')
-file.rename(from='./simulations_pi/nkdsge_aggressive_mp.pdf',
-            to='./Plots/nkdsge_aggressive_mp.pdf')
-file.rename(from='./simulations_pi/nkdsge_aggressive_tfp.pdf',
-            to='./Plots/nkdsge_aggressive_tfp.pdf')
-file.rename(from='./simulations_pi/nkdsge_accommodative_tfp.pdf',
-            to='./Plots/nkdsge_accommodative_tfp.pdf')
-file.rename(from='./simulations_pi/nkdsge_accommodative_mp.pdf',
-            to='./Plots/nkdsge_accommodative_mp.pdf')
+file.rename(from='./simulations_pi/nkdtc_notp_mp.eps',
+            to='./Plots/nkdtc_notp_mp.eps')
+file.rename(from='./simulations_pi/nkdtc_notp_tfp.eps',
+            to='./Plots/nkdtc_notp_tfp.eps')
+file.rename(from='./simulations_pi/nkdtc_tp_mp.eps',
+            to='./Plots/nkdtc_tp_mp.eps')
+file.rename(from='./simulations_pi/nkdtc_tp_tfp.eps',
+            to='./Plots/nkdtc_tp_tfp.eps')
+file.rename(from='./simulations_pi/nkdsge_mp.eps',
+            to='./Plots/nkdsge_mp.eps')
+file.rename(from='./simulations_pi/nkdsge_tfp.eps',
+            to='./Plots/nkdsge_tfp.eps')
+file.rename(from='./simulations_pi/nkdsge_aggressive_mp.eps',
+            to='./Plots/nkdsge_aggressive_mp.eps')
+file.rename(from='./simulations_pi/nkdsge_aggressive_tfp.eps',
+            to='./Plots/nkdsge_aggressive_tfp.eps')
+file.rename(from='./simulations_pi/nkdsge_accommodative_tfp.eps',
+            to='./Plots/nkdsge_accommodative_tfp.eps')
+file.rename(from='./simulations_pi/nkdsge_accommodative_mp.eps',
+            to='./Plots/nkdsge_accommodative_mp.eps')
 file.rename(from='./simulations_pi/nkdtc_z_shock.eps',
             to='./Plots/nkdtc_z_shock.eps')
 
