@@ -219,26 +219,26 @@ len=options_.irf;
 irf_tfp = figure('Name', 'TFP shock', 'visible', 'off');
 
 subplot(3,1,1);
-plot(oo_.irfs.y_gap_e_tfp, 'black', 'LineWidth', 4);
+plot(oo_.irfs.y_gap_e_tfp, 'black', 'LineWidth', 1);
 hold on;
-line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
 axis([1 inf -.6 .1]);
 ylabel('Output gap');
 hold off;
 
 
 subplot(3,1,2);
-plot(oo_.irfs.pi_e_tfp, 'black', 'LineWidth', 4);
+plot(oo_.irfs.pi_e_tfp, 'black', 'LineWidth', 1);
 hold on;
-line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
 axis([1 inf -.25 .05]);
 ylabel('Inflation');
 hold off;
 
 subplot(3,1,3);
-plot(oo_.irfs.s_e_tfp, 'black', 'LineWidth', 4);
+plot(oo_.irfs.s_e_tfp, 'black', 'LineWidth', 1);
 hold on;
-line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
 axis([1 inf -.25 .05]);
 ylabel('Interest rate');
 hold off;
@@ -249,40 +249,40 @@ hold off;
 irf_mon = figure('Name', 'Monetary policy shock', 'visible', 'off');
 
 subplot(3,1,1);
-plot(oo_.irfs.y_gap_e_e_mp, 'black', 'LineWidth', 4);
+plot(oo_.irfs.y_gap_e_e_mp, 'black', 'LineWidth', 1);
 hold on;
-line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
 axis([1 inf -.2 .005]);
 ylabel('Output gap');
 hold off;
 
 
 subplot(3,1,2);
-plot(oo_.irfs.pi_e_e_mp, 'black', 'LineWidth', 4);
+plot(oo_.irfs.pi_e_e_mp, 'black', 'LineWidth', 1);
 hold on;
-line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
 axis([1 inf -.12 .015]);
 ylabel('Inflation');
 hold off;
 
 subplot(3,1,3);
-plot(oo_.irfs.s_e_e_mp, 'black', 'LineWidth', 4);
+plot(oo_.irfs.s_e_e_mp, 'black', 'LineWidth', 1);
 hold on;
-line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
 axis([1 inf 0 .15]);
 ylabel('Interest rate');
 hold off;
 
 
 @#if calibras == 0
-print(irf_tfp, 'nkdtc_tp_tfp', '-dpdf', '-fillpage');
-print(irf_mon, 'nkdtc_tp_mp', '-dpdf', '-fillpage');
+print(irf_tfp, 'nkdtc_tp_tfp', '-deps');
+print(irf_mon, 'nkdtc_tp_mp', '-deps');
 @#endif
 
 
 @#if calibras == 1
-print(irf_tfp, 'nkdtc_notp_tfp', '-dpdf', '-fillpage');
-print(irf_mon, 'nkdtc_notp_mp', '-dpdf', '-fillpage');
+print(irf_tfp, 'nkdtc_notp_tfp', '-deps');
+print(irf_mon, 'nkdtc_notp_mp', '-deps');
 @#endif
 
 clear len;

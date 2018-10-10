@@ -181,9 +181,9 @@ free_ax = [1 inf -inf inf];
 irf_tfp = figure('Name', 'TFP shock', 'visible', 'off');
 
 subplot(3,1,1);
-plot(oo_.irfs.y_gap_eps_a, 'black', 'LineWidth', 4);
+plot(oo_.irfs.y_gap_eps_a, 'black', 'LineWidth', 1);
 hold on;
-line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
 axis([1 inf -.6 .1]);
 @#if flag_gali == 2
     axis(free_ax);
@@ -193,9 +193,9 @@ hold off;
 
 
 subplot(3,1,2);
-plot(oo_.irfs.pi_eps_a, 'black', 'LineWidth', 4);
+plot(oo_.irfs.pi_eps_a, 'black', 'LineWidth', 1);
 hold on;
-line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
 axis([1 inf -.25 .05]);
 @#if flag_gali == 2
     axis(free_ax);
@@ -204,9 +204,9 @@ ylabel('Inflation');
 hold off;
 
 subplot(3,1,3);
-plot(oo_.irfs.i_eps_a, 'black', 'LineWidth', 4);
+plot(oo_.irfs.i_eps_a, 'black', 'LineWidth', 1);
 hold on;
-line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
 axis([1 inf -.45 .05]);
 @#if flag_gali == 2
     axis(free_ax);
@@ -220,9 +220,9 @@ hold off;
 irf_mon = figure('Name', 'Monetary policy shock', 'visible', 'off');
 
 subplot(3,1,1);
-plot(oo_.irfs.y_gap_eps_nu, 'black', 'LineWidth', 4);
+plot(oo_.irfs.y_gap_eps_nu, 'black', 'LineWidth', 1);
 hold on;
-line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
 axis([1 inf -.2 .015]);
 @#if flag_gali == 2
     axis(free_ax);
@@ -232,9 +232,9 @@ hold off;
 
 
 subplot(3,1,2);
-plot(oo_.irfs.pi_eps_nu, 'black', 'LineWidth', 4);
+plot(oo_.irfs.pi_eps_nu, 'black', 'LineWidth', 1);
 hold on;
-line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
 axis([1 inf -.12 .015]);
 @#if flag_gali == 2
     axis(free_ax);
@@ -243,9 +243,9 @@ ylabel('Inflation');
 hold off;
 
 subplot(3,1,3);
-plot(oo_.irfs.i_eps_nu, 'black', 'LineWidth', 4);
+plot(oo_.irfs.i_eps_nu, 'black', 'LineWidth', 1);
 hold on;
-line([0 len], [0 0], 'Color', 'red', 'LineWidth', 4);
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
 axis([1 inf 0 .2]);
 @#if flag_gali == 2
     axis(free_ax);
@@ -254,21 +254,21 @@ ylabel('Interest rate');
 hold off;
 
 @#if flag_gali == 0
-print(irf_tfp, 'nkdsge_tfp', '-dpdf', '-fillpage');
-print(irf_mon, 'nkdsge_mp', '-dpdf', '-fillpage');
+print(irf_tfp, 'nkdsge_tfp', '-deps');
+print(irf_mon, 'nkdsge_mp', '-deps');
 save('gali_pi', 'pi', '-v6');
 @#endif
 
 
 @#if flag_gali == 1
-print(irf_tfp, 'nkdsge_accommodative_tfp', '-dpdf', '-fillpage');
-print(irf_mon, 'nkdsge_accommodative_mp', '-dpdf', '-fillpage');
+print(irf_tfp, 'nkdsge_accommodative_tfp', '-deps');
+print(irf_mon, 'nkdsge_accommodative_mp', '-deps');
 @#endif
 
 
 @#if flag_gali == 2
-print(irf_tfp, 'nkdsge_aggressive_tfp', '-dpdf', '-fillpage');
-print(irf_mon, 'nkdsge_aggressive_mp', '-dpdf', '-fillpage');
+print(irf_tfp, 'nkdsge_aggressive_tfp', '-deps');
+print(irf_mon, 'nkdsge_aggressive_mp', '-deps');
 @#endif
 
 

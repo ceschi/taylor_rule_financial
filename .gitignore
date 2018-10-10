@@ -124,3 +124,9 @@ $RECYCLE.BIN/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# MATLAB ancillary files for Dynare shall be added
+
+
+# WIP scripts
+./todo/*

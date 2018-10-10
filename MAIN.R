@@ -119,10 +119,11 @@ toc()
 
 
 
-##### VI - IRFs #####
-cat('is it efficient to have IRFs in R\n
-	rather than do all in matlab?')
-# source('irfs.R')
+##### VI - AR(p*) estimates on simulated inflation ######
+tic('AR(p*) estimates')
+source('sim_pi.R')
+toc()
+
 
 
 ##### VII - VISUALIZATION ####

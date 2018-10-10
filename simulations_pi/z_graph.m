@@ -20,9 +20,9 @@ f = figure('visible', 'off');
 
 % y gap
 subplot(3, 2, 1);
-plot(z_tp.y_gap_e_z, 'black', 'LineStyle', '--', 'LineWidth',2);
+plot(z_tp.y_gap_e_z, 'black', 'LineStyle', '--', 'LineWidth',1);
 hold on;
-plot(z_notp.y_gap_e_z, 'black', 'LineStyle', ':', 'LineWidth',3);
+plot(z_notp.y_gap_e_z, 'black', 'LineStyle', ':', 'LineWidth',1);
 line([1 len], [0 0], 'color', 'red');
 axis([1 inf -inf inf]);
 ylabel('Outputgap');
@@ -30,9 +30,9 @@ hold off;
 
 % pi
 subplot(3, 2, 2);
-plot(z_tp.pi_e_z, 'black', 'LineStyle', '--', 'LineWidth',2);
+plot(z_tp.pi_e_z, 'black', 'LineStyle', '--', 'LineWidth',1);
 hold on;
-plot(z_notp.pi_e_z, 'black', 'LineStyle', ':', 'LineWidth',3);
+plot(z_notp.pi_e_z, 'black', 'LineStyle', ':', 'LineWidth',1);
 line([1 len], [0 0], 'color', 'red');
 axis([1 inf -inf inf]);
 ylabel('Inflation');
@@ -40,9 +40,9 @@ hold off;
 
 % s
 subplot(3, 2, 3);
-plot(z_tp.s_e_z, 'black', 'LineStyle', '--', 'LineWidth',2);
+plot(z_tp.s_e_z, 'black', 'LineStyle', '--', 'LineWidth',1);
 hold on;
-plot(z_notp.s_e_z, 'black', 'LineStyle', ':', 'LineWidth',3);
+plot(z_notp.s_e_z, 'black', 'LineStyle', ':', 'LineWidth',1);
 line([1 len], [0 0], 'color', 'red');
 axis([1 inf -inf inf]);
 ylabel('Policy rate');
@@ -50,9 +50,9 @@ hold off;
 
 % m
 subplot(3, 2, 4);
-plot(z_tp.m_e_z, 'black', 'LineStyle', '--', 'LineWidth',2);
+plot(z_tp.m_e_z, 'black', 'LineStyle', '--', 'LineWidth',1);
 hold on;
-plot(z_notp.m_e_z, 'black', 'LineStyle', ':', 'LineWidth',3);
+plot(z_notp.m_e_z, 'black', 'LineStyle', ':', 'LineWidth',1);
 line([1 len], [0 0], 'color', 'red');
 axis([1 inf -inf inf]);
 ylabel('Money holdings');
@@ -60,9 +60,9 @@ hold off;
 
 % z
 subplot(3, 2, 5);
-plot(z_tp.z_e_z, 'black', 'LineStyle', '--', 'LineWidth',2);
+plot(z_tp.z_e_z, 'black', 'LineStyle', '--', 'LineWidth',1);
 hold on;
-plot(z_notp.z_e_z, 'black', 'LineStyle', ':', 'LineWidth',3);
+plot(z_notp.z_e_z, 'black', 'LineStyle', ':', 'LineWidth',1);
 line([1 len], [0 0], 'color', 'red');
 axis([1 inf -inf inf]);
 ylabel('Real liquidity');
@@ -70,9 +70,9 @@ hold off;
 
 % b
 subplot(3, 2, 6);
-plot(z_tp.b_e_z, 'black', 'LineStyle', '--', 'LineWidth',2);
+plot(z_tp.b_e_z, 'black', 'LineStyle', '--', 'LineWidth',1);
 hold on;
-plot(z_notp.b_e_z, 'black', 'LineStyle', ':', 'LineWidth',3);
+plot(z_notp.b_e_z, 'black', 'LineStyle', ':', 'LineWidth',1);
 line([1 len], [0 0], 'color', 'red');
 axis([1 inf -inf inf]);
 ylabel('Bonds');
