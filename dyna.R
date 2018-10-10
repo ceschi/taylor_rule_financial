@@ -57,4 +57,4 @@ f_output <- sapply('./simulations_pi/', paste0, f_output)
 unlink(c('./simulations_pi/gali_recalib', './simulations_pi/nkdtc', './simulations_pi/sw07', './simulations_pi/ascardone14'), recursive = T)
 file.remove(f_output)
 
-rm(i, f_output)
+rm(f_output)

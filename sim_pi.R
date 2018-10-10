@@ -93,4 +93,4 @@ for (i in 1:ncol(sim_inflation)){
 
 
 # housekeeping 
-  rm(df)
+  rm(df, i)
