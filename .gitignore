@@ -131,13 +131,21 @@ Thumbs.db
 # WIP scripts and folders
 todo/*.*
 Plots/*.*
+
+# aux files and folders
 simulations_pi/ascardone14/*.*
 simulations_pi/sw07/*.*
 simulations_pi/nkdtc/*.*
 simulations_pi/gali_recalib/*.*
-
 simulations_pi/ascardone14_*
 simulations_pi/sw07_*
 simulations_pi/nkdtc_*
 simulations_pi/gali_recalib_*
+
+# simulated series
+simulations_pi/ascardone_pi.*
+simulations_pi/gali_pi.mat
+simulations_pi/nkdtc_pi_notp.mat
+simulations_pi/nkdtc_pi_tp.mat
+simulations_pi/pinf.mat
 
