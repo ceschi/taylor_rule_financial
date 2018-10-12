@@ -12,7 +12,7 @@ sim_inflation <- data.frame(liq = readMat("./simulations_pi/nkdtc_pi_tp.mat") %>
             as14 = readMat('./simulations_pi/ascardone_pi.mat') %>% .$pi
             ) %>% as.tibble()
 
-# burn-in drop
+# burn-in drop, optional
 # sim_inflation <- sim_inflation[-(1:(dim(sim_inflation)[1]*.2)),]
 
 ##### set exo lags and list #####
@@ -93,4 +93,4 @@ for (i in 1:ncol(sim_inflation)){
 
 
 # housekeeping 
-  rm(df, i)
+  rm(df, i, k, llags)

@@ -41,7 +41,14 @@ file.rename(from='./simulations_pi/nkdsge_accommodative_mp.eps',
             to='./Plots/nkdsge_accommodative_mp.eps')
 file.rename(from='./simulations_pi/nkdtc_z_shock.eps',
             to='./Plots/nkdtc_z_shock.eps')
-
+file.rename(from='./simulations_pi/nkdtc_tp_tfp_allvar.eps',
+            to='./Plots/nkdtc_tp_tfp_allvar.eps')
+file.rename(from='./simulations_pi/nkdtc_tp_mp_allvar.eps',
+            to='./Plots/nkdtc_tp_mp_allvar.eps')
+file.rename(from='./simulations_pi/nkdtc_notp_tfp_allvar.eps',
+            to='./Plots/nkdtc_notp_tfp_allvar.eps')
+file.rename(from='./simulations_pi/nkdtc_notp_mp_allvar.eps',
+            to='./Plots/nkdtc_notp_mp_allvar.eps')
 
 # housekeeping, cleans all output files
 
