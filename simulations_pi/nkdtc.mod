@@ -216,7 +216,8 @@ stoch_simul(order=1, 		% approx order
 verbatim;
 len=options_.irf;
 
-irf_tfp = figure('Name', 'TFP shock', 'visible', 'off');
+%% SELVAR TFP
+irf_tfp = figure('Name', 'TFP shock - selected variables', 'visible', 'off');
 
 subplot(3,1,1);
 plot(oo_.irfs.y_gap_e_tfp, 'black', 'LineWidth', 1);
@@ -239,20 +240,20 @@ subplot(3,1,3);
 plot(oo_.irfs.s_e_tfp, 'black', 'LineWidth', 1);
 hold on;
 line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
-axis([1 inf -.25 .05]);
+axis([1 inf -.4 .05]);
 ylabel('Interest rate');
 hold off;
 
 
 
-
-irf_mon = figure('Name', 'Monetary policy shock', 'visible', 'off');
+%% SELVAR MP
+irf_mon = figure('Name', 'Monetary policy shock - selected variables', 'visible', 'off');
 
 subplot(3,1,1);
 plot(oo_.irfs.y_gap_e_e_mp, 'black', 'LineWidth', 1);
 hold on;
 line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
-axis([1 inf -.2 .005]);
+axis([1 inf -.2 .025]);
 ylabel('Output gap');
 hold off;
 
@@ -261,7 +262,7 @@ subplot(3,1,2);
 plot(oo_.irfs.pi_e_e_mp, 'black', 'LineWidth', 1);
 hold on;
 line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
-axis([1 inf -.12 .015]);
+axis([1 inf -.1 .05]);
 ylabel('Inflation');
 hold off;
 
@@ -269,23 +270,138 @@ subplot(3,1,3);
 plot(oo_.irfs.s_e_e_mp, 'black', 'LineWidth', 1);
 hold on;
 line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
-axis([1 inf 0 .15]);
+axis([1 inf 0 .15]);							
 ylabel('Interest rate');
 hold off;
 
 
+%% ALLVAR TFP
+irf_tfp_allvar = figure('Name', 'TFP shock - all variables', 'visible', 'off')
+
+subplot(3,2,1);
+plot(oo_.irfs.y_gap_e_tfp, 'black', 'LineWidth', 1);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
+axis([1 inf -.4 .05]);
+ylabel('Output gap');
+hold off;
+
+
+subplot(3,2,2);
+plot(oo_.irfs.pi_e_tfp, 'black', 'LineWidth', 1);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
+axis([1 inf -.2 .025]);
+ylabel('Inflation');
+hold off;
+
+subplot(3,2,3);
+plot(oo_.irfs.s_e_tfp, 'black', 'LineWidth', 1);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
+axis([1 inf -.1 .05]); 								
+ylabel('Interest rate');
+hold off;
+
+subplot(3,2,4);
+plot(oo_.irfs.m_e_tfp, 'black', 'LineWidth', 1);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
+axis([1 inf -0.2 2]);								
+ylabel('Money holdings');
+
+subplot(3,2,5);
+plot(oo_.irfs.b_e_tfp, 'black', 'LineWidth', 1);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
+axis([1 inf -1.25 .5]);								
+ylabel('Bonds');
+
+subplot(3,2,6);
+plot(oo_.irfs.z_e_tfp, 'black', 'LineWidth', 1);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
+axis([1 inf 0 .2]);
+ylabel('Real liquidity');
+
+
+
+
+%% ALLVAR MP
+irf_mp_allvar = figure('Name', 'Monetary policy shock - all variables', 'visible', 'off')
+
+subplot(3,2,1);
+plot(oo_.irfs.y_gap_e_e_mp, 'black', 'LineWidth', 1);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
+axis([1 inf -.2 .015]);
+ylabel('Output gap');
+hold off;
+
+
+subplot(3,2,2);
+plot(oo_.irfs.pi_e_e_mp, 'black', 'LineWidth', 1);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
+axis([1 inf -.1 .015]);
+ylabel('Inflation');
+hold off;
+
+subplot(3,2,3);
+plot(oo_.irfs.s_e_e_mp, 'black', 'LineWidth', 1);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
+axis([1 inf 0 .05]);
+ylabel('Interest rate');
+hold off;
+
+subplot(3,2,4);
+plot(oo_.irfs.m_e_e_mp, 'black', 'LineWidth', 1);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
+axis([1 inf -1 .1]);
+ylabel('Money holdings');
+
+subplot(3,2,5);
+plot(oo_.irfs.b_e_e_mp, 'black', 'LineWidth', 1);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
+axis([1 inf 0 .5]);
+ylabel('Bonds');
+
+subplot(3,2,6);
+plot(oo_.irfs.z_e_e_mp, 'black', 'LineWidth', 1);
+hold on;
+line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
+axis([1 inf 0 .1]);
+ylabel('Real liquidity');
+
+
+
+
+
+
+
+
+% saving plots
 @#if calibras == 0
 print(irf_tfp, 'nkdtc_tp_tfp', '-deps');
 print(irf_mon, 'nkdtc_tp_mp', '-deps');
+print(irf_tfp_allvar, 'nkdtc_tp_tfp_allvar', '-deps');
+print(irf_mp_allvar, 'nkdtc_tp_mp_allvar', '-deps');
 @#endif
 
 
 @#if calibras == 1
 print(irf_tfp, 'nkdtc_notp_tfp', '-deps');
 print(irf_mon, 'nkdtc_notp_mp', '-deps');
+print(irf_tfp_allvar, 'nkdtc_notp_tfp_allvar', '-deps');
+print(irf_mp_allvar, 'nkdtc_notp_mp_allvar', '-deps');
 @#endif
 
 clear len;
 clear irf_tfp;
 clear irf_mon;
+clear irf_tfp_allvar;
+clear irf_mp_allvar;
 @#endif

@@ -207,7 +207,7 @@ subplot(3,1,3);
 plot(oo_.irfs.i_eps_a, 'black', 'LineWidth', 1);
 hold on;
 line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
-axis([1 inf -.45 .05]);
+axis([1 inf -.4 .05]);
 @#if flag_gali == 2
     axis(free_ax);
 @#endif
@@ -223,7 +223,7 @@ subplot(3,1,1);
 plot(oo_.irfs.y_gap_eps_nu, 'black', 'LineWidth', 1);
 hold on;
 line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
-axis([1 inf -.2 .015]);
+axis([1 inf -.2 .025]);
 @#if flag_gali == 2
     axis(free_ax);
 @#endif
@@ -235,7 +235,7 @@ subplot(3,1,2);
 plot(oo_.irfs.pi_eps_nu, 'black', 'LineWidth', 1);
 hold on;
 line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
-axis([1 inf -.12 .015]);
+axis([1 inf -.1 .05]);
 @#if flag_gali == 2
     axis(free_ax);
 @#endif
@@ -246,7 +246,7 @@ subplot(3,1,3);
 plot(oo_.irfs.i_eps_nu, 'black', 'LineWidth', 1);
 hold on;
 line([0 len], [0 0], 'Color', 'red', 'LineWidth', 1);
-axis([1 inf 0 .2]);
+axis([1 inf 0 .15]);
 @#if flag_gali == 2
     axis(free_ax);
 @#endif
