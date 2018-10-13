@@ -8,7 +8,9 @@ if (flag___singular==1) library(ggplot2, xts)
 # scale for LaTeX plots
 # /1 to have bigger ones
 # good for nontext vis
-pdf_width = 14.6/1.5; pdf_height = 8/1.5
+
+invsc <- 1.5
+pdf_width = 14.6/invsc; pdf_height = 8/invsc
 
 
 # TR variables
@@ -224,7 +226,7 @@ rm(plot_trvars,
    plot_spf_fore,
    plot_money,
    plot_spf_iqr,
-   plot_spread,m,
+   plot_spread,
    pdf_height,
    pdf_width
    )

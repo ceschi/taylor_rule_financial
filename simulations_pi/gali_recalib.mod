@@ -89,7 +89,7 @@ phi_pi = 1.8;
 
 % lowerbound calibration
 @#if flag_gali==1
-phi_pi = 1.0001;
+phi_pi = 1.00000000001; % prev 1.0001
 @#endif
 
 % extremely aggressive calibration
