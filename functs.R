@@ -340,7 +340,10 @@ lagger <- function(series, lag, na.cut=F){
   return(matrix)
 }
 
-#### !!!! test which works best !!!! #####
+# Apparently "lagger" works faster
+# than "lagger_bis" despited loops
+# but only short lags
+
 lagger_bis <- function(series, lag, na.cut=F){
   # Takes a time series and creates a matrix with given number
   # of lags, also generating appropriate names

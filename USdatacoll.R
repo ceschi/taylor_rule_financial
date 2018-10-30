@@ -1,9 +1,3 @@
-#### Second venue of research
-#### using unemployment metrics to proxy output gap ####
-
-# side goal: integrate smoothly this with previous codes
-# for US (Trulyfinal.R) and for the panel building
-
 # This code collects and scraps core data for the analysis
 # and puts it in xts format
 
@@ -147,44 +141,6 @@ names(rev_hist) <-  c('rev_cpi', 'rev_cpi_fe', 'rev_defl',
                       'rev_pce', 'rev_pce_fe')
 
 
-#### ERROR GENERATING CODE #### 
-### commented out bcs it does not merge
-### issue with NA's in indexes 
-
-
-# tsconverter <- function(df, index){
-#   temp <- as.Date(as.yearqtr(df$index, format='%Y.%q'))
-#   df$index <- temp
-#   df <- xts(df, order.by = df$index)
-#   # df$index <- NULL
-#   return(df)
-# }
-# 
-# cpi$date <- as.Date(as.yearqtr(cpi$date, format='%Y.%q'))
-# cpi.mean$date <- as.yearqtr(cpi.mean$date, format='%Y.%q')
-# 
-# core$date <- as.Date(as.yearqtr(core$date, format='%Y.%q'))
-# core.mean$date <- as.yearqtr(core.mean$date, format='%Y.%q')
-# 
-# defl$date <- as.Date(as.yearqtr(defl$date, format='%Y.%q'))
-# defl.mean$date <- as.yearqtr(defl.mean$date, format='%Y.%q')
-# 
-# cpi <- xts(cpi, order.by=cpi$date)
-# cpi.mean <- xts(cpi.mean, order.by=cpi.mean$date)
-# # cpi$date <- NULL
-# # cpi.mean$date <- NULL
-# 
-# core <- xts(core, order.by=core$date)
-# core.mean <- xts(core.mean, order.by=core.mean$date)
-# # core$date <- NULL
-# # core.mean$date <- NULL
-# 
-# defl <- xts(defl, order.by=defl$date)
-# defl.mean <- xts(defl.mean, order.by=defl.mean$date)
-# # defl$date <- NULL
-# # defl.mean$date <- NULL
-
-
 ## UNEMPLOYMENT METRICS ####
 
 claims <- fredr_series_observations(series_id='ICSA', frequency='q', aggregation_method='sum') %>% tbl_xts()
@@ -204,14 +160,14 @@ tot_emp <- fredr_series_observations(series_id='PAYEMS', frequency='q') %>% tbl_
 
 ## Unemployment manipulation
 
-# short_long_diff <- natural_unemp_short - natural_unemp_long
+short_long_diff <- natural_unemp_short - natural_unemp_long
 layoffs <- 100*claims/tot_emp
 employment_fluct <- current_unemp - natural_unemp_long
 
 ## merging
 
-unemployment <- merge(layoffs, employment_fluct)
-names(unemployment) <- c('layoffs', 'employment_fluct')
+unemployment <- merge(layoffs, employment_fluct, current_unemp, short_long_diff)
+names(unemployment) <- c('layoffs', 'employment_fluct', 'unempl_rate', 'unemp_sh_lng')
 
 
 #### OUTPUT GAPS ####
@@ -248,6 +204,43 @@ names(gap_output) <- c('realtime_gap', 'expost_gap')
                       # philly and st louis gaps, respectively
 options(warn=0) # reactivates warnings
 
+##### Consumption #####
+# work in progress
+# real_cons_exp <-  fredr_series_observations(series_id = 'PCECC96', frequency = 'q') %>% 
+
+###### List of additional series ########
+# mnemonics	desc
+# PCECC96	Real personal consumption expenditures
+# PCEDG	personal consumption expenditures, durable goods
+# PCND	personal consumption expenditures, non durable goods
+# PCESV	personal consumption expenditures, services
+# DPCCRC1M027SBEA	personal consumption expenditures ex food and energy
+# GCEC1	Real Government Consumption Expenditures and Gross Investment
+# FDEFX	Federal Government: National Defense Consumption Expenditures and Gross Investment
+# GPDI	Gross Private Domestic Investment
+# GPDIC1	Real Gross Private Domestic Investment
+# PNFI	Private Nonresidential Fixed Investment
+# PRFI	Private Residential Fixed Investment
+# DRSFRMACBS	Delinquency Rate on Single-Family Residential Mortgages, Booked in Domestic Offices, All Commercial Banks
+# EMRATIO	Civilian Employment-Population Ratio
+# PAYEMS	All Employees: Total Nonfarm Payrolls
+# CES0500000003	Average Hourly Earnings of All Employees: Total Private
+# CE16OV	Civilian Employment Level
+# LREM25TTUSQ156S	Employment Rate: Aged 25-54: All Persons for the United States
+# CES9091000001	All Employees: Government: Federal
+# LNS12300060	Employment Population Ratio: 25 - 54 years
+# U6RATE	Total unemployed, plus all marginally attached workers plus total employed part time for economic reasons
+# UEMPMEAN	Average (Mean) Duration of Unemployment
+# AWHNONAG	Average Weekly Hours of Production and Nonsupervisory Employees: Total private
+# AWHMAN	Average Weekly Hours of Production and Nonsupervisory Employees: Manufacturing
+# CES0600000007	Average Weekly Hours of Production and Nonsupervisory Employees: Goods-Producing 
+# CES4300000007	Average Weekly Hours of Production and Nonsupervisory Employees: Transportation and Warehousing
+# CEU4200000007	Average Weekly Hours of Production and Nonsupervisory Employees: Retail Trade
+# CES4200000007	Average Weekly Hours of Production and Nonsupervisory Employees: Retail Trade  seasonally adj
+# CEU3100000007	Average Weekly Hours of Production and Nonsupervisory Employees: Durable Goods
+
+
+
 
 ##### SPREADS ####
 
@@ -268,23 +261,6 @@ tbill_rate_10y <- fredr_series_observations(series_id='DGS10',frequency='q') %>%
 tbill3_ffr <- fredr_series_observations(series_id='TB3SMFFM', frequency='q', aggregation_method='eop') %>% tbl_xts()
 
 
-## Scraping Yahoo! Finance
-
-# # determine current date, adapt the Yahoo! URL
-# sp_ret <- read_csv(paste0('http://chart.finance.yahoo.com/table.csv?s=^GSPC&a=0&b=3&c=1950&d=',
-#                           as.numeric(format(Sys.Date(), '%m')), 
-#                           '&e=', as.numeric(format(Sys.Date(), '%d')), 
-#                           '&f=', as.numeric(format(Sys.Date(), '%Y')), 
-#                           '&g=m&ignore=.csv'),
-#                    col_names=T, col_types = cols(
-#                      Date = col_date(format = "%Y-%m-%d"),
-#                      Open = col_double(),
-#                      High = col_double(),
-#                      Low = col_double(),
-#                      Close = col_double(),
-#                      Volume = col_double(),
-#                      `Adj Close` = col_double()
-#                    ))
 
 options("getSymbols.warning4.0"=FALSE)
 options("getSymbols.yahoo.warning"=FALSE)# disables disclaimer about version update
@@ -423,9 +399,93 @@ spf <- merge(spf_cpi,spf_corecpi,spf_pce, spf_corepce)
 
 
 
+##### Wu-Xia Shadow FFR #####
+
+# This shadow rate ends in 2015 when the ZLB period was terminated.
+# using this shadow rate allows the inclusion of 
+# non-Taylor rule interventions of the CB in the 
+# quantity of money in the policy rate path
+
+download.file(url = 'http://faculty.chicagobooth.edu/jing.wu/research/data/policyrate.xls', 
+              destfile = file.path(temp_dir, 'wuxia_dwnl.xls'),
+              mode = 'wb',
+              quiet = T)
+
+shffr <- read_excel(path = file.path(temp_dir,'wuxia_dwnl.xls'),
+                    col_names = F,
+                    sheet = 'Sheet1')
+
+names(shffr) <- c('date', 'shffr')
+# the above lines download the xls file and dataframe it
+
+#### conversion to xts ####
+
+shffr <- shffr$shffr
+shffr <- as.xts(ts(shffr, frequency = 12, start=c(1960, 1)))
+shffr <- aggregate(shffr, as.yearqtr(as.yearmon(time(shffr))), mean)
+shffr <- merge(shffr, lag(shffr, 1))
+names(shffr) <- c('shffr', 'shffrb')
+
+
+##### Un. of Michigan Surveys of Consumers #######
+
+# Glossary:
+# perch is PERcentage CHange; 
+# SOC(M) is Survey Of Consumers (Michigan);
+# g is for Growth rate
+# ind is for INDex
+# diff is for DIFFerence, levels when not otherwise stated
+# download and read data from site
+socm_inflation <- read_csv('http://www.sca.isr.umich.edu/files/tbqpx1px5.csv',
+                           col_types = cols(QUARTER = col_character(),
+                                            YYYY = col_integer(),
+                                            PX_MD = col_double(),
+                                            PX5_MD = col_double()
+                                            ))
+
+# massage them into TS format, skipping 2 initial rows (dates are 1968)
+socm_inflation_ts <- as.xts(ts(socm_inflation$PX_MD[3:nrow(socm_inflation)], 
+                               start=c(1978,1), frequency=4))
+
+colnames(socm_inflation_ts) <- 'socm_e_cpi_1y_ahead'
+
+# importing the actual and expected consumers sentiments indexes
+socm_indexes <- read_csv('http://www.sca.isr.umich.edu/files/tbqiccice.csv', 
+                         col_types = cols(QUARTER = col_character(),
+                                          YYYY = col_integer(),
+                                          ICC = col_double(),
+                                          ICE = col_double()
+                                          ))
+
+# creating three series, adding the difference btw actual and expected
+indexes <- cbind(socm_indexes$ICC, socm_indexes$ICE, (socm_indexes$ICC - socm_indexes$ICE))
+
+socm_indexes_ts <- as.xts(ts(indexes, start=c(1960, 1), frequency=4,
+                             names=c('soc_actual_ind', 'soc_expected_ind','soc_diff_ind')))
+
+# creates the percentage variations from SOC levels, period over period
+
+g_indexes_rates <- diff(log(socm_indexes_ts[,1:2]))*100
+colnames(g_indexes_rates) <- c('soc_perch_actual_ind', 'soc_perch_expected_ind')
+
+SOC_Michigan <- merge(socm_inflation_ts,
+                      socm_indexes_ts,
+                      g_indexes_rates)
+
+
 #### Merge to dataset ####
 
-db_US <- merge(rates, rev_hist, unemployment, gap_output, spreads, money, fiscal, spf)
+db_US <- merge(rates, 
+               rev_hist,
+               unemployment,
+               gap_output,
+               spreads,
+               money,
+               fiscal,
+               spf,
+               shffr,
+               SOC_Michigan)
+
 write.zoo(x=db_US, 
           file=file.path(data_dir, 'US_data.txt'), 
           sep=';', 
@@ -467,5 +527,8 @@ inizio, fine, surplus.ts, debt_fed,
 debt_fed_share, debt_g, debt_gdp, debt_lev, fiscal,
 surplus_gdp, surplus_season, spf, spf_corecpi,
 spf_corepce, spf_cpi, spf_pce, rev_hist,
-tbill3_ffr)
+tbill3_ffr, shffr,
+socm_inflation, socm_indexes, indexes, socm_indexes_ts,
+socm_inflation_ts, g_indexes_rates, SOC_Michigan,
+short_long_diff)
 if (flag___singular == 1) rm(ahead)

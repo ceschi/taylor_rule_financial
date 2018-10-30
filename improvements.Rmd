@@ -1,0 +1,47 @@
+---
+title: "improvements"
+author: "Emanuele Franceschi"
+date: "30 ottobre 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Improvements on existing code
+
+## Easy ones: add more graphs
+
+This is done in the `visuals.R` file: I shall add 
+
++ a Phillips Curve plot connecting dots accoriding to dates
++ a kernel density plot for inflations distributions
++ growth rates for monetary aggregates to make better sense
+
+Synchronising effectively `USdatacoll.R` across projects (this one and `us_macro_data`) should be done seamlessly, they simply share the same file that can be plugged in.
+
+## Time consuming, worth doing before going public
+
+Some boring stuff, like polishing loops and vectorising, using functions calls rather big chuncks of repeated code. This actually concerns three files: 
+
+  * `inflanalysis.R`
+  * `USreg.R`
+  * `sim_pi.R`
+  
+## Really time consuming, outcome is uncertain
+
+This mainly concerns persistence studies (hence inflations, output gaps, FFR). While the existing structure for inflation can be adopted for output gap and FFR, it remains an open question whether the graphs produced are really informative on the persistence change.
+
+In order to plot a more precise picture of persistence dynamics, it is maybe better to implement the following mehtod. Hinging on the fact longer, significant lags point to higher persistence, using `ggridges` plots with rolling window can be helpful.
+
+Required packages: `ggridges`, `broom`, `urca` modified vers.
+
+* derive and store opilag k
+* rolling window lm, for every iteration:
+  * store most recent date
+  * estimate model with k lags, store coefficients, STErrs, p-values in DF
+  * put this last info as row, so that one has date-coef1-...-coefk-SDErr1-...-SDErrk-p-value1-...-pvaluek
+  * this means a 3 $\times$ k +1 columns matrix, is this correct format for `ggridges`?
+* plot this in `ggridges`, with increasing time index: if there is a flattening and level increase of the AC function, persistence increases
+
