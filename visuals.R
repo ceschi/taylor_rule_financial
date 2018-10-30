@@ -188,6 +188,15 @@ ggsave(plot = plot_spread,
        height = pdf_height, width = pdf_width, units='in')
 
 
+# Phillips Curve, classic one
+plot_phil <- ggplot(db_US, aes(y = rev_cpi, x = layoffs, colour = index(db_US)))+
+geom_jitter(size = .5)+
+theme_bw()+xlab('Layoff rate') + ylab('Revised CPI')+labs(colour = ' ')+
+ggtitle('Phillips Curve')
+
+if (flag___plot == 0) print(plot_phil)
+
+
 ##### LIST OF ADDITIONAL PLOTS #####
 
 # Phillips curve
@@ -222,7 +231,8 @@ plots <- list(plot_trvars,
               plot_spf_fore,
               plot_spf_iqr,
               plot_money,
-              plot_spread)
+              plot_spread,
+              plot_phil)
 
 ##### Housekeeping #####
 rm(plot_trvars,
@@ -236,6 +246,7 @@ rm(plot_trvars,
    plot_spread,
    pdf_height,
    pdf_width,
+   plot_phil,
    invsc
    )
 
