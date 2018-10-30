@@ -190,9 +190,9 @@ ggsave(plot = plot_spread,
 
 # Phillips Curve, classic one
 plot_phil <- ggplot(db_US, aes(y = rev_cpi, x = layoffs, colour = index(db_US)))+
-geom_jitter(size = .5)+
-theme_bw()+xlab('Layoff rate') + ylab('Revised CPI')+labs(colour = ' ')+
-ggtitle('Phillips Curve')
+      geom_path() + geom_point(size = .5)+
+      theme_bw()+xlab('Layoff rate') + ylab('Revised CPI')+labs(colour = ' ')+
+      ggtitle('Phillips Curve')
 
 if (flag___plot == 0) print(plot_phil)
 
