@@ -261,7 +261,6 @@ subfilter <- function(df){
   outp <- data.frame(outp)
   names(outp) <- names(df)
   for (i in 1:len){
-    #supp <- as.numeric(indice[i])
     supp <- indice[i]
     ram <- subset(df, date==supp)
     outp[i,] <- ram[nrow(ram),]
@@ -283,7 +282,7 @@ subfilter.mean <- function(df){
   outp <- data.frame(outp)
   names(outp) <- names(df)
   for (i in 1:len){
-    supp <- as.numeric(indice[i])
+    supp <- indice[i]
     ram <- subset(df, date==supp)
     outp[i,] <- c(0, as.numeric(apply(ram[,-1], 2, mean)))
   }
