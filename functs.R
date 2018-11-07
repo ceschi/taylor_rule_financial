@@ -360,19 +360,28 @@ lagger_bis <- function(series, lag, na.cut=F){
   return(matrix)
 }
 
-formula.maker <- function(df, y){
+formula.maker <- function(df, y, intercept = T){
   # provided with a df and a dependent variable name
   # this generates a formula for estimation in R, y is the 
   # dependent variable, all the others are considered
   # independent and explanatory ones
   
-  
-  fomu <- as.formula(paste(y, 
+  if (intercept){
+    fomu <- as.formula(paste(y, 
                            paste(names(df)[names(df)!=y], collapse='+'),
                            # paste(c(0,names(df)[names(df)!=y]), collapse='+'),
                            # this prevents to have a constant but breaks the
                            # functioning of the code 
                            sep='~'))
+  } else {
+    fomu <- as.formula(paste(y,
+                             paste(c(0,names(df)[names(df)!=y]), collapse='+'),
+                             # this prevents to have a constant but breaks the
+                             # functioning of the code somewhere
+                             sep='~'))
+                }
+  
+  
   attr(fomu, which='.Environment') <- .GlobalEnv
   return(fomu)
 }

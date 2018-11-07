@@ -161,7 +161,7 @@ var e_ee; 	stderr .000;
 var e_pc; 	stderr .000;
 
 % regulars shocks
-@#if z_flag == 0
+@#if z_flag != 1
 % TFP shock
 var e_tfp;	stderr 1; % for non-standard-size shock
 
@@ -202,7 +202,7 @@ stoch_simul(order=1, 		% approx order
 			y_gap pi s m z b;   % vars to plot
 
 
-@#if z_flag == 0
+@#if z_flag != 1
 
 @#if calibras == 0
 	save('nkdtc_pi_tp.mat', 'pi', '-v6');
