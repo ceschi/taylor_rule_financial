@@ -181,11 +181,13 @@ for (i in 1:n){
     ggtitle(paste0(inflation$names[[i]], ' - ', k, ' exogneous lags'))
   
   inflation[['plot_ridges']][[i]] <- ggplot(data = inflation[['rollridges']][[i]])+
-                                         geom_ridgeline(aes(x = term,
+                                         geom_ridgeline_density(aes(x = term,
                                                             y = as.factor(last.date),
                                                             height = estimate,
-                                                            group = as.factor(last.date)),
-                                                        min_height = -2)
+                                                            group = as.factor(last.date),
+                                                            fill = p.value),
+                                                        min_height = -2) +
+                                          scale_fill_viridis(option = "C", direction = -1)
   ###########!!!!!! make up is missing!
   
   if  (flag___plot==0) plot(inflation[['plot_rollm']][[i]])
