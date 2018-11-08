@@ -213,8 +213,6 @@ for (i in 1:n){
   sink()
 }
 
-# plot twist: partial autocorrelation functions over rolling windows
-# but how to plot or synthetize? all this? ggridges?
 
 
 ##### Housekeeping ####
