@@ -55,7 +55,9 @@ inflation <- list(
   aroptilm=list(),
   plot_aropti=list(),
   rollm=list(),
-  plot_rollm=list()
+  rollridges=list(),
+  plot_rollm=list(),
+  plot_ridges=list()
 )
 
 ##### Unit root tests #####
@@ -152,6 +154,11 @@ for (i in 1:n){
   ## is about precision and extension of the resulting estimates
   inflation[['rollm']][[i]] <- rolloop(df = pi[,i], window = wind, lags = k)
   
+  ##### AR(k) while keeping all coefs ####
+  inflation[['rollridges']][[i]] <- persistence_ridges(tseries = pi[,i],
+                                                       window = wind,
+                                                       lags = inflation[['aropti']][[i]])
+  
   
   ##### Plots registration #####
   # attaches data, select first column of estimates and time
@@ -173,6 +180,14 @@ for (i in 1:n){
     scale_y_continuous()+xlab(' ') + ylab(paste0('AR(',r,') coeff. estimates')) + 
     ggtitle(paste0(inflation$names[[i]], ' - ', k, ' exogneous lags'))
   
+  inflation[['plot_ridges']][[i]] <- ggplot(data = inflation[['rollridges']][[i]])+
+                                         geom_ridgeline(aes(x = term,
+                                                            y = as.factor(last.date),
+                                                            height = estimate,
+                                                            group = as.factor(last.date)),
+                                                        min_height = -2)
+  ###########!!!!!! make up is missing!
+  
   if  (flag___plot==0) plot(inflation[['plot_rollm']][[i]])
   
   # saves graphs in proper directory with names
@@ -181,6 +196,17 @@ for (i in 1:n){
          device='pdf',
          graphs_dir,
          height=8, width=14.16, units='in')
+  
+  ggsave(paste0(i, ' - AR(',inflation[['aropti']][[i]],') acf ', inflation[['names']][[i]], '.pdf'),
+         inflation[['plot_ridges']][[i]],
+         device = 'pdf',
+         graphs_dir,
+         # extra height needed for full display
+         height = 100,
+         width = 14.16,
+         units = 'in',
+         limitsize = FALSE
+         )
   
   cat('\n\n\n')
   # stopping printing

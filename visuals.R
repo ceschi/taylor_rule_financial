@@ -231,15 +231,22 @@ ggsave(plot = plot_phil_fluct,
        height = pdf_height, width = pdf_width, units='in')
 
 
-# plot_hist <- ggplot(data=db_US)+
-#   geom_density(aes(x=deflt, fill=' '), alpha= .5)+
-#   geom_density(aes(x=deflt1, fill=''), alpha= .5)+
-#   geom_density(aes(x=ffr, fill = 'ffr'), alpha = .5)+
-#   labs(' ')+theme_bw()+
-#   scale_fill_manual( values = c("red","blue", "green"), labels = c('now', '1 ahead', 'FFR'), name=' ')+ 
-#   xlab('Inflation rates')+
-#   ggtitle('Distribution of the inflation rates')
-# print(plot_hist)
+plot_hist_pi <- ggplot(data=db_US)+
+  geom_density(aes(x=deflt, fill=' '), alpha= .5)+
+  geom_density(aes(x=deflt1, fill=''), alpha= .5)+
+  geom_density(aes(x=ffr, fill = 'ffr'), alpha = .5)+
+  labs(' ')+theme_bw()+
+  scale_fill_manual( values = c("red","blue", "green"), labels = c('now', '1 ahead', 'FFR'), name=' ')+
+  xlab('Inflation rates')+
+  ggtitle('Distribution of the inflation rates')
+
+if (flag___plot == 0) print(plot_hist_pi)
+
+ggsave(plot = plot_hist_pi,
+       filename='pi_kernels.pdf',
+       path=graphs_dir,
+       device='pdf',
+       height = pdf_height, width = pdf_width, units='in')
 
 
 ##### LIST OF ADDITIONAL PLOTS #####
@@ -279,7 +286,8 @@ plots <- list(plot_trvars,
               plot_spread,
               plot_phil,
               plot_phil_lay,
-              plot_phil_fluct)
+              plot_phil_fluct,
+              plot_hist_pi)
 
 ##### Housekeeping #####
 rm(plot_trvars,
@@ -296,7 +304,8 @@ rm(plot_trvars,
    plot_phil,
    invsc,
    plot_phil_lay,
-   plot_phil_fluct
+   plot_phil_fluct,
+   plot_hist_pi
    )
 
 
@@ -546,19 +555,6 @@ rm(plot_trvars,
 #   theme_bw()+ggtitle('Deflator, FFR, Wu Xia Shadow rate')+labs('leg.')+ylab(' ')+xlab(' ')+
 #   theme(legend.position='top')+  guides(colour = guide_legend(override.aes = list(size=3)))
 # print(plot_shffr)
-
-
-##### inflation dynamics #####
-plot_pi <- ggplot(na.omit(us_pi))+
-  geom_line(aes(x=index(na.omit(us_pi)), y=deflt, color='t=0'), na.rm = T)+
-  geom_line(aes(x=index(na.omit(us_pi)), y=deflt1, color='t=1'), na.rm = T)+
-  ylab(' ')+xlab(' ')+theme(legend.position='top', legend.title = NULL)+
-  theme_bw()+ggtitle('Nowcast and 1Q ahead forecast')
-print(plot_pi)
-
-
-
-
 
 ### housekeeping
 # rm(pat, ) 

@@ -575,8 +575,85 @@ spf_funct <-  function(filnam, typs, ahead=1) {
 #       teststat = teststat, testreg = testreg, res = res, test.name = "Augmented Dickey-Fuller Test")
 # }
 
-
-
+##### TRACKING PERSISTENCE OVER TIME #####
+persistence_ridges <- function(tseries, window = 24, lags = 8){
+  # requires zoo, broom
+  if (!require(zoo))    {install.packages('zoo');   library(zoo)}
+  if (!require(broom))  {install.packages('broom'); library(broom)}
+  
+  # check out the nature of the input
+  # throw an error if it's not time series class
+  if (!(class(tseries)=='ts' || class(tseries)=='xts' || class(tseries) == 'zoo')) error('Wrong object, please provide a time series object (ts, zoo, xts).')
+  if (window<=lags*2) error('Wrong window / lag sizes: \nto get meaningful estimates window width should be at least twice the lags.')
+  
+  # define function to be applied rolling over
+  bloc_ar <- function(tseries, lags = 8, interc = F, last){
+    
+    # save out last observation of the series
+    # will be the identifier later on
+    #last <- time(tseries)[length(tseries)]
+    
+    # generate a matrix with lags+1 columns
+    # to have original series + lagged cols
+    # 
+    # It outputs a flat matrix, its 
+    # length is cut down by lags
+    mat_lag <- embed(tseries, lags+1)
+    
+    
+    # estimate linear model without intercept,
+    # store the results
+    estlm <- lm(data = as.data.frame(mat_lag),
+                formula = formula.maker(as.data.frame(mat_lag), 'V1', intercept = interc))
+    
+    # flip in tidy format the lm output
+    # and delete the "statistic" col
+    est_tidy <- broom::tidy(estlm)
+    est_tidy$statistic <- NULL
+    
+    # gather all in a dated dataframe:
+    # lengths = 8
+    # width   = 5
+    # names = c('last.date', 'term', 'estimate', 'std.error', 'p.value')
+    col <- data.frame(last.date = rep(last, lags),
+                      est_tidy)
+    
+    # output the resulting df
+    return(col)
+  }
+  
+  # remove all NAs - experimental
+  tseries <- na.omit(tseries)
+  
+  # this object out_fin will accommodate 
+  # the results, iteration by iteration
+  # add names and preallocate cells
+  out_fin <- matrix(nrow = (length(tseries)-window+1)*lags, ncol = 5)
+  out_fin <- as.data.frame(out_fin)
+  names(out_fin) <- c('last.date', 'term', 'estimate', 'std.error', 'p.value')
+  
+  for (i in 1:(length(tseries)-window+1)){
+    
+    last_date <- time(tseries)[(i+window-1)]
+    
+    col_fin <- bloc_ar(tseries = tseries[i:(i+window-1)],
+                       lags = lags,
+                       interc = F,
+                       last = last_date)
+    
+    out_fin[((i-1)*lags + 1):((i)*lags),] <- col_fin
+    # out_df <- rbind(out_df,col)
+  }
+  
+  out_fin$term <- as.numeric(
+                  gsub(pattern = '[V]',
+                       x = out_fin$term,
+                       replacement = '')
+                            )
+  
+  return(out_fin)
+  
+}
 
 
 
@@ -589,8 +666,8 @@ pkgs <- c('vars', 'glue', 'MSwM', 'lazyeval',
           'tseries', 'dynlm', 'stargazer',
           'dyn', 'strucchange', 'xts',
           'MASS', 'car', 'rvest',
-          'mFilter', 'fredr',
-          'readr', 'quantmod',
+          'mFilter', 'fredr','ggridges',
+          'readr', 'quantmod','broom',
           'devtools', 'lubridate',
           'readxl', 'VARsignR', 'tbl2xts',
           'R.matlab', 'matlabr', 'tictoc')

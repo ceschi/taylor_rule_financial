@@ -276,7 +276,7 @@ hold off;
 
 
 %% ALLVAR TFP
-irf_tfp_allvar = figure('Name', 'TFP shock - all variables', 'visible', 'off')
+irf_tfp_allvar = figure('Name', 'TFP shock - all variables', 'visible', 'off');
 
 subplot(3,2,1);
 plot(oo_.irfs.y_gap_e_tfp, 'black', 'LineWidth', 1);
@@ -328,7 +328,7 @@ ylabel('Real liquidity');
 
 
 %% ALLVAR MP
-irf_mp_allvar = figure('Name', 'Monetary policy shock - all variables', 'visible', 'off')
+irf_mp_allvar = figure('Name', 'Monetary policy shock - all variables', 'visible', 'off');
 
 subplot(3,2,1);
 plot(oo_.irfs.y_gap_e_e_mp, 'black', 'LineWidth', 1);

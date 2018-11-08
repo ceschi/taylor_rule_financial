@@ -44,7 +44,7 @@ flag___singular = 0
 
 # 0 -- the code prints out all graphs
 # 1 -- graphs are not printed but only produced and stored
-flag___plot = 0
+flag___plot = 1
 
 # 0 -- optimal lags for inflation are off
 # 1 -- optimal lags for inflation are on
@@ -121,7 +121,7 @@ toc()
 
 ##### VI - AR(p*) estimates on simulated inflation ######
 tic('AR(p*) estimates')
-source('sim_pi.R')
+#source('sim_pi.R')
 toc()
 
 
@@ -136,5 +136,5 @@ toc()
 rm(temp_dir, data_dir, graphs_dir, 
    working_directory, flag___singular,
    flag___msm, flag___optilag, flag___plot,
-   ahead, k, r, wind)
+   ahead, k, r, wind, j, m)
 toc()

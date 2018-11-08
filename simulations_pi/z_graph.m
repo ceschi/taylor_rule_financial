@@ -85,9 +85,9 @@ print(f, 'nkdtc_z_shock', '-deps')%, '-fillpage');
 clear f;
 clear len;
 
-% clean up the folder
-delete 'nkdtc.m';
-delete 'nkdtc_static.m';
-delete 'nkdtc_dynamic.m';
-delete 'nkdtc_results.mat';
-delete 'nkdtc_set_auxiliary_variables.m';
+% % clean up the folder
+% delete 'nkdtc.m';
+% delete 'nkdtc_static.m';
+% delete 'nkdtc_dynamic.m';
+% delete 'nkdtc_results.mat';
+% delete 'nkdtc_set_auxiliary_variables.m';
