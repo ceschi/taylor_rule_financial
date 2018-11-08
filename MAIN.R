@@ -121,7 +121,7 @@ toc()
 
 ##### VI - AR(p*) estimates on simulated inflation ######
 tic('AR(p*) estimates')
-#source('sim_pi.R')
+source('sim_pi.R')
 toc()
 
 
