@@ -37,7 +37,7 @@ ggsave(plot_trvars,
 plot_re_infl <- ggplot(db_US["1945/"], aes(x=index(db_US["1945/"])))+
   geom_line(aes(y=rev_cpi, colour='Rev. Infl.'),size= 1)+
   geom_line(aes(y=rev_cpi_fe, colour='Rev. Infl. no FE'),size= 1)+
-  geom_line(aes(y=rev_pce, colour='Rev. PCE'))+
+  geom_line(aes(y=rev_pce, colour='Rev. PCE'),size= 1)+
   geom_line(aes(y=rev_pce_fe, colour='Rev. PCE no FE'),size= 1)+
   geom_line(aes(y=rev_defl, colour='Rev. Defl.'),size= 1)+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
