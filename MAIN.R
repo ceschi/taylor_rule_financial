@@ -125,8 +125,15 @@ source('sim_pi.R')
 toc()
 
 
+##### VII - Persistence in output gap and FFR ####
+tic('Other persistences')
+k = 5
+r = 1
+wind = 14*4
+source('gap_ffr_persistence.R')
+toc()
 
-##### VII - VISUALIZATION ####
+##### VIII - VISUALIZATION ####
 tic('Graphing')
 source('visuals.R', verbose=F, echo=F)
 toc()

@@ -33,7 +33,8 @@ pi <- merge(db_US$cpit,
             db_US$rev_cpi_fe,
             db_US$rev_defl,
             db_US$rev_pce,
-            db_US$rev_pce_fe)
+            db_US$rev_pce_fe
+            )
 
 # looping upper bound
 n=length(names(pi))
