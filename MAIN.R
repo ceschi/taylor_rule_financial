@@ -44,7 +44,7 @@ flag___singular = 0
 
 # 0 -- the code prints out all graphs
 # 1 -- graphs are not printed but only produced and stored
-flag___plot = 1
+flag___plot = 0
 
 # 0 -- optimal lags for inflation are off
 # 1 -- optimal lags for inflation are on
@@ -95,7 +95,7 @@ tic('Inflation - real data')
 # exogenous lag
 # ideally cycling through different values
 # like 1 3 5
-k=5
+k=1
 
 # selector for coefficient
 # AR(r) will be plotted

@@ -545,10 +545,10 @@ pkgs <- c('vars', 'glue', 'MSwM', 'lazyeval',
           'quantreg', 'tidyverse', 'devtools',
           'tseries', 'dynlm', 'stargazer',
           'dyn', 'strucchange', 'xts',
-          'MASS', 'car', 'rvest',
+          'MASS', 'car', 'rvest', 'viridis',
           'mFilter', 'fredr','ggridges',
           'readr', 'quantmod','broom',
-          'devtools', 'lubridate',
+          'devtools', 'lubridate', 'ggridges',
           'readxl', 'VARsignR', 'tbl2xts',
           'R.matlab', 'matlabr', 'tictoc')
 # fill pkgs with names of the packages to install

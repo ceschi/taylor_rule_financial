@@ -182,7 +182,7 @@ for (i in 1:n){
     ggtitle(paste0(inflation$names[[i]], ' - ', k, ' exogneous lags'))
   
   inflation[['plot_ridges']][[i]] <- ggplot(data = inflation[['rollridges']][[i]])+
-                                         geom_ridgeline_density2(aes(x = term,
+                                         geom_ridgeline_gradient(aes(x = term,
                                                             y = as.factor(last.date),
                                                             height = estimate,
                                                             group = as.factor(last.date),
