@@ -231,12 +231,12 @@ ggsave(plot = plot_phil_fluct,
        height = pdf_height, width = pdf_width, units='in')
 
 
-plot_hist_pi <- ggplot(data=db_US)+
-  geom_density(aes(x=deflt, fill=' '), alpha= .5)+
-  geom_density(aes(x=deflt1, fill=''), alpha= .5)+
-  geom_density(aes(x=ffr, fill = 'ffr'), alpha = .5)+
+plot_hist_pi <- plot_hist_pi <- ggplot(data=db_US)+
+  geom_density(aes(x=rev_defl, fill = 'defl'), alpha= .5)+
+  geom_density(aes(x=rev_pce, fill = 'pce'), alpha= .5)+
+  geom_density(aes(x=rev_cpi, fill = 'cpi'), alpha = .5)+
   labs(' ')+theme_bw()+
-  scale_fill_manual( values = c("red","blue", "green"), labels = c('now', '1 ahead', 'FFR'), name=' ')+
+  scale_fill_manual( values = c("red","blue", "green"), labels = c('Defl.', 'PCE', 'CPI'), name='Hist. series')+
   xlab('Inflation rates')+
   ggtitle('Distribution of the inflation rates')
 

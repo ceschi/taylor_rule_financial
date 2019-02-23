@@ -464,7 +464,7 @@ persistence_ridges <- function(tseries, window = 24, lags = 8){
   # check out the nature of the input
   # throw an error if it's not time series class
   if (!(class(tseries)=='ts' || class(tseries)=='xts' || class(tseries) == 'zoo')) error('Wrong object, please provide a time series object (ts, zoo, xts).')
-  if (window<=lags*2) error('Wrong window / lag sizes: \nto get meaningful estimates window width should be at least twice the lags.')
+  if (window<=lags*2) warning('Wrong window/lag sizes: \nto get meaningful estimates window width should be at least twice the lags.')
   
   # define function to be applied rolling over
   bloc_ar <- function(tseries, lags = 8, interc = F, last){

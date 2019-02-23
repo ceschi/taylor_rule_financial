@@ -396,6 +396,8 @@ spf_corepce <- spf_funct('spf_ind_corepce_rate.xlsx', 'COREPCE',
                          ahead=ahead)
 
 spf <- merge(spf_cpi,spf_corecpi,spf_pce, spf_corepce)
+# take back here to have tidy spf raw
+# raw_spf_cpi <- sapply()
 
 
 
@@ -406,16 +408,16 @@ spf <- merge(spf_cpi,spf_corecpi,spf_pce, spf_corepce)
 # non-Taylor rule interventions of the CB in the 
 # quantity of money in the policy rate path
 
-download.file(url = 'http://faculty.chicagobooth.edu/jing.wu/research/data/policyrate.xls', 
+download.file(#url = 'http://faculty.chicagobooth.edu/jing.wu/research/data/policyrate.xls', old link
+              url = 'https://drive.google.com/uc?export=download&id=1Z0UdvdPhXaIQNVXTZzYtvxDXwxA6YD2e',
               destfile = file.path(temp_dir, 'wuxia_dwnl.xls'),
               mode = 'wb',
               quiet = T)
 
 shffr <- read_excel(path = file.path(temp_dir,'wuxia_dwnl.xls'),
-                    col_names = F,
+                    col_names = c('date', 'shffr'),
                     sheet = 'Sheet1')
 
-names(shffr) <- c('date', 'shffr')
 # the above lines download the xls file and dataframe it
 
 #### conversion to xts ####

@@ -25,7 +25,7 @@ hold on;
 plot(z_notp.y_gap_e_z, 'black', 'LineStyle', ':', 'LineWidth',1);
 line([1 len], [0 0], 'color', 'red');
 axis([1 inf -inf inf]);
-ylabel('Outputgap');
+ylabel('Output gap');
 hold off;
 
 % pi

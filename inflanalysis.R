@@ -179,7 +179,7 @@ for (i in 1:n){
     # plot makeup
     geom_smooth(method='loess', colour='blue')+scale_x_yearqtr(format='%Y Q%q', n=20)+theme_bw()+
     scale_y_continuous()+xlab(' ') + ylab(paste0('AR(',r,') coeff. estimates')) + 
-    ggtitle(paste0(inflation$names[[i]], ' - ', k, ' exogneous lags'))
+    ggtitle(paste0(inflation$names[[i]], ' - ', k, ' exogenous lags'))
   
   inflation[['plot_ridges']][[i]] <- ggplot(data = inflation[['rollridges']][[i]])+
                                          geom_ridgeline_gradient(aes(x = term,

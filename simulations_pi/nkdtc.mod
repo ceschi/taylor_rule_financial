@@ -183,7 +183,7 @@ var e_tfp;	stderr 0; % for non-standard-size shock
 var e_e_mp; 	stderr 0;
 
 % Real liq. shock
-var e_z; 		stderr 50;
+var e_z; 		stderr 10;
 @#endif
 
 
