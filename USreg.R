@@ -138,6 +138,8 @@ for (m in 1:length(regressions$formula)){
   
   
   
+  
+  
   #### Markov Switching models with K states ####
   # looping over formulae to estimate j-state
   # Markov Switching model 

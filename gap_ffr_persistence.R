@@ -37,7 +37,7 @@ n <- length(names(ygap))
 
 # results collector
 output_gap_persistence <- list(names = list('Layoff rate',
-                                            'Employment flcutuations',
+                                            'Employment fluctuations',
                                             'Real time output gap',
                                             'Ex post output gap',
                                             'FFR'),
