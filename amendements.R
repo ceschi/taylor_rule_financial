@@ -38,7 +38,7 @@ for (i in 1:8){
 
 
 ####### inflation ######
-
+# 
 
 apply(pi,MARGIN = 2, function(x){print(length(x)-sum(is.na(x)))} )
 
