@@ -13,11 +13,8 @@
 #		- run a set of econometric tests and estimations 
 #			over a given number of specifications of the 
 #			Taylor rule, plotting results;
-#		- select the series concernig inflation measures
-#			and estimate optimal AR(p) models for each series
-#			plotting the results;
 #		- simulate with Dynare 4 DSGE models, stock the inflation
-# 			series and run the same econometric tests as the real inflation
+# 		series and run the same econometric tests as the real inflation
 #			data, plotting the AR properties of these models;
 #		- solve and simulate the liquidity NKDSGE model with two monetary rules,
 #			generate the IRFs; simulate the standard NKDSGE model for regular,
@@ -29,8 +26,7 @@
 # from modifications over time as the paper developed and changed. Higher speed
 # might be easily achieved with vectorisation and parallelisation.
 #
-#
-#
+# v1.1
 
 ##### I - Flags, libraries, and folders #####
 
@@ -88,27 +84,27 @@ source('USreg.R', verbose=F, echo=F)
 toc()
 
 
-
-##### IV - Analyses on inflation #####
-# AR(k) on several inflation series
-tic('Inflation - real data')
-# exogenous lag
-# ideally cycling through different values
-# like 1 3 5
-k=1
-
-# selector for coefficient
-# AR(r) will be plotted
-# MUST be =<k
-r=1
-
-# select window width for
-# rolling estimates, pick <80
-# to get interesting results
-wind=14*4
-
-source('inflanalysis.R')
-toc()
+# stuff to develop away from this 
+# ##### IV - Analyses on inflation #####
+# # AR(k) on several inflation series
+# tic('Inflation - real data')
+# # exogenous lag
+# # ideally cycling through different values
+# # like 1 3 5
+# k=1
+# 
+# # selector for coefficient
+# # AR(r) will be plotted
+# # MUST be =<k
+# r=1
+# 
+# # select window width for
+# # rolling estimates, pick <80
+# # to get interesting results
+# wind=14*4
+# 
+# source('inflanalysis.R')
+# toc()
 
 
 
@@ -125,13 +121,13 @@ source('sim_pi.R')
 toc()
 
 
-##### VII - Persistence in output gap and FFR ####
-tic('Other persistences')
-k = 5
-r = 1
-wind = 14*4
-source('gap_ffr_persistence.R')
-toc()
+# ##### VII - Persistence in output gap and FFR ####
+# tic('Other persistences')
+# k = 5
+# r = 1
+# wind = 14*4
+# source('gap_ffr_persistence.R')
+# toc()
 
 ##### VIII - VISUALIZATION ####
 tic('Graphing')

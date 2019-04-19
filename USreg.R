@@ -31,14 +31,14 @@ regressions <- list(
     coefs=list(),
     convse=list()
   ),
-  var=list(
-    varfit=list(),
-    varirf=list()
-  ),
-  svar=list(
-    svarfit=list(),
-    svarirf=list()
-  ),
+  # var=list(
+  #   varfit=list(),
+  #   varirf=list()
+  # ),
+  # svar=list(
+  #   svarfit=list(),
+  #   svarirf=list()
+  # ),
   plot=list()
 )
 
@@ -162,57 +162,57 @@ for (m in 1:length(regressions$formula)){
       regressions$mswm$convse[[m]][,4] <- regressions$mswm$fit[[m]]@seCoef[,4]
   }
   
-  ##### VAR #####
-  # Model: y_t = A_i y_{t-1} + \eps_t
-  ## revise ordering and choleski dec side
-  
-  # slice database
-  dat <- db_US %>% as.tibble()  %>% 
-    select(regressions$formula[[m]] %>% all.vars(), -ffrb) %>%
-    na.omit(.)
-  
-  # estimate a VAR model with pre-set formulas
-  regressions$var$varfit[[m]] <- VAR(y = dat,
-                                     lag.max = 16,
-                                     type = 'const',
-                                     ic = 'HQ')
-  # stock irfs for 40 quarters,
-  # the impulse is given to
-  # the interest rate  --> might consider inclusion of 
-  # actual cpi series to check how real inflation reacts
-  regressions$var$varirf[[m]] <- irf(regressions$var$varfit[[m]],
-                                     impulse='ffr',
-                                     n.ahead=20,
-                                     runs=250)
-  
-  ##### Setting up environment for SVAR #####
-  
-  ## Declaration of struct matrix
-  # B mat is identity by default (orthogonal shocks)
-  # all off-diagonal elements are suppressed
-  # from the estimation <- CAREFUL!
-  AA <- matrix(0, ncol=regressions$formula[[m]] %>% all.vars() %>% length() - 1,
-               nrow=regressions$formula[[m]] %>% all.vars()%>% length() - 1)
-
-  # diagonal elements are set to NA
-  # so to be estimated
-  # next step is to autamete contemporaneuous
-  # interactions with due restrictions
-  diag(AA) <- NA
-  
-  # SVAR estimation
-  # Model: AAy_t = A_i y_{t-1} + \eps_t
-  regressions$svar$svarfit[[m]] <- SVAR(regressions$var$varfit[[m]],
-                                Amat=AA,
-                                estmethod='direct',
-                                hessian=T,
-                                method="BFGS") # alternative for method is 'CG'
-  
-  # SVAR IRFs
-  regressions$svar$svarirf[[m]] <- irf(regressions$svar$svarfit[[m]],
-                                       impulse='ffr',
-                                       n.ahead=20,
-                                       runs=250)
+  # ##### VAR #####
+  # # Model: y_t = A_i y_{t-1} + \eps_t
+  # ## revise ordering and choleski dec side
+  # 
+  # # slice database
+  # dat <- db_US %>% as.tibble()  %>% 
+  #   select(regressions$formula[[m]] %>% all.vars(), -ffrb) %>%
+  #   na.omit(.)
+  # 
+  # # estimate a VAR model with pre-set formulas
+  # regressions$var$varfit[[m]] <- VAR(y = dat,
+  #                                    lag.max = 16,
+  #                                    type = 'const',
+  #                                    ic = 'HQ')
+  # # stock irfs for 40 quarters,
+  # # the impulse is given to
+  # # the interest rate  --> might consider inclusion of 
+  # # actual cpi series to check how real inflation reacts
+  # regressions$var$varirf[[m]] <- irf(regressions$var$varfit[[m]],
+  #                                    impulse='ffr',
+  #                                    n.ahead=20,
+  #                                    runs=250)
+  # 
+  # ##### Setting up environment for SVAR #####
+  # 
+  # ## Declaration of struct matrix
+  # # B mat is identity by default (orthogonal shocks)
+  # # all off-diagonal elements are suppressed
+  # # from the estimation <- CAREFUL!
+  # AA <- matrix(0, ncol=regressions$formula[[m]] %>% all.vars() %>% length() - 1,
+  #              nrow=regressions$formula[[m]] %>% all.vars()%>% length() - 1)
+  # 
+  # # diagonal elements are set to NA
+  # # so to be estimated
+  # # next step is to autamete contemporaneuous
+  # # interactions with due restrictions
+  # diag(AA) <- NA
+  # 
+  # # SVAR estimation
+  # # Model: AAy_t = A_i y_{t-1} + \eps_t
+  # regressions$svar$svarfit[[m]] <- SVAR(regressions$var$varfit[[m]],
+  #                               Amat=AA,
+  #                               estmethod='direct',
+  #                               hessian=T,
+  #                               method="BFGS") # alternative for method is 'CG'
+  # 
+  # # SVAR IRFs
+  # regressions$svar$svarirf[[m]] <- irf(regressions$svar$svarfit[[m]],
+  #                                      impulse='ffr',
+  #                                      n.ahead=20,
+  #                                      runs=250)
   
   
 
@@ -222,5 +222,14 @@ for (m in 1:length(regressions$formula)){
 
 
   # housekeeping
-  rm(AA, dat)
+  # rm(AA, dat)
+  
+  
+  ##### GMM estimates #####
+  
+  
+  
+  
+  
+  
 }
