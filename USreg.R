@@ -39,7 +39,11 @@ regressions <- list(
   #   svarfit=list(),
   #   svarirf=list()
   # ),
-  plot=list()
+  plot=list(),
+  gmm=list(
+    fit=list(),
+    params=list()
+  )
 )
 
 # Formulas for regressions, appended to first sublist
@@ -227,9 +231,18 @@ for (m in 1:length(regressions$formula)){
   
   ##### GMM estimates #####
   
+  variabs <- regressions$formula[[m]] %>% all.vars()
+  temps_db <- db_US %>% as_tibble() %>% select(variabs) %>% na.omit()
+  attach(temps_db)
+  
+  regressions$gmm$fit[[m]] <- gmm(g = regressions$formula[[m]],
+                                  x = temps_db,
+                                  crit = 1e-18)
+  
+  regressions$gmm$params[[m]] <- repara(regressions$gmm$fit[[m]])
   
   
-  
-  
-  
+  detach(temps_db)
+  # housekeeping
+  rm(variabs, temps_db)
 }

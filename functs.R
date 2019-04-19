@@ -550,7 +550,7 @@ pkgs <- c('vars', 'glue', 'MSwM', 'lazyeval',
           'readr', 'quantmod','broom',
           'devtools', 'lubridate', 'ggridges',
           'readxl', 'VARsignR', 'tbl2xts',
-          'R.matlab', 'matlabr', 'tictoc')
+          'R.matlab', 'matlabr', 'tictoc', 'gmm')
 # fill pkgs with names of the packages to install
 
 devtools::install_github('sboysel/fredr')
