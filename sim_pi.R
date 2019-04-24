@@ -17,7 +17,7 @@ sim_inflation <- data.frame(liq = readMat("./simulations_pi/nkdtc_pi_tp.mat") %>
 
 ##### set exo lags and list #####
 
-k = 5; llags = 120;
+k = 5; llags = 16; #120
 
 infl <- list(names = list('Liquidity TP',
 						  'Liquidity, No TP',
