@@ -33,7 +33,7 @@ ffrate <- merge(ffr, ffrb)
 # downloads the big xlsx Greenbook file in
 # a specifically created folder
 download.file('https://www.philadelphiafed.org/-/media/research-and-data/real-time-center/greenbook-data/documentation/gbweb_row_format.xls?la=en',
-              file.path(temp_dir,'Greenbook_allvar_row.xls'), mode='wb',
+              file.path(temp_dir,'Greenbook_allvar_row.xlsx'), mode='wb',
               extra='--no-check-certificate',
               quiet = T)
 
@@ -42,11 +42,11 @@ download.file('https://www.philadelphiafed.org/-/media/research-and-data/real-ti
 
 classi <- c('text', rep('numeric', 14), 'text')
 
-cpi_greenbook <- read_excel(file.path(temp_dir,'Greenbook_allvar_row.xls'), 
+cpi_greenbook <- read_excel(file.path(temp_dir,'Greenbook_allvar_row.xlsx'), 
                             sheet='gPCPI', col_types=classi, na='#N/D')
-core_greenbook <- read_excel(file.path(temp_dir,'Greenbook_allvar_row.xls'),
+core_greenbook <- read_excel(file.path(temp_dir,'Greenbook_allvar_row.xlsx'),
                              sheet='gPCPIX', col_types=classi, na='#N/D')
-deflator_greenbook <- read_excel(file.path(temp_dir,'Greenbook_allvar_row.xls'),
+deflator_greenbook <- read_excel(file.path(temp_dir,'Greenbook_allvar_row.xlsx'),
                                  sheet='gPGDP', col_types=classi, na='#N/D')
 
 # # replace NAs

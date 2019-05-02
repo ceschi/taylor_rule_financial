@@ -241,10 +241,16 @@ return(regs)
 repara <- function(x, rho=4){
   # function to reparametrize once a lm is estimated 
   # having on the 4th place the persistence parameter for FFR
+  # and SE + p-val
   
-  
+  # coefs and SE
   params <- coef(summary(x))[,1:2]/(1-coef(x)[rho])
   params[rho,] <- coef(summary(x))[rho, 1:2]
+  
+  # p-val
+  p_val <- coef(summary(x))[,4]
+  params <- cbind(params, p_val)
+  
   return(params)
 }
 
@@ -464,14 +470,14 @@ persistence_ridges <- function(tseries, window = 24, lags = 8){
   # check out the nature of the input
   # throw an error if it's not time series class
   if (!(class(tseries)=='ts' || class(tseries)=='xts' || class(tseries) == 'zoo')) error('Wrong object, please provide a time series object (ts, zoo, xts).')
-  if (window<=lags*2) warning('Wrong window/lag sizes: \nto get meaningful estimates window width should be at least twice the lags.')
+  if (window<=lags*2) warning('\nWrong window/lag sizes: \nto get meaningful estimates window width should be at least twice the lags.')
   
   # define function to be applied rolling over
   bloc_ar <- function(tseries, lags = 8, interc = F, last){
     
     # save out last observation of the series
     # will be the identifier later on
-    #last <- time(tseries)[length(tseries)]
+    # last <- time(tseries)[length(tseries)]
     
     # generate a matrix with lags+1 columns
     # to have original series + lagged cols
@@ -553,11 +559,14 @@ pkgs <- c('vars', 'glue', 'MSwM', 'lazyeval',
           'R.matlab', 'matlabr', 'tictoc', 'gmm')
 # fill pkgs with names of the packages to install
 
-devtools::install_github('sboysel/fredr')
-devtools::install_github('ceschi/urcabis')
-#library(urcabis)
-
 instant_pkgs(pkgs)
 
+devtools::install_github('sboysel/fredr')
+devtools::install_github('ceschi/urcabis')
+# devtools::install_version("readxl", version = "1.0.0")
+# library(urcabis) # for when the package will be duly updated (pull request)
 
+
+
+#### housekeeping ####
 rm(pkgs)
