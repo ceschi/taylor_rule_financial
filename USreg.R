@@ -97,12 +97,13 @@ regressions$messages <- list(
 ### Warm-up ####
 ################
 # correlation table
-db_US %>% as_tibble() %>% select(ffr, ffrb,
+corr_tab <- db_US %>% as_tibble() %>% select(ffr, ffrb,
                                  deflt, deflt1, cpit, cpit1, coret, coret1, 
                                  realtime_gap, layoffs, expost_gap, employment_fluct,
                                  spread_baa, spread_sp_3m, 
                                  spf_cpi_h1_mean, spf_cpi_h1_iqr, 
                                  debt_growth, surplus_gdp) %>% na.omit(.) %>% cor(.)
+
 
 ### Looping over different specifications
 

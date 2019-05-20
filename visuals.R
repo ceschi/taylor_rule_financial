@@ -260,7 +260,13 @@ ggsave(plot = plot_hist_pi,
 ##### Residuals and results from regressions in USreg.r #####
 ## of course, source the script beforehand
 
+
 if (flag___singular==1) source('USreg.r')
+
+# Correlation tab with Stargazer
+# formatting
+
+print(stargazer(corr_tab))
 
 # outputs all results in regressions list
 
