@@ -232,7 +232,7 @@ for (m in 1:length(regressions$formula)){
   
 
 
-  ##### sign-restricted vars shall #####
+  # ##### sign-restricted vars shall #####
   # be next implementation via VARsignR pkg
 
 
