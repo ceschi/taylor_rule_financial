@@ -155,6 +155,19 @@ reg_call <- function(m){
     invisible(dev.off())
   }
   
+  #####################################
+  #####################################
+  #####################################
+  ##### ADD HERE GMM OUTPUT ###########
+  #####################################
+  #####################################
+  #####################################
+  
+  cat('\n\n\nGMM estimates for robustness:\n')
+  print(regressions$gmm$params[[m]])
+  
+  
+    
   # # VAR results for TR equation
   # # this does ignore all other results
   # cat('\n\n\n')

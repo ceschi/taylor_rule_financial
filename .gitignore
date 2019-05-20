@@ -9,11 +9,11 @@
 *.txt
 
 # simulated series
-simulations_pi/pinf.mat
-simulations_pi/ascardone_pi.mat
-simulations_pi/nkdtc_pi_tp.mat
-simulations_pi/nkdtc_pi_notp.mat
-simulations_pi/gali_pi.mat
+/simulations_pi/pinf.mat
+/simulations_pi/ascardone_pi.mat
+/simulations_pi/nkdtc_pi_tp.mat
+/simulations_pi/nkdtc_pi_notp.mat
+/simulations_pi/gali_pi.mat
 
 # Session Data files
 .RData

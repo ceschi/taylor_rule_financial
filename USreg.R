@@ -94,6 +94,16 @@ regressions$messages <- list(
   '10 - TR with surplus'
 )
 
+### Warm-up ####
+################
+# correlation table
+db_US %>% as_tibble() %>% select(ffr, ffrb,
+                                 deflt, deflt1, cpit, cpit1, coret, coret1, 
+                                 realtime_gap, layoffs, expost_gap, employment_fluct,
+                                 spread_baa, spread_sp_3m, 
+                                 spf_cpi_h1_mean, spf_cpi_h1_iqr, 
+                                 debt_growth, surplus_gdp) %>% na.omit(.) %>% cor(.)
+
 ### Looping over different specifications
 
 for (m in 1:length(regressions$formula)){
@@ -232,7 +242,7 @@ for (m in 1:length(regressions$formula)){
   ##### GMM estimates #####
   
   variabs <- regressions$formula[[m]] %>% all.vars()
-  temps_db <- db_US %>% as_tibble() %>% select(variabs) %>% na.omit()
+  temps_db <- db_US %>% tibble::enframe(name = NULL) %>% select(variabs) %>% na.omit()
   attach(temps_db)
   
   regressions$gmm$fit[[m]] <- gmm(g = regressions$formula[[m]],
@@ -241,6 +251,12 @@ for (m in 1:length(regressions$formula)){
   
   regressions$gmm$params[[m]] <- repara(regressions$gmm$fit[[m]])
   
+  cat('\n\n\nCorrelation matrix for the specification')
+  db_US %>% as_tibble()  %>%
+    select(regressions$formula[[m]] %>% all.vars(), -ffrb) %>%
+    na.omit(.) %>% cor(.)
+  
+
   
   detach(temps_db)
   # housekeeping

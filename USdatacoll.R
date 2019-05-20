@@ -347,13 +347,14 @@ names(fiscal) <- c('surplus_gdp', 'debt_growth', 'debt_gdp', 'debt_fed', 'debt_f
 base <- fredr_series_observations(series_id='BOGMBASE', frequency='q') %>% tbl_xts() %>% `/`(.,1000)
 m1 <- fredr_series_observations(series_id='M1SL', frequency='q') %>% tbl_xts()
 m2 <- fredr_series_observations(series_id='M2SL', frequency='q') %>% tbl_xts()
+m3 <- fredr_series_observations(series_id = 'MABMM301USM189S', frequency = 'q') %>% tbl_xts()
 
-money <- merge(base, m1, m2)
-names(money) <- c('base', 'm1', 'm2')
+money <- merge(base, m1, m2, m3)
+names(money) <- c('base', 'm1', 'm2', 'm3')
 
 # monetary aggregates growth rates
 money_g <- diff(log(money))*100
-names(money_g) <- c('base_g', 'm1_g', 'm2_g')
+names(money_g) <- c('base_g', 'm1_g', 'm2_g', 'm3_g')
 
 
 #### SPF DATA ####

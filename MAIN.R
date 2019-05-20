@@ -26,7 +26,7 @@
 # from modifications over time as the paper developed and changed. Higher speed
 # might be easily achieved with vectorisation and parallelisation.
 #
-# v1.1
+# v0.92
 
 ##### I - Flags, libraries, and folders #####
 
