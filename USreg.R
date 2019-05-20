@@ -96,7 +96,7 @@ regressions$messages <- list(
 
 ### Warm-up ####
 ################
-# correlation table
+# correlation table: values in 1986Q1:2013Q4
 corr_tab <- db_US %>% as_tibble() %>% select(ffr, ffrb,
                                  deflt, deflt1, cpit, cpit1, coret, coret1, 
                                  realtime_gap, layoffs, expost_gap, employment_fluct,
