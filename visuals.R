@@ -157,6 +157,7 @@ plot_money <- ggplot(db_US["1955/"], aes(x=index(db_US["1955/"])))+
   geom_line(aes(y=base, colour='Base mon.'),size= 1)+
   geom_line(aes(y=m1, colour='M1'),size= 1)+
   geom_line(aes(y=m2, colour='M2'),size= 1)+
+  geom_line(aes(y=m3, colour='M3'),size= 1)+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Monetary aggregates levels')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
@@ -172,8 +173,11 @@ ggsave(plot = plot_money,
 
 # spreads
 plot_spread <- ggplot(db_US["1950/"], aes(x=index(db_US["1950/"])))+
-  geom_line(aes(y=spread_baa, colour='BAA'),size= 1)+
+  geom_line(aes(y=spread_baa, colour='BAA'),size= 1.5)+
   geom_line(aes(y=spread_sp_3m, colour='3m SP'),size= 1)+
+  geom_line(aes(y=spread_baa_aaa, colour ='B-A'), size= 1)+
+  geom_line(aes(y=spread_baa_long, colour='BAALONG'), size=1)+
+  geom_line(aes(y=spread_aaa, colour='AAA'), size=1)+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Liquidity spreads - financial instability')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+

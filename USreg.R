@@ -18,6 +18,7 @@ if (flag___singular == 1){
 regressions <- list(
   formula=list(),
   messages=list(),
+  cor=list(),
   models=list(),
   params=list(),
   stab=list(
@@ -67,7 +68,7 @@ regressions$formula <- list(
   # 9
     tr_debt_g = ffr ~ deflt1 + realtime_gap + ffrb + debt_growth,
   # 10
-    tr_surplus = ffr ~ deflt1 + realtime_gap + ffrb + surplus_gdp
+    tr_surplus = ffr ~ deflt1 + realtime_gap + ffrb + surplus_gdp,
   # 11
     tr_spread_long = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_long,
   # 12
@@ -101,9 +102,9 @@ regressions$messages <- list(
   # 11
   '11 - TR with long BAA spread',
   # 12
-  '12 - TR with BAA/AAA spread',
+  '12 - TR with BAA-AAA spread',
   # 13
-  '13 - TR with AAA/10y spread'
+  '13 - TR with AAA-10y spread'
 )
 
 ### Warm-up ####
@@ -255,8 +256,8 @@ for (m in 1:length(regressions$formula)){
   ##### GMM estimates #####
   
   variabs <- regressions$formula[[m]] %>% all.vars()
-  temps_db <- db_US %>% tibble::enframe(name = NULL) %>% select(variabs) %>% na.omit()
-  attach(temps_db)
+  temps_db <- db_US %>% as_tibble(name = NULL) %>% select(variabs) %>% na.omit()
+  attach(temps_db, warn.conflicts = FALSE)
   
   regressions$gmm$fit[[m]] <- gmm(g = regressions$formula[[m]],
                                   x = temps_db,
@@ -264,12 +265,9 @@ for (m in 1:length(regressions$formula)){
   
   regressions$gmm$params[[m]] <- repara(regressions$gmm$fit[[m]])
   
-  cat('\n\n\nCorrelation matrix for the specification')
-  db_US %>% as_tibble()  %>%
+  regressions$cor[[m]] <- db_US %>% as_tibble()  %>%
     select(regressions$formula[[m]] %>% all.vars(), -ffrb) %>%
     na.omit(.) %>% cor(.)
-  
-
   
   detach(temps_db)
   # housekeeping

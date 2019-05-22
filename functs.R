@@ -44,24 +44,7 @@ reg_call <- function(m){
   # custom function to extract, print and plot 
   # information on estimates of a particular
   # Taylor rule specification. The latter is selected
-  # by specifying m, listed below
-  
-  # # 1
-  # 'Standard TR',
-  # # 2
-  # 'TR with layoffs replacing output gap',
-  # # 3 
-  # 'TR and BAA spread',
-  # # 4
-  # 'TR and 3M spread',
-  # # 5
-  # 'TR with layoffs and 3M spread',
-  # # 6
-  # 'TR with layoffs and BAA spread',
-  # # 7
-  # 'TR with SPF mean expected inflation',
-  # # 8
-  # 'TR augmented with IQR SPF'
+  # by specifying m iterator.
   
   # sink fnct saves in a txt file
   # the output while printing it out
@@ -92,6 +75,8 @@ reg_call <- function(m){
   # prints the estimated formula
   cat('\n')
   print(regressions$formula[[m]])
+  cat('\n\n\nCorrelation matrix for the specification:\n')
+  print(regressions$cor[[m]])
   cat('\n')
   
   # prints the number of observations used in the model
@@ -102,6 +87,7 @@ reg_call <- function(m){
 
   # plots the residuals + SE bands for stability
   print(regressions$plot[[m]])
+  sa_plot(paste0(file.path(graphs_dir, regressions$messages[[m]]), ' resids.pdf'))
 
   # plots cusum stability diagnostics
   plot(regressions$stab$cusum[[m]], alpha=.01, boundary=T)
@@ -155,38 +141,10 @@ reg_call <- function(m){
     invisible(dev.off())
   }
   
-  #####################################
-  #####################################
-  #####################################
-  ##### ADD HERE GMM OUTPUT ###########
-  #####################################
-  #####################################
-  #####################################
   
   cat('\n\n\nGMM estimates for robustness:\n')
   print(regressions$gmm$params[[m]])
-  
-  
-    
-  # # VAR results for TR equation
-  # # this does ignore all other results
-  # cat('\n\n\n')
-  # print(summary(regressions$var$varfit[[m]], equation='ffr'))
-  # 
-  # # plots and saves IRFs
-  # plot(regressions$var$varirf[[m]])
-  # title(paste0(regressions$messages[[m]], ' VAR IRFs, MonPol shock'), line=9.5)
-  # sa_plot(file.path(graphs_dir, paste0(regressions$messages[[m]], ' VAR model IRFs.pdf')))
-  # 
-  # # SVAR results restricted to TR
-  # # thus dropping other eq'ns
-  # cat('\n\n\n')
-  # print(summary(regressions$svar$svarfit[[m]], equation='ffr'))
-  # 
-  # # plots and save SVAR IRFs
-  # plot(regressions$svar$svarirf[[m]])
-  # title(paste0(regressions$messages[[m]], ' SVAR IRFs, MonPol shock'), line=9.5)
-  # sa_plot(file.path(graphs_dir, paste0(regressions$messages[[m]], ' SVAR model IRFs.pdf')))
+
   
   # end spacing
   cat('\n\n\n\n')
@@ -195,6 +153,9 @@ reg_call <- function(m){
   
   # stopp printing
   sink(file=NULL)
+  
+  
+  ########## STARGAZER for latex output? #########
 }
 
 rollm <- function(df, formula){

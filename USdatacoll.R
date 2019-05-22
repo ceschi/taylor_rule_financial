@@ -630,10 +630,13 @@ cpi, core, defl, cpi.mean, core.mean, defl.mean,
 claims, natural_unemp_long, natural_unemp_short,
 current_unemp, tot_emp, layoffs, employment_fluct,
 cols, gdp_waves, rates, ffrate, unemployment, gap_output,
+
 spreads, sp_ret, spread_baa, spread_sp_3m,
 tbill_rate_3m, tbill_rate_10y, tbill_rate_1y,ffrb,
+spread_baa_long, spread_baa_aaa, spread_aaa, aaa, baa,
+
 actual, capacity, y_real_gap, gap_expost, rates.mean,
-base, m1, m2, money, money_g, gdp,
+base, m1, m2, m3, money, money_g, gdp,
 inizio, fine, surplus.ts, debt_fed,
 debt_fed_share, debt_g, debt_gdp, debt_lev, fiscal,
 surplus_gdp, surplus_season, spf, spf_corecpi,
@@ -645,3 +648,4 @@ short_long_diff, epu_aggregate, epu_aggregate_comp,
 epu_aggregate_comp_ts, epu_aggregate_ts,
 epu_cat, epu_cat_ts, epu)
 if (flag___singular == 1) rm(ahead)
+
