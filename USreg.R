@@ -68,6 +68,12 @@ regressions$formula <- list(
     tr_debt_g = ffr ~ deflt1 + realtime_gap + ffrb + debt_growth,
   # 10
     tr_surplus = ffr ~ deflt1 + realtime_gap + ffrb + surplus_gdp
+  # 11
+    tr_spread_long = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_long,
+  # 12
+    tr_spread_aaabaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_aaa,
+  # 13
+    tr_spread_corp = ffr ~ deflt1 + realtime_gap + ffrb + spread_aaa
     )
 
 # Strings to indentify models 
@@ -91,7 +97,13 @@ regressions$messages <- list(
   # 9
   '9 - TR with debt growth',
   # 10
-  '10 - TR with surplus'
+  '10 - TR with surplus',
+  # 11
+  '11 - TR with long BAA spread',
+  # 12
+  '12 - TR with BAA/AAA spread',
+  # 13
+  '13 - TR with AAA/10y spread'
 )
 
 ### Warm-up ####
