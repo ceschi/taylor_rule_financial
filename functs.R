@@ -53,6 +53,14 @@ reg_call <- function(m){
   # first, stops older sink
   # sink(file = NULL)
   
+  
+  # store defaults
+  st_setting <- c(getOption('scipen'), # default: 0
+                  getOption('digits')) # default: 7
+
+  options(scipen = 200,
+          digits = 4)
+  
   sink(file=paste0(file.path(graphs_dir, regressions$messages[[m]]), ' regressions results.txt'),
        append=F,
        split=T,
@@ -153,7 +161,9 @@ reg_call <- function(m){
   
   # stopp printing
   sink(file=NULL)
-  
+  # restore defaults
+  options('scipen'=st_setting[1],
+         'digits'=st_setting[2])
   
   ########## STARGAZER for latex output? #########
 }
@@ -212,10 +222,62 @@ return(regs)
 }
 
 
+# make_stars <- function(x){
+#   
+#   # pre-allocate 
+#   signif <- NULL
+#   
+#   if (x < .001) {
+#     signif <- as.factor('***')
+#   }else if (x < .01 & x >= .001){
+#     signif <- as.factor('**')
+#   }else if (x < .05 & x >= .01){
+#     signif <- as.factor('*')
+#   }else if (x < .1 & x >= .05){
+#     signif <- as.factor('.')
+#   }else if (x>=.1){
+#     signif <- as.factor('')
+#   }
+#   
+#   # if (!is.character(signif)){
+#   #   stop('Something\'s wrong')
+#   # }
+#   
+#   
+#   return(as.factor(signif))
+# }
+
+
 repara <- function(x, rho=4){
   # function to reparametrize once a lm is estimated 
   # having on the 4th place the persistence parameter for FFR
   # and SE + p-val
+  
+  
+  # ancillary for stars
+  make_stars <- function(x){
+    
+    # pre-allocate 
+    signif <- NULL
+    
+    if (x < .001) {
+      signif <- as.factor('***')
+    }else if (x < .01 & x >= .001){
+      signif <- as.factor('**')
+    }else if (x < .05 & x >= .01){
+      signif <- as.factor('*')
+    }else if (x < .1 & x >= .05){
+      signif <- as.factor('.')
+    }else if (x>=.1){
+      signif <- as.factor('')
+    }
+    
+    # if (!is.character(signif)){
+    #   stop('Something\'s wrong')
+    # }
+    
+    return(signif)
+  }
   
   # coefs and SE
   params <- coef(summary(x))[,1:2]/(1-coef(x)[rho])
@@ -225,7 +287,11 @@ repara <- function(x, rho=4){
   p_val <- coef(summary(x))[,4]
   params <- cbind(params, p_val)
   
-  return(params)
+  params2 <- data.frame(params,
+                        sig=sapply(X = p_val, FUN = make_stars))
+  
+  
+  return(params2)
 }
 
 

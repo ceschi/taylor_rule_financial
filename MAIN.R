@@ -91,17 +91,17 @@ toc()
 # # exogenous lag
 # # ideally cycling through different values
 # # like 1 3 5
-# k=1
+k=1
 # 
 # # selector for coefficient
 # # AR(r) will be plotted
 # # MUST be =<k
-# r=1
+r=1
 # 
 # # select window width for
 # # rolling estimates, pick <80
 # # to get interesting results
-# wind=14*4
+wind=14*4
 # 
 # source('inflanalysis.R')
 # toc()
