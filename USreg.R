@@ -74,7 +74,9 @@ regressions$formula <- list(
   # 12
     tr_spread_aaabaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_aaa,
   # 13
-    tr_spread_corp = ffr ~ deflt1 + realtime_gap + ffrb + spread_aaa
+    tr_spread_corp = ffr ~ deflt1 + realtime_gap + ffrb + spread_aaa,
+  # 14
+    tr_laybaa_long = ffr ~ deflt1 + layoffs + ffrb + spread_baa_long
     )
 
 # Strings to indentify models 
@@ -104,7 +106,9 @@ regressions$messages <- list(
   # 12
   '12 - TR with BAA-AAA spread',
   # 13
-  '13 - TR with AAA-10y spread'
+  '13 - TR with AAA-10y spread',
+  # 14
+  '14 - TR with layoffs and long BAA spread'
 )
 
 ### Warm-up ####
@@ -266,7 +270,7 @@ for (m in 1:length(regressions$formula)){
   regressions$gmm$params[[m]] <- repara(regressions$gmm$fit[[m]])
   
   regressions$cor[[m]] <- db_US %>% as_tibble()  %>%
-    select(regressions$formula[[m]] %>% all.vars(), -ffrb) %>%
+    select(regressions$formula[[m]] %>% all.vars()) %>%
     na.omit(.) %>% cor(.)
   
   detach(temps_db)

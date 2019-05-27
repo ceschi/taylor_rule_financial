@@ -116,9 +116,9 @@ toc()
 
 
 ##### VI - AR(p*) estimates on simulated inflation ######
-tic('AR(p*) estimates')
-source('sim_pi.R')
-toc()
+# tic('AR(p*) estimates')
+# source('sim_pi.R')
+# toc()
 
 
 # ##### VII - Persistence in output gap and FFR ####

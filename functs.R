@@ -54,12 +54,12 @@ reg_call <- function(m){
   # sink(file = NULL)
   
   
-  # store defaults
-  st_setting <- c(getOption('scipen'), # default: 0
-                  getOption('digits')) # default: 7
-
-  options(scipen = 200,
-          digits = 4)
+  # # store defaults
+  # st_setting <- c(getOption('scipen'), # default: 0
+  #                 getOption('digits')) # default: 7
+  # 
+  # options(scipen = 200,
+  #         digits = 4)
   
   sink(file=paste0(file.path(graphs_dir, regressions$messages[[m]]), ' regressions results.txt'),
        append=F,
@@ -73,7 +73,6 @@ reg_call <- function(m){
     invisible(dev.off())
     # set height=8/1.5 and width=14.6/1.5
     # for LaTeX readable plots
-    
   }
   
   
@@ -86,6 +85,12 @@ reg_call <- function(m){
   cat('\n\n\nCorrelation matrix for the specification:\n')
   print(regressions$cor[[m]])
   cat('\n')
+  
+  cat('\nStandard output:\n')
+  print(summary(regressions$models[[m]]))
+  
+  cat('\nBIC\n')
+  print(BIC(regressions$models[[m]]))
   
   # prints the number of observations used in the model
   cat(paste0('\nModel estimated with ', nobs(regressions$models[[m]]), ' observations\n\n'))
@@ -161,9 +166,9 @@ reg_call <- function(m){
   
   # stopp printing
   sink(file=NULL)
-  # restore defaults
-  options('scipen'=st_setting[1],
-         'digits'=st_setting[2])
+  # # restore defaults
+  # options('scipen'=st_setting[1],
+  #        'digits'=st_setting[2])
   
   ########## STARGAZER for latex output? #########
 }
@@ -222,30 +227,30 @@ return(regs)
 }
 
 
-# make_stars <- function(x){
-#   
-#   # pre-allocate 
-#   signif <- NULL
-#   
-#   if (x < .001) {
-#     signif <- as.factor('***')
-#   }else if (x < .01 & x >= .001){
-#     signif <- as.factor('**')
-#   }else if (x < .05 & x >= .01){
-#     signif <- as.factor('*')
-#   }else if (x < .1 & x >= .05){
-#     signif <- as.factor('.')
-#   }else if (x>=.1){
-#     signif <- as.factor('')
-#   }
-#   
-#   # if (!is.character(signif)){
-#   #   stop('Something\'s wrong')
-#   # }
-#   
-#   
-#   return(as.factor(signif))
-# }
+
+make_stars <- function(x){
+  # ancillary function for
+  # printing stars alongside
+  # with converted parameters
+  
+  c
+  # pre-allocate 
+  signif <- NULL
+  
+  if (x < .001) {
+    signif <- as.factor('***')
+  }else if (x < .01 & x >= .001){
+    signif <- as.factor('**')
+  }else if (x < .05 & x >= .01){
+    signif <- as.factor('*')
+  }else if (x < .1 & x >= .05){
+    signif <- as.factor('.')
+  }else if (x>=.1){
+    signif <- as.factor('')
+  }
+  
+  return(signif)
+}
 
 
 repara <- function(x, rho=4){
@@ -271,10 +276,6 @@ repara <- function(x, rho=4){
     }else if (x>=.1){
       signif <- as.factor('')
     }
-    
-    # if (!is.character(signif)){
-    #   stop('Something\'s wrong')
-    # }
     
     return(signif)
   }

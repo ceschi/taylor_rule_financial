@@ -604,6 +604,11 @@ write.zoo(x=db_US,
           index.name='time')
 
 
+# this snippet normalises all vars to standard normal
+# JBC suggested this but it really messes up results
+# and changes the estimated parameters in an important way.
+
+# db_US <- apply(db_US, FUN = function(x){y=(x-mean(na.omit(x)))/sd(na.omit(x)); return(y)}, MARGIN = 2) %>% as.data.frame()
 
 
 
