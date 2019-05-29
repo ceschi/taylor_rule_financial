@@ -122,10 +122,15 @@ corr_tab <- db_US %>% as_tibble() %>% select(ffr, ffrb,
                                  debt_growth, surplus_gdp) %>% na.omit(.) %>% cor(.)
 
 
+# temp_ <- db_US
+# # db_US <- db_US['1981:12/2007:07/']
+# db_US <- db_US['2007:07/']
+
+
 ### Looping over different specifications
 
 for (m in 1:length(regressions$formula)){
-  
+# for (m in c(1,2,4,5,9,10,11,12,13,14)){
   ##### Simple OLS with stability checks #####
 
   # lapply
@@ -158,103 +163,43 @@ for (m in 1:length(regressions$formula)){
   regressions$stab$cusum[[m]]<- efp(formula=regressions$formula[[m]], data=as.data.frame(db_US), type='OLS-CUSUM')
   # modifies title
   regressions[["stab"]][["cusum"]][[m]][["type.name"]] <- paste0(regressions$messages[[m]], ': OLS-based CUSUM test')
-  
+
   # FStat - Chow test
   regressions$stab$fstat[[m]] <- Fstats(formula=regressions$formula[[m]], data=as.data.frame(db_US))
   # saves most likely date of structural break
-  regressions$stab$fstatpoints[[m]] <- regressions[["models"]][[m]][["model"]][regressions$stab$fstat[[m]]$breakpoint,] %>% 
+  regressions$stab$fstatpoints[[m]] <- regressions[["models"]][[m]][["model"]][regressions$stab$fstat[[m]]$breakpoint,] %>%
     row.names()
   # extracts and saves dates of breaks detected
+
   regressions$stab$fstatcandidates[[m]] <- breakpoints(regressions$formula[[m]],
                                                        data=as.data.frame(db_US))
-  
-  
-  
-  
-  
+
+
+
+
+
   #### Markov Switching models with K states ####
   # looping over formulae to estimate j-state
-  # Markov Switching model 
+  # Markov Switching model
   if (flag___msm==1) j <- 2
   if (flag___msm==2) j <- 3
-  
+
   if (flag___msm!=0){
       regressions$mswm$fit[[m]] <- msmFit(object=regressions$models[[m]],
                                           #data=db_US,
                                           k=j,
                                           sw=rep(T, 1+regressions$formula[[m]] %>% all.vars() %>% length())
                                           )
-      
+
       # Delta coefs + replace correct \rhohat
       regressions$mswm$coefs[[m]] <- regressions$mswm$fit[[m]]@Coef/(1-regressions$mswm$fit[[m]]@Coef[,4])
       regressions$mswm$coefs[[m]][,4] <- regressions$mswm$fit[[m]]@Coef[,4]
-      
+
       # Delta SE + add correct SE for \rho
       regressions$mswm$convse[[m]] <- regressions$mswm$fit[[m]]@seCoef/(1-regressions$mswm$fit[[m]]@Coef[,4])
       regressions$mswm$convse[[m]][,4] <- regressions$mswm$fit[[m]]@seCoef[,4]
   }
-  
-  # ##### VAR #####
-  # # Model: y_t = A_i y_{t-1} + \eps_t
-  # ## revise ordering and choleski dec side
-  # 
-  # # slice database
-  # dat <- db_US %>% as.tibble()  %>% 
-  #   select(regressions$formula[[m]] %>% all.vars(), -ffrb) %>%
-  #   na.omit(.)
-  # 
-  # # estimate a VAR model with pre-set formulas
-  # regressions$var$varfit[[m]] <- VAR(y = dat,
-  #                                    lag.max = 16,
-  #                                    type = 'const',
-  #                                    ic = 'HQ')
-  # # stock irfs for 40 quarters,
-  # # the impulse is given to
-  # # the interest rate  --> might consider inclusion of 
-  # # actual cpi series to check how real inflation reacts
-  # regressions$var$varirf[[m]] <- irf(regressions$var$varfit[[m]],
-  #                                    impulse='ffr',
-  #                                    n.ahead=20,
-  #                                    runs=250)
-  # 
-  # ##### Setting up environment for SVAR #####
-  # 
-  # ## Declaration of struct matrix
-  # # B mat is identity by default (orthogonal shocks)
-  # # all off-diagonal elements are suppressed
-  # # from the estimation <- CAREFUL!
-  # AA <- matrix(0, ncol=regressions$formula[[m]] %>% all.vars() %>% length() - 1,
-  #              nrow=regressions$formula[[m]] %>% all.vars()%>% length() - 1)
-  # 
-  # # diagonal elements are set to NA
-  # # so to be estimated
-  # # next step is to autamete contemporaneuous
-  # # interactions with due restrictions
-  # diag(AA) <- NA
-  # 
-  # # SVAR estimation
-  # # Model: AAy_t = A_i y_{t-1} + \eps_t
-  # regressions$svar$svarfit[[m]] <- SVAR(regressions$var$varfit[[m]],
-  #                               Amat=AA,
-  #                               estmethod='direct',
-  #                               hessian=T,
-  #                               method="BFGS") # alternative for method is 'CG'
-  # 
-  # # SVAR IRFs
-  # regressions$svar$svarirf[[m]] <- irf(regressions$svar$svarfit[[m]],
-  #                                      impulse='ffr',
-  #                                      n.ahead=20,
-  #                                      runs=250)
-  
-  
 
-
-  # ##### sign-restricted vars shall #####
-  # be next implementation via VARsignR pkg
-
-
-  # housekeeping
-  # rm(AA, dat)
   
   
   ##### GMM estimates #####

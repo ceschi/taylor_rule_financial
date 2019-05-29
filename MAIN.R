@@ -107,11 +107,11 @@ wind=14*4
 # toc()
 
 
-
-##### V - Inflation simulations #####
-tic('Models and simulations')
-source('dyna.R')
-toc()
+# 
+# ##### V - Inflation simulations #####
+# tic('Models and simulations')
+# source('dyna.R')
+# toc()
 
 
 

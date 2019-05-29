@@ -105,34 +105,34 @@ reg_call <- function(m){
   # plots cusum stability diagnostics
   plot(regressions$stab$cusum[[m]], alpha=.01, boundary=T)
   sa_plot(paste0(file.path(graphs_dir, regressions$messages[[m]]), ' CUSUM.pdf'))
-  
+
   # plots Fstat stability diagnostics
   plot(regressions$stab$fstat[[m]])
   title(main=paste0(regressions$messages[[m]], ': F-stat stability'),
-        sub=paste0('Vertical line indicates date of most likely break: ', 
+        sub=paste0('Vertical line indicates date of most likely break: ',
                    regressions$stab$fstatpoints[[m]]))
   lines(breakpoints(regressions$stab$fstat[[m]]))
   sa_plot(paste0(file.path(graphs_dir, regressions$messages[[m]]), ' F-stat.pdf'))
-  
+
   # prints date of most likely break
   cat('\n\n\n')
   cat(paste0('Most likely singular break occurs at ',
              as.character(regressions$stab$fstatpoints[[m]]), '\n'))
   regressions$stab$fstatcandidates[[m]]
-  
+
   # optimal number of segment partition,
   # -1 to account for the 0-breaks case
   fstat_dates <- which(summary(regressions$stab$fstatcandidates[[m]])$RSS[2,]==
                          min(summary(regressions$stab$fstatcandidates[[m]])$RSS[2,]), arr.ind=T)-1
-  
+
   # extracting corresponding nobs and dates
   n_obs <- summary(regressions$stab$fstatcandidates[[m]])$breakpoints[fstat_dates,] %>% na.omit(.)
   multibreaks <- names(regressions$stab$fstatcandidates[[m]]$y)[n_obs] %>% paste(collapse=', ')
-  
+
   # printing optimal segment partition dates
   cat(paste0('while optimal segmentation points to ', length(n_obs), ' breaks, at dates ', multibreaks))
-  
-  
+
+
   # MSwM printig results and plotting
   if (flag___msm!=0){
     cat('\n\n\nMarkov Switching model estimation with', j, 'states')
@@ -142,14 +142,14 @@ reg_call <- function(m){
     print(regressions$mswm$coefs[[m]])
     cat('\nConverted standard errors:\n')
     print(regressions$mswm$convse[[m]])
-    
+
     # fine tuning plots
     par(mar=c(1,1,2.85,1), cex.main=.85)
     plotProb(regressions$mswm$fit[[m]], which=2)
     title(paste0(j, '-state MS regimes for ', regressions$messages[[m]]), line=2.3)
     sa_plot(file.path(graphs_dir,paste0(regressions$messages[[m]], ' ',
                       j,'-state MSM.pdf')))
-    
+
     # silently setting margins to default values
     invisible(dev.off())
   }

@@ -23,7 +23,8 @@ plot_trvars <- ggplot(db_US["1945/"], aes(x=index(db_US["1945/"])))+
   ggtitle('US Taylor rule - main components')+
   scale_y_continuous()+
   scale_x_yearqtr(format='%Y Q%q', n=20)+
-  geom_hline(yintercept = 0, colour='black')
+  geom_hline(yintercept = 0, colour='black')+
+  theme(axis.text.x = element_text(angle = 90))
 
 if (flag___plot==0) print(plot_trvars)
 
@@ -44,7 +45,8 @@ plot_re_infl <- ggplot(db_US["1945/"], aes(x=index(db_US["1945/"])))+
   ggtitle('Measures of historical inflation')+
   scale_y_continuous()+
   scale_x_yearqtr(format='%Y Q%q', n=20)+
-  geom_hline(yintercept = 0, colour='black')
+  geom_hline(yintercept = 0, colour='black')+
+  theme(axis.text.x = element_text(angle = 90))
   
 if (flag___plot==0) print(plot_re_infl)
 
@@ -66,7 +68,8 @@ plot_slack <- ggplot(db_US["1945/"], aes(x=index(db_US["1945/"])))+
   ggtitle('Measures of slackness')+
   scale_y_continuous()+
   scale_x_yearqtr(format='%Y Q%q', n=20)+
-  geom_hline(yintercept = 0, colour='black')
+  geom_hline(yintercept = 0, colour='black')+
+  theme(axis.text.x = element_text(angle = 90))
 
 if (flag___plot==0) print(plot_slack)
 
@@ -86,7 +89,8 @@ plot_nowinf <- ggplot(db_US["1965/"], aes(x=index(db_US["1965/"])))+
   ggtitle('Current period inflation forecasts')+
   scale_y_continuous()+
   scale_x_yearqtr(format='%Y Q%q', n=20)+
-  geom_hline(yintercept = 0, colour='black')
+  geom_hline(yintercept = 0, colour='black')+
+  theme(axis.text.x = element_text(angle = 90))
 
 if (flag___plot==0) print(plot_nowinf)
 
@@ -104,7 +108,8 @@ plot_hinf <- ggplot(db_US["1965/"], aes(x=index(db_US["1965/"])))+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('One quarter ahead inflation forecasts')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
-  geom_hline(yintercept = 0, colour='black')
+  geom_hline(yintercept = 0, colour='black')+
+  theme(axis.text.x = element_text(angle = 90))
 
 if (flag___plot==0) print(plot_hinf)
 
@@ -123,7 +128,8 @@ plot_spf_fore <- ggplot(db_US["1980/"], aes(x=index(db_US["1980/"])))+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('One quarter ahead inflation forecasts - SPF cross section means')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
-  geom_hline(yintercept = 0, colour='black')
+  geom_hline(yintercept = 0, colour='black')+
+  theme(axis.text.x = element_text(angle = 90))
 
 if (flag___plot==0) print(plot_spf_fore)
 
@@ -142,7 +148,8 @@ plot_spf_iqr <- ggplot(db_US["1980/"], aes(x=index(db_US["1980/"])))+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour='IQRs')+
   ggtitle('One quarter ahead inflation forecasts - SPF cross section IQR')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
-  geom_hline(yintercept = 0, colour='black')
+  geom_hline(yintercept = 0, colour='black')+
+  theme(axis.text.x = element_text(angle = 90))
 
 if (flag___plot==0) print(plot_spf_iqr)
 
@@ -161,7 +168,8 @@ plot_money <- ggplot(db_US["1955/"], aes(x=index(db_US["1955/"])))+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Monetary aggregates levels')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
-  geom_hline(yintercept = 0, colour='black')
+  geom_hline(yintercept = 0, colour='black')+
+  theme(axis.text.x = element_text(angle = 90))
 
 if (flag___plot==0) print(plot_money)
 
@@ -181,7 +189,8 @@ plot_spread <- ggplot(db_US["1950/"], aes(x=index(db_US["1950/"])))+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Liquidity spreads - financial instability')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
-  geom_hline(yintercept = 0, colour='black')
+  geom_hline(yintercept = 0, colour='black')+
+  theme(axis.text.x = element_text(angle = 90))
 
 if (flag___plot==0) print(plot_spread)
 
@@ -275,6 +284,7 @@ print(stargazer(corr_tab))
 # outputs all results in regressions list
 
 for (m in 1:length(regressions$models)){
+# for (m in c(1,2,4,5,9,10,11,12,13,14)){  # this for first sample
   # costum function, prints and plots
   # results gathered in regression list
   # and writes results in a txt file
