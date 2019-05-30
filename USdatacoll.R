@@ -179,7 +179,7 @@ capacity <- fredr_series_observations(series_id='GDPPOT', frequency='q') %>% tbl
 actual <- fredr_series_observations(series_id='GDPC1', frequency='q') %>% tbl_xts()
 # actual gdp
 
-gap_expost <- (actual-capacity)*100/capacity
+gap_expost <- (actual-capacity)*100/capacity 
 
 # real time gap
 

@@ -7,10 +7,12 @@
 ./Downloaded files/*.*
 ./Plots/*.*
 ./Processed data/*.*
+./todo/*.*
 
 Downloaded files/
 Plots/
 Processed data/
+todo/
 
 simulations_pi/ascardone_pi.mat
 simulations_pi/gali_pi.mat

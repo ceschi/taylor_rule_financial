@@ -583,6 +583,21 @@ persistence_ridges <- function(tseries, window = 24, lags = 8){
 }
 
 
+standard <- function(x){
+  
+  # handy fct to standardize
+  # a vector x of draws - 
+  # use base::scale
+  
+  
+  x_mean <- mean(na.omit(x))
+  x_sd <- sd(na.omit(x))
+  x_stand <- (x-x_mean)/x_sd
+  
+  return(x_stand)
+}
+
+
 
 
 

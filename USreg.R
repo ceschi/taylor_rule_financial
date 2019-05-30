@@ -149,13 +149,8 @@ for (m in 1:length(regressions$formula)){
     geom_line()+theme_bw()+scale_x_yearqtr(format='%Y Q%q', n=20)+
     geom_hline(color='red', yintercept=regressions$models[[m]] %>% residuals() %>% sd() %>% `*`(2))+
     geom_hline(color='red', yintercept=regressions$models[[m]] %>% residuals() %>% sd() %>% `*`(-2))+
-    xlab(' ') + ylab('Residuals') + ggtitle(regressions$messages[[m]])
-  
-  ggsave(paste0(regressions$messages[[m]],' residuals.pdf'),
-    regressions$plot[[m]], 
-    device='pdf', 
-    graphs_dir,
-    height=8, width=14.16, units='in')
+    xlab(' ') + ylab('Residuals') + ggtitle(regressions$messages[[m]])+
+    theme(axis.text.x = element_text(angle = 90))
   
   # lapply
   # stability checks on OLS
