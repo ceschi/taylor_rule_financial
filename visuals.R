@@ -14,7 +14,7 @@ pdf_width = 14.6/invsc; pdf_height = 8/invsc
 
 
 # TR variables
-plot_trvars <- ggplot(db_US["1945/"], aes(x=index(db_US["1945/"])))+
+plot_trvars <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
   geom_line(aes(y=ffr, color='FFR'), size=1)+
   geom_line(aes(y=rev_defl, color='Act. Infl.'), size=1)+
   geom_line(aes(y=deflt1, color='Exp. Infl.'), size=1)+
@@ -35,7 +35,7 @@ ggsave(plot_trvars,
        height = pdf_height, width = pdf_width, units='in')
 
 # Measures of inflation, revised ones
-plot_re_infl <- ggplot(db_US["1945/"], aes(x=index(db_US["1945/"])))+
+plot_re_infl <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
   geom_line(aes(y=rev_cpi, colour='Rev. Infl.'),size= 1)+
   geom_line(aes(y=rev_cpi_fe, colour='Rev. Infl. no FE'),size= 1)+
   geom_line(aes(y=rev_pce, colour='Rev. PCE'),size= 1)+
@@ -59,7 +59,7 @@ ggsave(plot = plot_re_infl,
 
 
 # Measures of slackness in the economy
-plot_slack <- ggplot(db_US["1945/"], aes(x=index(db_US["1945/"])))+
+plot_slack <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
   geom_line(aes(y=layoffs, colour='Layoff rate'),size= 1)+
   geom_line(aes(y=employment_fluct, colour='NU gap'),size= 1)+
   geom_line(aes(y=realtime_gap, colour='Realtime gap'),size= 1)+
@@ -81,7 +81,7 @@ ggsave(plot = plot_slack,
 
 
 # Inflation forecasts and nowcasts
-plot_nowinf <- ggplot(db_US["1965/"], aes(x=index(db_US["1965/"])))+
+plot_nowinf <- ggplot(db_US["1965/2020"], aes(x=index(db_US["1965/2020"])))+
   geom_line(aes(y=cpit, colour='CPI'),size= 1)+
   geom_line(aes(y=coret, colour='Core PCE'),size= 1)+
   geom_line(aes(y=deflt, colour='Deflator'),size= 1)+
@@ -101,9 +101,9 @@ ggsave(plot = plot_nowinf,
        height = pdf_height, width = pdf_width, units='in')
 
 # one quarter ahead inflation forecasts
-plot_hinf <- ggplot(db_US["1965/"], aes(x=index(db_US["1965/"])))+
+plot_hinf <- ggplot(db_US["1965/2020"], aes(x=index(db_US["1965/2020"])))+
   geom_line(aes(y=cpit1, colour='CPI'),size= 1)+
-  geom_line(aes(y=coret1, colour='Core (PCE?)'),size= 1)+
+  geom_line(aes(y=coret1, colour='Core PCE'),size= 1)+
   geom_line(aes(y=deflt1, colour='Deflator'),size= 1)+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('One quarter ahead inflation forecasts')+
@@ -120,7 +120,7 @@ ggsave(plot = plot_hinf,
        height = pdf_height, width = pdf_width, units='in')
 
 # Inflation forecasts coming from SPF
-plot_spf_fore <- ggplot(db_US["1980/"], aes(x=index(db_US["1980/"])))+
+plot_spf_fore <- ggplot(db_US["1980/2020"], aes(x=index(db_US["1980/2020"])))+
   geom_line(aes(y=spf_cpi_h1_mean, colour='SPF CPI mean'),size= 1)+
   geom_line(aes(y=spf_corecpi_h1_mean, colour='SPF core CPI mean'),size= 1)+
   geom_line(aes(y=spf_pce_h1_mean, colour='SPF PCE mean'),size= 1)+
@@ -140,7 +140,7 @@ ggsave(plot = plot_spf_fore,
        height = pdf_height, width = pdf_width, units='in')
 
 # Inflation forecast disagreement among SPF
-plot_spf_iqr <- ggplot(db_US["1980/"], aes(x=index(db_US["1980/"])))+
+plot_spf_iqr <- ggplot(db_US["1980/2020"], aes(x=index(db_US["1980/2020"])))+
   geom_line(aes(y=spf_cpi_h1_iqr, colour='SPF CPI'),size= 1)+
   geom_line(aes(y=spf_corecpi_h1_iqr, colour='SPF core CPI'),size= 1)+
   geom_line(aes(y=spf_pce_h1_iqr, colour='SPF PCE'),size= 1)+
@@ -160,7 +160,7 @@ ggsave(plot = plot_spf_iqr,
        height = pdf_height, width = pdf_width, units='in')
 
 # Monetary levels
-plot_money <- ggplot(db_US["1955/"], aes(x=index(db_US["1955/"])))+
+plot_money <- ggplot(db_US["1955/2020"], aes(x=index(db_US["1955/2020"])))+
   geom_line(aes(y=base, colour='Base mon.'),size= 1)+
   geom_line(aes(y=m1, colour='M1'),size= 1)+
   geom_line(aes(y=m2, colour='M2'),size= 1)+
@@ -180,7 +180,7 @@ ggsave(plot = plot_money,
        height = pdf_height, width = pdf_width, units='in')
 
 # spreads
-plot_spread <- ggplot(db_US["1950/"], aes(x=index(db_US["1950/"])))+
+plot_spread <- ggplot(db_US["1950/2020"], aes(x=index(db_US["1950/2020"])))+
   geom_line(aes(y=spread_baa, colour='BAA'),size= 1.5)+
   geom_line(aes(y=spread_sp_3m, colour='3m SP'),size= 1)+
   geom_line(aes(y=spread_baa_aaa, colour ='B-A'), size= 1)+
@@ -244,7 +244,7 @@ ggsave(plot = plot_phil_fluct,
        height = pdf_height, width = pdf_width, units='in')
 
 
-plot_hist_pi <- plot_hist_pi <- ggplot(data=db_US)+
+plot_hist_pi <- ggplot(data=db_US)+
   geom_density(aes(x=rev_defl, fill = 'defl'), alpha= .5)+
   geom_density(aes(x=rev_pce, fill = 'pce'), alpha= .5)+
   geom_density(aes(x=rev_cpi, fill = 'cpi'), alpha = .5)+
@@ -260,6 +260,112 @@ ggsave(plot = plot_hist_pi,
        path=graphs_dir,
        device='pdf',
        height = pdf_height, width = pdf_width, units='in')
+
+plot_defl <- ggplot(db_US["1967/2015"], aes(x=index(db_US["1967/2015"])))+
+  geom_line(aes(y = deflt, colour = 't'), size = 1, alpha = .5)+
+  geom_line(aes(y = deflt1, colour = 't+1'), size = 1, alpha = .5)+
+  geom_line(aes(y = deflt2, colour = 't+2'), size = 1, alpha = .5)+
+  geom_line(aes(y = deflt3, colour = 't+3'), size = 1, alpha = .5)+
+  geom_line(aes(y = deflt4, colour = 't+4'), size = 1, alpha = .5)+
+  geom_line(aes(y = deflt5, colour = 't+5'), size = 1, alpha = .5)+
+  geom_line(aes(y = deflt6, colour = 't+6'), size = 1, alpha = .5)+
+  geom_line(aes(y = deflt7, colour = 't+7'), size = 1, alpha = .5)+
+  geom_line(aes(y = deflt8, colour = 't+8'), size = 1, alpha = .5)+
+  theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  ggtitle('Deflator')+
+  scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+  theme(axis.text.x = element_text(angle = 90))
+
+if (flag___plot == 0) print(plot_defl)
+
+ggsave(plot = plot_defl,
+       filename='deflatorh.pdf',
+       path=graphs_dir,
+       device='pdf',
+       height = pdf_height, width = pdf_width, units='in')
+
+
+plot_cpi <- ggplot(db_US["1978/2015"], aes(x=index(db_US["1978/2015"])))+
+  geom_line(aes(y = cpit, colour = 't'), size = 1, alpha = .5)+
+  geom_line(aes(y = cpit1, colour = 't+1'), size = 1, alpha = .5)+
+  geom_line(aes(y = cpit2, colour = 't+2'), size = 1, alpha = .5)+
+  geom_line(aes(y = cpit3, colour = 't+3'), size = 1, alpha = .5)+
+  geom_line(aes(y = cpit4, colour = 't+4'), size = 1, alpha = .5)+
+  geom_line(aes(y = cpit5, colour = 't+5'), size = 1, alpha = .5)+
+  geom_line(aes(y = cpit6, colour = 't+6'), size = 1, alpha = .5)+
+  geom_line(aes(y = cpit7, colour = 't+7'), size = 1, alpha = .5)+
+  geom_line(aes(y = cpit8, colour = 't+8'), size = 1, alpha = .5)+
+  theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  ggtitle('CPI')+
+  scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+  theme(axis.text.x = element_text(angle = 90))
+
+if (flag___plot == 0) print(plot_cpi)
+
+ggsave(plot = plot_cpi,
+       filename='cpih.pdf',
+       path=graphs_dir,
+       device='pdf',
+       height = pdf_height, width = pdf_width, units='in')
+
+
+
+plot_core <- ggplot(db_US["1985/2015"], aes(x=index(db_US["1985/2015"])))+
+  geom_line(aes(y = coret, colour = 't'), size = 1, alpha = .5)+
+  geom_line(aes(y = coret1, colour = 't+1'), size = 1, alpha = .5)+
+  geom_line(aes(y = coret2, colour = 't+2'), size = 1, alpha = .5)+
+  geom_line(aes(y = coret3, colour = 't+3'), size = 1, alpha = .5)+
+  geom_line(aes(y = coret4, colour = 't+4'), size = 1, alpha = .5)+
+  geom_line(aes(y = coret5, colour = 't+5'), size = 1, alpha = .5)+
+  geom_line(aes(y = coret6, colour = 't+6'), size = 1, alpha = .5)+
+  geom_line(aes(y = coret7, colour = 't+7'), size = 1, alpha = .5)+
+  geom_line(aes(y = coret8, colour = 't+8'), size = 1, alpha = .5)+
+  theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  ggtitle('CORE')+
+  scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+  theme(axis.text.x = element_text(angle = 90))
+
+if (flag___plot == 0) print(plot_core)
+
+ggsave(plot = plot_core,
+       filename='coreh.pdf',
+       path=graphs_dir,
+       device='pdf',
+       height = pdf_height, width = pdf_width, units='in')
+
+# # provocative graph...
+# ggplot(db_US["1985/2015"], aes(x=index(db_US["1985/2015"])))+
+#   geom_line(aes(y = coret), size = 1, alpha = .5)+
+#   geom_line(aes(y = coret1), size = 1, alpha = .5)+
+#   geom_line(aes(y = coret2), size = 1, alpha = .5)+
+#   geom_line(aes(y = coret3), size = 1, alpha = .5)+
+#   geom_line(aes(y = coret4), size = 1, alpha = .5)+
+#   geom_line(aes(y = coret5), size = 1, alpha = .5)+
+#   geom_line(aes(y = coret6), size = 1, alpha = .5)+
+#   geom_line(aes(y = coret7), size = 1, alpha = .5)+
+#   geom_line(aes(y = coret8), size = 1, alpha = .5)+
+#   geom_line(aes(y = cpit), size = 1, alpha = .5)+
+#   geom_line(aes(y = cpit1), size = 1, alpha = .5)+
+#   geom_line(aes(y = cpit2), size = 1, alpha = .5)+
+#   geom_line(aes(y = cpit3), size = 1, alpha = .5)+
+#   geom_line(aes(y = cpit4), size = 1, alpha = .5)+
+#   geom_line(aes(y = cpit5), size = 1, alpha = .5)+
+#   geom_line(aes(y = cpit6), size = 1, alpha = .5)+
+#   geom_line(aes(y = cpit7), size = 1, alpha = .5)+
+#   geom_line(aes(y = cpit8), size = 1, alpha = .5)+
+#   geom_line(aes(y = deflt), size = 1, alpha = .5)+
+#   geom_line(aes(y = deflt1), size = 1, alpha = .5)+
+#   geom_line(aes(y = deflt2), size = 1, alpha = .5)+
+#   geom_line(aes(y = deflt3), size = 1, alpha = .5)+
+#   geom_line(aes(y = deflt4), size = 1, alpha = .5)+
+#   geom_line(aes(y = deflt5), size = 1, alpha = .5)+
+#   geom_line(aes(y = deflt6), size = 1, alpha = .5)+
+#   geom_line(aes(y = deflt7), size = 1, alpha = .5)+
+#   geom_line(aes(y = deflt8), size = 1, alpha = .5)+
+#   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+#   ggtitle('really.')+
+#   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+#   theme(axis.text.x = element_text(angle = 90))
 
 
 ##### LIST OF ADDITIONAL PLOTS #####
@@ -307,7 +413,10 @@ plots <- list(plot_trvars,
               plot_phil,
               plot_phil_lay,
               plot_phil_fluct,
-              plot_hist_pi)
+              plot_hist_pi,
+              plot_defl,
+              plot_cpi,
+              plot_core)
 
 ##### Housekeeping #####
 rm(plot_trvars,
@@ -325,7 +434,10 @@ rm(plot_trvars,
    invsc,
    plot_phil_lay,
    plot_phil_fluct,
-   plot_hist_pi
+   plot_hist_pi,
+   plot_defl,
+   plot_cpi,
+   plot_core
    )
 
 

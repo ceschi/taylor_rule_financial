@@ -125,7 +125,7 @@ rev_hist <- merge(
                                          units='pc1') %>% tbl_xts(),
           
           # Personal Consumption Expenditures including Food and Energy
-          rev_pce  = fredr_series_observations(series_id='PCE', 
+          rev_pce  = fredr_series_observations(series_id='PCEPI', 
                                              frequency='q', 
                                          # aggregation_method='eop', 
                                          units='pc1') %>% tbl_xts(),
@@ -539,7 +539,8 @@ epu_cat <- read_excel(path = file.path(temp_dir, 'EPU_categories.xlsx'),
                       sheet = 1,
                       col_types = c('date', rep('numeric', 12))
                       )
-epu_cat <- epu_cat[-nrow(epu_cat),]
+
+epu_cat <- epu_cat[-c((nrow(epu_cat)-1),nrow(epu_cat)),]
 
 # convert data to xts
 epu_aggregate_ts <- ts(data = epu_aggregate, 
@@ -578,7 +579,7 @@ names(epu_cat_ts) <- c('epu_econpol', 'epu_monpol', 'epu_fiscal', 'epu_taxes',
 
 epu <- merge(epu_aggregate_ts,
              epu_aggregate_comp_ts,
-             epu_cat_ts)
+             epu_cat_ts, fill = NA)
 
 
 

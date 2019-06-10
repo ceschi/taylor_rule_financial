@@ -109,16 +109,16 @@ wind=14*4
 
 # 
 # ##### V - Inflation simulations #####
-# tic('Models and simulations')
-# source('dyna.R')
-# toc()
+tic('Models and simulations')
+source('dyna.R')
+toc()
 
 
 
 ##### VI - AR(p*) estimates on simulated inflation ######
-# tic('AR(p*) estimates')
-# source('sim_pi.R')
-# toc()
+tic('AR(p*) estimates')
+source('sim_pi.R')
+toc()
 
 
 # ##### VII - Persistence in output gap and FFR ####

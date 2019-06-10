@@ -75,6 +75,7 @@ for (i in 1:ncol(sim_inflation)){
                            geom_line(aes(y = estimate + 2*std.error), colour = 'red') + 
                            geom_line(aes(y = estimate - 2*std.error), colour = 'red') +
                            geom_hline(aes(yintercept = 0), colour = 'black', size = .1)+
+                           ylim(-.03, .1)+
                            theme_bw() + ylab('Coefficient estimate') + xlab('Lags')+
                            ggtitle(paste0(infl[['names']][[i]], ': optimal lags estimates')) +
                            labs(subtitle = 'Point estimate is the black line, red lines are 2*SE bands, blue bars are p-values, horizontal blue line is 1% sign. threshold.')
