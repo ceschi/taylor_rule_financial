@@ -159,14 +159,14 @@ ggsave(plot = plot_spf_iqr,
        device='pdf',
        height = pdf_height, width = pdf_width, units='in')
 
-# Monetary levels
+# Monetary growth rates
 plot_money <- ggplot(db_US["1955/2020"], aes(x=index(db_US["1955/2020"])))+
-  geom_line(aes(y=base, colour='Base mon.'),size= 1)+
-  geom_line(aes(y=m1, colour='M1'),size= 1)+
-  geom_line(aes(y=m2, colour='M2'),size= 1)+
-  geom_line(aes(y=m3, colour='M3'),size= 1)+
+  geom_line(aes(y=base_g, colour='Base mon.'),size= 1)+
+  geom_line(aes(y=m1_g, colour='M1'),size= 1)+
+  geom_line(aes(y=m2_g, colour='M2'),size= 1)+
+  geom_line(aes(y=m3_g, colour='M3'),size= 1)+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
-  ggtitle('Monetary aggregates levels')+
+  ggtitle('Monetary aggregates growth rates')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 90))

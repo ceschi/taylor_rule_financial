@@ -204,6 +204,8 @@ names(gap_output) <- c('realtime_gap', 'expost_gap')
                       # philly and st louis gaps, respectively
 options(warn=0) # reactivates warnings
 
+cfnai <- fredr_series_observations(series_id = 'CFNAI', frequency = 'q') %>% tbl_xts()
+
 ##### Consumption #####
 # work in progress
 # real_cons_exp <-  fredr_series_observations(series_id = 'PCECC96', frequency = 'q') %>% 
@@ -384,7 +386,7 @@ names(money_g) <- c('base_g', 'm1_g', 'm2_g', 'm3_g')
 
 #### SPF DATA ####
 
-# automatize download of the xlsx file, import, run statistics and merge
+# automate download of the xlsx file, import, run statistics and merge
 
 # download CPI inflation rate raw file for individuals in the SPF
 download.file('https://www.philadelphiafed.org/-/media/research-and-data/real-time-center/survey-of-professional-forecasters/data-files/files/individual_cpi.xlsx?la=en',
@@ -590,6 +592,7 @@ db_US <- merge(rates,
                rev_hist,
                unemployment,
                gap_output,
+               cfnai,
                spreads,
                money,
                fiscal,
@@ -635,7 +638,8 @@ rm(ffr, classi, core_greenbook, cpi_greenbook, deflator_greenbook,
 cpi, core, defl, cpi.mean, core.mean, defl.mean,
 claims, natural_unemp_long, natural_unemp_short,
 current_unemp, tot_emp, layoffs, employment_fluct,
-cols, gdp_waves, rates, ffrate, unemployment, gap_output,
+cols, gdp_waves, rates, ffrate, 
+unemployment, gap_output, cfnai,
 
 spreads, sp_ret, spread_baa, spread_sp_3m,
 tbill_rate_3m, tbill_rate_10y, tbill_rate_1y,ffrb,
