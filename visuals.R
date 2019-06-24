@@ -60,8 +60,8 @@ ggsave(plot = plot_re_infl,
 
 # Measures of slackness in the economy
 plot_slack <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
-  geom_line(aes(y=layoffs, colour='Layoff rate'),size= 1)+
-  geom_line(aes(y=employment_fluct, colour='NU gap'),size= 1)+
+  geom_line(aes(y=-layoffs, colour='(-)Layoff rate'),size= 1)+
+  geom_line(aes(y=-employment_fluct, colour='(-)NU gap'),size= 1)+
   geom_line(aes(y=realtime_gap, colour='Realtime gap'),size= 1)+
   geom_line(aes(y=expost_gap, colour='ExPost gap'),size= 1)+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
