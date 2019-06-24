@@ -12,6 +12,7 @@ if (flag___singular == 1){
 
 
 
+
 # consider putting all elements in lists of homogeneous 
 # elements and then looping over these ones
 
@@ -32,14 +33,6 @@ regressions <- list(
     coefs=list(),
     convse=list()
   ),
-  # var=list(
-  #   varfit=list(),
-  #   varirf=list()
-  # ),
-  # svar=list(
-  #   svarfit=list(),
-  #   svarirf=list()
-  # ),
   plot=list(),
   gmm=list(
     fit=list(),
@@ -51,86 +44,58 @@ regressions <- list(
 regressions$formula <- list(
   # 1
     tr_standard =  ffr ~ deflt1 + realtime_gap + ffrb,
-  # 2
-    tr_layoff = ffr  ~ deflt1 + layoffs + ffrb,
-  # 3
-    tr_spread = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa,
   # 4
-    tr_treasury = ffr ~ deflt1 + realtime_gap + ffrb + spread_sp_3m,                  # ADDED 1 TO ALL DEFLT
-  # 5
-    tr_layspread = ffr ~ deflt1 + layoffs + ffrb + spread_sp_3m,
-  # 6
-    tr_laybaa = ffr ~ deflt1 + layoffs + ffrb + spread_baa,
-  # 7
-    tr_spf_mean = ffr ~ spf_cpi_h1_mean + realtime_gap + ffrb,
-  # 8
-    tr_spf_uncert = ffr ~ deflt1 + realtime_gap + ffrb + spf_cpi_h1_iqr,
-  # 9
-    tr_debt_g = ffr ~ deflt1 + realtime_gap + ffrb + debt_growth,
-  # 10
-    tr_surplus = ffr ~ deflt1 + realtime_gap + ffrb + surplus_gdp,
+    tr_spread_sp = ffr ~ deflt1 + realtime_gap + ffrb + spread_sp_3m,
   # 11
-    tr_spread_long = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_long,
+    tr_spread_10y_baa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_long,
   # 12
-    tr_spread_aaabaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_aaa,
+    tr_spread_baa_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_aaa,
   # 13
-    tr_spread_corp = ffr ~ deflt1 + realtime_gap + ffrb + spread_aaa,
-  # 14
-    tr_laybaa_long = ffr ~ deflt1 + layoffs + ffrb + spread_baa_long
+    tr_spread_10y_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_aaa,
+  # 3
+    tr_spread_oldbaa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa,
+  # 15
+    tr_shrate = shffr ~ deflt1 + realtime_gap + shffrb 
     )
 
 # Strings to indentify models 
 regressions$messages <- list(
   # 1
   '1 - Standard TR',
-  # 2
-  '2 - TR with layoffs replacing output gap',
-  # 3 
-  '3 - TR and BAA spread',
   # 4
-  '4 - TR and 3M spread',
-  # 5
-  '5 - TR with layoffs and 3M spread',
-  # 6
-  '6 - TR with layoffs and BAA spread',
-  # 7
-  '7 - TR with SPF mean expected inflation',
-  # 8
-  '8 - TR augmented with IQR SPF',
-  # 9
-  '9 - TR with debt growth',
-  # 10
-  '10 - TR with surplus',
+  '2 - TR and 3M spread',
   # 11
-  '11 - TR with long BAA spread',
+  '3 - TR with BAA spread',
   # 12
-  '12 - TR with BAA-AAA spread',
+  '4 - TR with BAA-AAA spread',
   # 13
-  '13 - TR with AAA-10y spread',
-  # 14
-  '14 - TR with layoffs and long BAA spread'
+  '5 - TR with AAA-10y spread',
+  # 3
+  '6 - TR with BAA spread oldver',
+  # 15
+  '7 - Wu-Xia shadow rate'
 )
 
 ### Warm-up ####
 ################
 # correlation table: values in 1986Q1:2013Q4
-corr_tab <- db_US %>% as_tibble() %>% select(ffr, ffrb,
-                                 deflt, deflt1, cpit, cpit1, coret, coret1, 
-                                 realtime_gap, layoffs, expost_gap, employment_fluct,
-                                 spread_baa, spread_sp_3m, 
-                                 spf_cpi_h1_mean, spf_cpi_h1_iqr, 
-                                 debt_growth, surplus_gdp) %>% na.omit(.) %>% cor(.)
+corr_tab <- db_US %>% xts_tbl() %>% select(ffr, ffrb,
+                                 deflt, deflt1, 
+                                 cpit, cpit1,
+                                 coret, coret1, 
+                                 realtime_gap, expost_gap, employment_fluct,
+                                 spread_sp_3m, spread_baa_long, spread_baa_aaa) %>% na.omit(.) %>% cor(.)
 
 
 # temp_ <- db_US
 # # db_US <- db_US['1981:12/2007:07/']
-# db_US <- db_US['2007:07/']
+# db_US <- db_US['/2006:12']
 
 
 ### Looping over different specifications
 
 for (m in 1:length(regressions$formula)){
-# for (m in c(1,2,4,5,9,10,11,12,13,14)){
+# for (m in 1:5){
   ##### Simple OLS with stability checks #####
 
   # lapply
@@ -205,7 +170,11 @@ for (m in 1:length(regressions$formula)){
   
   regressions$gmm$fit[[m]] <- gmm(g = regressions$formula[[m]],
                                   x = temps_db,
-                                  crit = 1e-18)
+                                  crit = 1e-50,
+                                  # t0 = regressions$models[[m]]$coefficients, # useless because g is formula not function
+                                  type = 'twoStep' # twoStep is standard, iterative/cue is another alternative
+                                  # itermax = 5000
+                                  )
   
   regressions$gmm$params[[m]] <- repara(regressions$gmm$fit[[m]])
   

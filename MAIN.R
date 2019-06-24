@@ -26,7 +26,7 @@
 # from modifications over time as the paper developed and changed. Higher speed
 # might be easily achieved with vectorisation and parallelisation.
 #
-# v0.92
+# v0.94
 
 ##### I - Flags, libraries, and folders #####
 
@@ -42,9 +42,6 @@ flag___singular = 0
 # 1 -- graphs are not printed but only produced and stored
 flag___plot = 0
 
-# 0 -- optimal lags for inflation are off
-# 1 -- optimal lags for inflation are on
-flag___optilag = 1
 
 # 0 -- MsM estimation is off
 # 1 -- MsM estimation is on, 2 states
@@ -83,51 +80,6 @@ tic('Econometrics')
 source('USreg.R', verbose=F, echo=F)
 toc()
 
-
-# stuff to develop away from this 
-# ##### IV - Analyses on inflation #####
-# # AR(k) on several inflation series
-# tic('Inflation - real data')
-# # exogenous lag
-# # ideally cycling through different values
-# # like 1 3 5
-k=1
-# 
-# # selector for coefficient
-# # AR(r) will be plotted
-# # MUST be =<k
-r=1
-# 
-# # select window width for
-# # rolling estimates, pick <80
-# # to get interesting results
-wind=14*4
-# 
-# source('inflanalysis.R')
-# toc()
-
-
-# 
-# ##### V - Inflation simulations #####
-tic('Models and simulations')
-source('dyna.R')
-toc()
-
-
-
-##### VI - AR(p*) estimates on simulated inflation ######
-tic('AR(p*) estimates')
-source('sim_pi.R')
-toc()
-
-
-# ##### VII - Persistence in output gap and FFR ####
-# tic('Other persistences')
-# k = 5
-# r = 1
-# wind = 14*4
-# source('gap_ffr_persistence.R')
-# toc()
 
 ##### VIII - VISUALIZATION ####
 tic('Graphing')

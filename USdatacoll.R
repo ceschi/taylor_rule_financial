@@ -454,8 +454,14 @@ shffr <- read_excel(path = file.path(temp_dir,'wuxia_dwnl.xls'),
 
 shffr <- shffr$shffr
 shffr <- as.xts(ts(shffr, frequency = 12, start=c(1960, 1)))
-shffr <- aggregate(shffr, as.yearqtr(as.yearmon(time(shffr))), mean)
-shffr <- merge(shffr, lag(shffr, 1))
+shffr <- aggregate(shffr, as.yearqtr(as.yearmon(time(shffr))), mean) %>% as.xts()
+
+
+# stitching
+shffr_ext <- ffr
+shffr_ext["2007/2015"] <- shffr["2007/2015"]
+
+shffr <- merge(shffr_ext, lag(shffr_ext, 1))
 names(shffr) <- c('shffr', 'shffrb')
 
 
@@ -637,7 +643,7 @@ write.zoo(x=db_US,
 
 ## housekeeping
 rm(ffr, classi, core_greenbook, cpi_greenbook, deflator_greenbook,
-cpi, core, defl, cpi.mean, core.mean, defl.mean,
+cpi, core, defl, cpi.mean, core.mean, defl.mean,shffr_ext,
 claims, natural_unemp_long, natural_unemp_short,
 current_unemp, tot_emp, layoffs, employment_fluct,
 cols, gdp_waves, rates, ffrate, 
