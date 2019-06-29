@@ -55,7 +55,19 @@ regressions$formula <- list(
   # 3
     tr_spread_oldbaa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa,
   # 15
-    tr_shrate = shffr ~ deflt1 + realtime_gap + shffrb 
+    tr_shrate = shffr ~ deflt1 + realtime_gap + shffrb,
+  # 16
+    tr_cpi = ffr ~ cpit1 + realtime_gap + ffrb,
+  # 17
+    tr_cpi_3m = ffr ~ cpit1 + realtime_gap + ffrb + spread_sp_3m,
+  # 18
+    tr_cpi_a = ffr ~ cpit1 + realtime_gap + ffrb + spread_aaa,
+  # 19
+    tr_pce = ffr ~ coret1 + realtime_gap + ffrb,
+  # 20
+    tr_core_3m = ffr ~ coret1 + realtime_gap + ffrb + spread_sp_3m,
+  # 21
+    tr_core_a = ffr ~ coret1 + realtime_gap + ffrb + spread_aaa
     )
 
 # Strings to indentify models 
@@ -73,7 +85,19 @@ regressions$messages <- list(
   # 3
   '6 - TR with BAA spread oldver',
   # 15
-  '7 - Wu-Xia shadow rate'
+  '7 - Wu-Xia shadow rate',
+  # 16
+  '8 - cpi',
+  # 17
+  '9 - cpi 3m',
+  # 18
+  '10 - cpi aaa',
+  # 19
+  '11 - core',
+  # 20
+  '12 - core 3m',
+  # 21
+  '13 - core aaa'
 )
 
 ### Warm-up ####
@@ -84,7 +108,7 @@ corr_tab <- db_US %>% xts_tbl() %>% select(ffr, ffrb,
                                  cpit, cpit1,
                                  coret, coret1, 
                                  realtime_gap, expost_gap, employment_fluct,
-                                 spread_sp_3m, spread_baa_long, spread_baa_aaa) %>% na.omit(.) %>% cor(.)
+                                 spread_sp_3m, spread_baa_long) %>% na.omit(.) %>% cor(.)
 
 
 # temp_ <- db_US
