@@ -591,6 +591,10 @@ epu <- merge(epu_aggregate_ts,
              epu_aggregate_comp_ts,
              epu_cat_ts, fill = NA)
 
+#### Quarterly dummies to account for seasonality (JBC)
+
+
+
 
 
 
@@ -608,6 +612,16 @@ db_US <- merge(rates,
                shffr,
                SOC_Michigan,
                epu)
+
+dums <- xts(x = data.frame(q1 = rep(c(1,0,0,0), floor(length(index(db_US)))/4),
+                           q2 = rep(c(0,1,0,0), floor(length(index(db_US)))/4),
+                           q3 = rep(c(0,0,1,0), floor(length(index(db_US)))/4)),
+            order.by = index(db_US)
+            )
+
+db_US <- merge(db_US, dums)
+
+
 
 write.zoo(x=db_US, 
           file=file.path(data_dir, 'US_data.txt'), 
@@ -660,10 +674,13 @@ debt_fed_share, debt_g, debt_gdp, debt_lev, fiscal,
 surplus_gdp, surplus_season, spf, spf_corecpi,
 spf_corepce, spf_cpi, spf_pce, rev_hist,
 tbill3_ffr, shffr,
+
 socm_inflation, socm_indexes, indexes, socm_indexes_ts,
 socm_inflation_ts, g_indexes_rates, SOC_Michigan,
 short_long_diff, epu_aggregate, epu_aggregate_comp,
 epu_aggregate_comp_ts, epu_aggregate_ts,
-epu_cat, epu_cat_ts, epu)
+epu_cat, epu_cat_ts, epu,
+
+dums)
 if (flag___singular == 1) rm(ahead)
 

@@ -43,31 +43,31 @@ regressions <- list(
 # Formulas for regressions, appended to first sublist
 regressions$formula <- list(
   # 1
-    tr_standard =  ffr ~ deflt1 + realtime_gap + ffrb,
+    tr_standard =  ffr ~ deflt1 + realtime_gap + ffrb + q1 + q2 + q3,
   # 4
-    tr_spread_sp = ffr ~ deflt1 + realtime_gap + ffrb + spread_sp_3m,
+    tr_spread_sp = ffr ~ deflt1 + realtime_gap + ffrb + spread_sp_3m + q1 + q2 + q3,
   # 11
-    tr_spread_10y_baa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_long,
+    tr_spread_10y_baa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_long + q1 + q2 + q3,
   # 12
-    tr_spread_baa_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_aaa,
+    tr_spread_baa_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_aaa + q1 + q2 + q3,
   # 13
-    tr_spread_10y_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_aaa,
+    tr_spread_10y_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_aaa + q1 + q2 + q3,
   # 3
-    tr_spread_oldbaa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa,
+    tr_spread_oldbaa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa + q1 + q2 + q3,
   # 15
-    tr_shrate = shffr ~ deflt1 + realtime_gap + shffrb,
+    tr_shrate = shffr ~ deflt1 + realtime_gap + shffrb + q1 + q2 + q3,
   # 16
-    tr_cpi = ffr ~ cpit1 + realtime_gap + ffrb,
+    tr_cpi = ffr ~ cpit1 + realtime_gap + ffrb + q1 + q2 + q3,
   # 17
-    tr_cpi_3m = ffr ~ cpit1 + realtime_gap + ffrb + spread_sp_3m,
+    tr_cpi_3m = ffr ~ cpit1 + realtime_gap + ffrb + spread_sp_3m + q1 + q2 + q3,
   # 18
-    tr_cpi_a = ffr ~ cpit1 + realtime_gap + ffrb + spread_aaa,
+    tr_cpi_a = ffr ~ cpit1 + realtime_gap + ffrb + spread_aaa + q1 + q2 + q3,
   # 19
-    tr_pce = ffr ~ coret1 + realtime_gap + ffrb,
+    tr_pce = ffr ~ coret1 + realtime_gap + ffrb + q1 + q2 + q3,
   # 20
-    tr_core_3m = ffr ~ coret1 + realtime_gap + ffrb + spread_sp_3m,
+    tr_core_3m = ffr ~ coret1 + realtime_gap + ffrb + spread_sp_3m + q1 + q2 + q3,
   # 21
-    tr_core_a = ffr ~ coret1 + realtime_gap + ffrb + spread_aaa
+    tr_core_a = ffr ~ coret1 + realtime_gap + ffrb + spread_aaa + q1 + q2 + q3
     )
 
 # Strings to indentify models 
