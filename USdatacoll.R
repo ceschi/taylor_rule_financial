@@ -486,7 +486,7 @@ req_fields <- list(#'User-Agent' = 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Bui
 # consumers' expected inflation, 1 year ahead
 socm_1y_inflation <- POST(url = 'https://data.sca.isr.umich.edu/data-archive/mine.php',
                           body = req_fields,
-                          encode = 'form', verbose()) %>% 
+                          encode = 'form' ) %>% 
                           content('parsed', encoding = 'UTF-8') %>%
                           rvest::html_table() %>% 
                           .[[2]] %>% 
@@ -504,7 +504,7 @@ req_fields[['table']] <- '33'
 
 socm_5y_inflation <- POST(url = 'https://data.sca.isr.umich.edu/data-archive/mine.php',
                           body = req_fields,
-                          encode = 'form', verbose()
+                          encode = 'form' 
                           ) %>% 
                             content('parsed', encoding = 'UTF-8') %>%
                             rvest::html_table() %>% 
@@ -523,7 +523,7 @@ req_fields[['table']] <- '5'
 
 socm_indexes <- POST(url = 'https://data.sca.isr.umich.edu/data-archive/mine.php',
                      body = req_fields,
-                     encode = 'form', verbose()
+                     encode = 'form' 
                       ) %>% 
                         content('parsed', encoding = 'UTF-8') %>%
                         rvest::html_table() %>% 
