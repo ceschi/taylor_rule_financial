@@ -606,7 +606,7 @@ standard <- function(x){
 pkgs <- c('vars', 'glue', 'MSwM', 'lazyeval',
           'quantreg', 'tidyverse', 'devtools',
           'tseries', 'dynlm', 'stargazer',
-          'dyn', 'strucchange', 'xts',
+          'dyn', 'strucchange', 'xts', 'httr',
           'MASS', 'car', 'rvest', 'viridis',
           'mFilter', 'fredr','ggridges',
           'readr', 'quantmod','broom',
@@ -617,7 +617,7 @@ pkgs <- c('vars', 'glue', 'MSwM', 'lazyeval',
 
 instant_pkgs(pkgs)
 
-devtools::install_github('sboysel/fredr')
+# devtools::install_github('sboysel/fredr')
 devtools::install_github('ceschi/urcabis')
 # devtools::install_version("readxl", version = "1.0.0")
 # library(urcabis) # for when the package will be duly updated (pull request)
