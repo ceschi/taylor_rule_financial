@@ -8,6 +8,9 @@
 ./Plots/*.*
 ./Processed data/*.*
 ./todo/*.*
+*.Rproj
+gap_ffr_persistence.R
+gmm_test_fuct.R
 
 
 Downloaded files/
