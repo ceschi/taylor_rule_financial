@@ -1,10 +1,8 @@
 ##### MAIN FILE #####
 
 # This file executes the scripts used in the paper
-# "Taylor rule(s) inflation", by E. Franceschi - PSE and Paris 1
-# 
-# The execution of the full batch of scripts requires
-# a working version of Matlab equipped with Dynare.
+# "Taylor rule and liquidity in financial markets", 
+#  by E. Franceschi - PSE and Paris 1
 # 
 # The scripts executes the following tasks:
 #		- gather data from several online sources,
@@ -12,14 +10,14 @@
 #			This dataset is stored in csv format in './Processed data/US_data.txt';
 #		- run a set of econometric tests and estimations 
 #			over a given number of specifications of the 
-#			Taylor rule, plotting results;
-#		- simulate with Dynare 4 DSGE models, stock the inflation
-# 		series and run the same econometric tests as the real inflation
-#			data, plotting the AR properties of these models;
-#		- solve and simulate the liquidity NKDSGE model with two monetary rules,
-#			generate the IRFs; simulate the standard NKDSGE model for regular,
-#			extremely aggressive and almost passive Central Banks. For all these
-#			models and cases plot and compare IRFs.
+#			Taylor rule, plotting results.
+#			
+#	Please note that this script estimates a larger number of specifications:
+#	those included in the paper are the following:
+#	                      : Number        Name                List number
+#	  - Paper's Spec. I   :   1           tr_standard           1
+#	  - Paper's Spec. II  :   11          tr_spread_10y_baa     3
+#	  - Paper's Spec. III :   4           tr_spread_sp          2
 #
 #
 # These scripts are not developed with code optimization in mind but result
