@@ -18,6 +18,8 @@
 #	  - Paper's Spec. I   :   1           tr_standard           1
 #	  - Paper's Spec. II  :   11          tr_spread_10y_baa     3
 #	  - Paper's Spec. III :   4           tr_spread_sp          2
+#	  
+#	To obtain the results in the paper, uncomment the last lines of code below
 #
 #
 # These scripts are not developed with code optimization in mind but result
@@ -91,3 +93,13 @@ rm(temp_dir, data_dir, graphs_dir,
    flag___msm, flag___optilag, flag___plot,
    ahead, k, r, wind, j, m)
 toc()
+
+
+##### Paper subset of specifications #####
+# uncomment the lines below to retrieve the estimates from the paper, in the order
+# of presentation as detailed on top of this script.
+
+
+# reg_print(1)
+# reg_print(3)
+# reg_print(2)
