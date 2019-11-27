@@ -134,8 +134,9 @@ reg_call <- function(m){
 
 
   # MSwM printig results and plotting
-  if (flag___msm!=0){
-    cat('\n\n\nMarkov Switching model estimation with', j, 'states')
+  if (length(regressions$mswm$fit)!=0){
+    n_states <- regressions$mswm$fit[[m]]@k
+    cat('\n\n\nMarkov Switching model estimation with', n_states, 'states')
     cat('\n')
     cat(summary(regressions$mswm$fit[[m]]))
     cat('\n\nConverted parameters:\n')
@@ -146,9 +147,9 @@ reg_call <- function(m){
     # fine tuning plots
     par(mar=c(1,1,2.85,1), cex.main=.85)
     plotProb(regressions$mswm$fit[[m]], which=2)
-    title(paste0(j, '-state MS regimes for ', regressions$messages[[m]]), line=2.3)
+    title(paste0(n_states, '-state MS regimes for ', regressions$messages[[m]]), line=2.3)
     sa_plot(file.path(graphs_dir,paste0(regressions$messages[[m]], ' ',
-                      j,'-state MSM.pdf')))
+                      n_states,'-state MSM.pdf')))
 
     # silently setting margins to default values
     invisible(dev.off())
@@ -597,6 +598,86 @@ standard <- function(x){
   return(x_stand)
 }
 
+
+reg_print <- function(m){
+  # custom function to solely print 
+  # information on estimates of a particular
+  # Taylor rule specification. The latter is selected
+  # by specifying m iterator.
+  # 
+  # Lighter version of previous reg_call function above
+  # without plots
+  
+  
+  
+  
+  # sink fnct saves in a txt file
+  # the output while printing it out
+  # on the command line
+  
+  
+  # prints the name of the model
+  cat(paste0(as.character(regressions$messages[[m]]), '\n'))
+  
+  # prints the estimated formula
+  cat('\n')
+  print(regressions$formula[[m]])
+  cat('\n\n\nCorrelation matrix for the specification:\n')
+  print(regressions$cor[[m]])
+  cat('\n')
+  
+  cat('\nStandard output:\n')
+  print(summary(regressions$models[[m]]))
+  
+  cat('\nBIC\n')
+  print(BIC(regressions$models[[m]]))
+  
+  # prints the number of observations used in the model
+  cat(paste0('\nModel estimated with ', nobs(regressions$models[[m]]), ' observations\n\n'))
+  
+  # prints converted parameters + SE
+  print(regressions$params[[m]])
+  
+
+  # prints date of most likely break
+  cat('\n\n\n')
+  cat(paste0('Most likely singular break occurs at ',
+             as.character(regressions$stab$fstatpoints[[m]]), '\n'))
+  regressions$stab$fstatcandidates[[m]]
+  
+  # optimal number of segment partition,
+  # -1 to account for the 0-breaks case
+  fstat_dates <- which(summary(regressions$stab$fstatcandidates[[m]])$RSS[2,]==
+                         min(summary(regressions$stab$fstatcandidates[[m]])$RSS[2,]), arr.ind=T)-1
+  
+  # extracting corresponding nobs and dates
+  n_obs <- summary(regressions$stab$fstatcandidates[[m]])$breakpoints[fstat_dates,] %>% na.omit(.)
+  multibreaks <- names(regressions$stab$fstatcandidates[[m]]$y)[n_obs] %>% paste(collapse=', ')
+  
+  # printing optimal segment partition dates
+  cat(paste0('while optimal segmentation points to ', length(n_obs), ' breaks, at dates ', multibreaks))
+  
+  
+  # MSwM printig results and plotting
+  if (length(regressions$mswm$fit)!=0){
+    n_states <- regressions$mswm$fit[[m]]@k
+    cat('\n\n\nMarkov Switching model estimation with', n_states, 'states')
+    cat('\n')
+    cat(summary(regressions$mswm$fit[[m]]))
+    cat('\n\nConverted parameters:\n')
+    print(regressions$mswm$coefs[[m]])
+    cat('\nConverted standard errors:\n')
+    print(regressions$mswm$convse[[m]])
+  }
+  
+  
+  cat('\n\n\nGMM estimates for robustness:\n')
+  print(regressions$gmm$params[[m]])
+  
+  
+  # end spacing
+  cat('\n\n\n\n')
+}
 
 
 
