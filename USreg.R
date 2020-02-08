@@ -55,7 +55,7 @@ regressions$formula <- list(
   # 3
     # tr_spread_oldbaa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa,# + q1 + q2 + q3,
   # 15
-    tr_shrate = shffr ~ deflt1 + realtime_gap + shffrb + q1 + q2 + q3,
+    tr_shrate = shffr ~ deflt1 + realtime_gap + shffrb + q1 + q2 + q3
   # # 16
   #   tr_cpi = ffr ~ cpit1 + realtime_gap + ffrb + q1 + q2 + q3,
   # # 17
@@ -85,7 +85,7 @@ regressions$messages <- list(
   # 3
   # '6 - TR with BAA spread oldver',
   # 15
-  '7 - Wu-Xia shadow rate',
+  '7 - Wu-Xia shadow rate'
   # # 16
   # '8 - cpi',
   # # 17
@@ -189,7 +189,7 @@ for (m in 1:length(regressions$formula)){
   ##### GMM estimates #####
   
   variabs <- regressions$formula[[m]] %>% all.vars()
-  temps_db <- db_US %>% as_tibble(name = NULL) %>% select(variabs) %>% na.omit()
+  temps_db <- db_US %>% as_tibble(name = NULL) %>% select(all_of(variabs)) %>% na.omit()
   attach(temps_db, warn.conflicts = FALSE)
   
   regressions$gmm$fit[[m]] <- gmm(g = regressions$formula[[m]],
