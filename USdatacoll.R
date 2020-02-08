@@ -37,6 +37,8 @@ download.file('https://www.philadelphiafed.org/-/media/research-and-data/real-ti
               extra='--no-check-certificate',
               quiet = T)
 
+### !!! EMAIL TO FED TO REQUIRE UPDATE !!!
+
 # reads the single interesting sheets and
 # imports them in df format
 

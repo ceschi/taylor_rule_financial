@@ -60,7 +60,7 @@ source('directories.R', verbose=F, echo=F)
 
 ##### II - Data scraping, collection, and stocking #####
 # US Data
-# pick ahead to set how many quarters ahead 
+# pick 'ahead' to set how many quarters ahead 
 # to consider for SPF forecasts:
 # -1 for previous quarter estimates
 # 0 for nowcast

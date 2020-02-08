@@ -47,13 +47,13 @@ regressions$formula <- list(
   # 4
     tr_spread_sp = ffr ~ deflt1 + realtime_gap + ffrb + spread_sp_3m + q1 + q2 + q3,
   # 11
-    tr_spread_10y_baa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_long + q1 + q2 + q3,
+    tr_spread_10y_baa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_long,# + q1 + q2 + q3,
   # 12
     tr_spread_baa_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_aaa + q1 + q2 + q3,
   # 13
     tr_spread_10y_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_aaa + q1 + q2 + q3,
   # 3
-    tr_spread_oldbaa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa + q1 + q2 + q3,
+    tr_spread_oldbaa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa,# + q1 + q2 + q3,
   # 15
     tr_shrate = shffr ~ deflt1 + realtime_gap + shffrb + q1 + q2 + q3,
   # 16
