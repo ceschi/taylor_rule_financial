@@ -111,32 +111,32 @@ rev_hist <- merge(
           # Consumer Price Index for All Urban Consumers: All Items 
           rev_pci = fredr_series_observations(series_id='CPIAUCSL', 
                                           frequency='q', 
-                                        # aggregation_method='eop',
-                                        units='pc1') %>% tbl_xts(), 
+                                        aggregation_method='eop',
+                                        units='cca') %>% tbl_xts(), 
           
           # Consumer Price Index for All Urban Consumers: All Items Less Food and Energy
           rev_pci_fe  = fredr_series_observations(series_id='CPILFESL', 
                                             frequency='q', 
-                                            # aggregation_method='eop', 
-                                            units='pc1') %>% tbl_xts(),
+                                            aggregation_method='eop',
+                                            units='cca') %>% tbl_xts(),
           
           # Gross Domestic Product: Implicit Price Deflator
           rev_defl = fredr_series_observations(series_id='GDPDEF', 
                                           frequency='q', 
-                                         # aggregation_method='eop', 
-                                         units='pc1') %>% tbl_xts(),
+                                         aggregation_method='eop',
+                                         units='cca') %>% tbl_xts(),
           
           # Personal Consumption Expenditures including Food and Energy
           rev_pce  = fredr_series_observations(series_id='PCEPI', 
                                              frequency='q', 
-                                         # aggregation_method='eop', 
-                                         units='pc1') %>% tbl_xts(),
+                                         aggregation_method='eop',
+                                         units='cca') %>% tbl_xts(),
           
           # Personal Consumption Expenditures Excluding Food and Energy
           rev_pce_fe  = fredr_series_observations(series_id='PCEPILFE', 
                                             frequency='q', 
-                                            # aggregation_method='eop', 
-                                            units='pc1') %>% tbl_xts()
+                                            aggregation_method='eop',
+                                            units='cca') %>% tbl_xts()
 ) 
 # renames variables
 names(rev_hist) <-  c('rev_cpi', 'rev_cpi_fe', 'rev_defl',
@@ -145,19 +145,31 @@ names(rev_hist) <-  c('rev_cpi', 'rev_cpi_fe', 'rev_defl',
 
 ## UNEMPLOYMENT METRICS ####
 
-claims <- fredr_series_observations(series_id='ICSA', frequency='q', aggregation_method='sum') %>% tbl_xts()
+claims <- fredr_series_observations(series_id='ICSA', 
+                                    frequency='q', 
+                                    aggregation_method='sum') %>% 
+                                      tbl_xts()
 # initial claims, number
 
-natural_unemp_short <- fredr_series_observations(series_id='NROUST', frequency='q') %>% tbl_xts()
+natural_unemp_short <- fredr_series_observations(series_id='NROUST', 
+                                                 frequency='q') %>% 
+                                      tbl_xts()
 # natural employment on the short run
 
-natural_unemp_long <- fredr_series_observations(series_id='NROU', frequency='q') %>% tbl_xts()
+natural_unemp_long <- fredr_series_observations(series_id='NROU', 
+                                                frequency='q') %>% 
+                                      tbl_xts()
 # longer term natural unemployment rate
 
-current_unemp <- fredr_series_observations(series_id='UNRATE', frequency='q') %>% tbl_xts()
+current_unemp <- fredr_series_observations(series_id='UNRATE', 
+                                           frequency='q') %>% 
+                                      tbl_xts()
 # current unemployment rate
 
-tot_emp <- fredr_series_observations(series_id='PAYEMS', frequency='q') %>% tbl_xts() %>% `*`(.,1000)
+tot_emp <- fredr_series_observations(series_id='PAYEMS', 
+                                     frequency='q') %>% 
+                                      tbl_xts() %>% 
+                                        `*`(.,1000)
 # total employed, thousands
 
 ## Unemployment manipulation
@@ -249,29 +261,41 @@ cfnai <- fredr_series_observations(series_id = 'CFNAI', frequency = 'q') %>% tbl
 ##### SPREADS ####
 
 ## BAA 10Y bonds        !!! - DISCONTINUED BY FRED - !!!
-spread_baa <- fredr_series_observations(series_id='BAA10Y', frequency='q') %>% tbl_xts()
+spread_baa <- fredr_series_observations(series_id='BAA10Y', 
+                                        frequency='q', 
+                                        aggregation_method = 'eop') %>% tbl_xts()
 
 ## BAA 20+ year bonds rate
-baa <- fredr_series_observations(series_id = 'BAA', frequency = 'q') %>% tbl_xts()
+baa <- fredr_series_observations(series_id = 'BAA', frequency
+                                 = 'q', 
+                                 aggregation_method = 'eop') %>% tbl_xts()
 
 ## AAA 20+ year bonds rate
-aaa <- fredr_series_observations(series_id = 'AAA', frequency = 'q') %>% tbl_xts()
+aaa <- fredr_series_observations(series_id = 'AAA', frequency
+                                 = 'q', 
+                                 aggregation_method = 'eop') %>% tbl_xts()
 
 ## 3 months Tbill rate
-tbill_rate_3m <- fredr_series_observations(series_id='TB3MS',frequency='q') %>% tbl_xts()
+tbill_rate_3m <- fredr_series_observations(series_id='TB3MS',
+                                           frequency='q', 
+                                           aggregation_method = 'eop') %>% tbl_xts()
 
 ## 1 year
-tbill_rate_1y <- fredr_series_observations(series_id='DGS1', frequency='q') %>% tbl_xts()
+tbill_rate_1y <- fredr_series_observations(series_id='DGS1', 
+                                           frequency='q', 
+                                           aggregation_method = 'eop') %>% tbl_xts()
 
 ## 10 years 
-tbill_rate_10y <- fredr_series_observations(series_id='DGS10',frequency='q') %>% tbl_xts()
+tbill_rate_10y <- fredr_series_observations(series_id='DGS10',
+                                            frequency='q', 
+                                            aggregation_method = 'eop') %>% tbl_xts()
 
 
 
 
 ## spread btw 3m tbill and FFR
 tbill3_ffr <- fredr_series_observations(series_id='TB3SMFFM', 
-                                        # aggregation_method='eop',
+                                        aggregation_method='eop',
                                         frequency = 'q') %>% tbl_xts()
 
 

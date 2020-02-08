@@ -47,27 +47,27 @@ regressions$formula <- list(
   # 4
     tr_spread_sp = ffr ~ deflt1 + realtime_gap + ffrb + spread_sp_3m + q1 + q2 + q3,
   # 11
-    tr_spread_10y_baa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_long,# + q1 + q2 + q3,
+    tr_spread_10y_baa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_long + q1 + q2 + q3,
   # 12
     tr_spread_baa_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_aaa + q1 + q2 + q3,
   # 13
     tr_spread_10y_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_aaa + q1 + q2 + q3,
   # 3
-    tr_spread_oldbaa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa,# + q1 + q2 + q3,
+    # tr_spread_oldbaa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa,# + q1 + q2 + q3,
   # 15
     tr_shrate = shffr ~ deflt1 + realtime_gap + shffrb + q1 + q2 + q3,
-  # 16
-    tr_cpi = ffr ~ cpit1 + realtime_gap + ffrb + q1 + q2 + q3,
-  # 17
-    tr_cpi_3m = ffr ~ cpit1 + realtime_gap + ffrb + spread_sp_3m + q1 + q2 + q3,
-  # 18
-    tr_cpi_a = ffr ~ cpit1 + realtime_gap + ffrb + spread_aaa + q1 + q2 + q3,
-  # 19
-    tr_pce = ffr ~ coret1 + realtime_gap + ffrb + q1 + q2 + q3,
-  # 20
-    tr_core_3m = ffr ~ coret1 + realtime_gap + ffrb + spread_sp_3m + q1 + q2 + q3,
-  # 21
-    tr_core_a = ffr ~ coret1 + realtime_gap + ffrb + spread_aaa + q1 + q2 + q3
+  # # 16
+  #   tr_cpi = ffr ~ cpit1 + realtime_gap + ffrb + q1 + q2 + q3,
+  # # 17
+  #   tr_cpi_3m = ffr ~ cpit1 + realtime_gap + ffrb + spread_sp_3m + q1 + q2 + q3,
+  # # 18
+  #   tr_cpi_a = ffr ~ cpit1 + realtime_gap + ffrb + spread_aaa + q1 + q2 + q3,
+  # # 19
+  #   tr_pce = ffr ~ coret1 + realtime_gap + ffrb + q1 + q2 + q3,
+  # # 20
+  #   tr_core_3m = ffr ~ coret1 + realtime_gap + ffrb + spread_sp_3m + q1 + q2 + q3,
+  # # 21
+  #   tr_core_a = ffr ~ coret1 + realtime_gap + ffrb + spread_aaa + q1 + q2 + q3
     )
 
 # Strings to indentify models 
@@ -83,21 +83,21 @@ regressions$messages <- list(
   # 13
   '5 - TR with AAA-10y spread',
   # 3
-  '6 - TR with BAA spread oldver',
+  # '6 - TR with BAA spread oldver',
   # 15
   '7 - Wu-Xia shadow rate',
-  # 16
-  '8 - cpi',
-  # 17
-  '9 - cpi 3m',
-  # 18
-  '10 - cpi aaa',
-  # 19
-  '11 - core',
-  # 20
-  '12 - core 3m',
-  # 21
-  '13 - core aaa'
+  # # 16
+  # '8 - cpi',
+  # # 17
+  # '9 - cpi 3m',
+  # # 18
+  # '10 - cpi aaa',
+  # # 19
+  # '11 - core',
+  # # 20
+  # '12 - core 3m',
+  # # 21
+  # '13 - core aaa'
 )
 
 ### Warm-up ####
@@ -111,8 +111,8 @@ corr_tab <- db_US %>% xts_tbl() %>% select(ffr, ffrb,
                                  spread_sp_3m, spread_baa_long) %>% na.omit(.) %>% cor(.)
 
 
-# temp_ <- db_US
-# # db_US <- db_US['1981:12/2007:07/']
+##### cycle through data cuts for exogenous sampling
+# db_US <- db_US['1981:12/2007:07/']
 # db_US <- db_US['/2006:12']
 
 
