@@ -295,7 +295,7 @@ tbill_rate_10y <- fredr_series_observations(series_id='DGS10',
 
 ## spread btw 3m tbill and FFR
 tbill3_ffr <- fredr_series_observations(series_id='TB3SMFFM', 
-                                        aggregation_method='eop',
+                                        aggregation_method = 'eop',
                                         frequency = 'q') %>% tbl_xts()
 
 

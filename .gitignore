@@ -11,6 +11,7 @@
 *.Rproj
 gap_ffr_persistence.R
 gmm_test_fuct.R
+*.pdf
 
 
 Downloaded files/
