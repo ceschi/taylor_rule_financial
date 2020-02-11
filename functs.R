@@ -103,15 +103,46 @@ reg_call <- function(m){
   sa_plot(paste0(file.path(graphs_dir, regressions$messages[[m]]), ' resids.pdf'))
 
   # plots cusum stability diagnostics
-  plot(regressions$stab$cusum[[m]], alpha=.01, boundary=T)
+  # extract useful ts from object
+  stab_ts <- regressions$stab$cusum[[m]]$process
+  
+  plot(regressions$stab$cusum[[m]], alpha=.01, boundary=T, xaxt="n")
+  axis(side = 1,
+       at = (0:10)/10,
+       labels = names(stab_ts)[
+         floor(
+           seq(from = 1,
+               to = length(stab_ts), 
+               length.out =  11)
+               )
+         ], 
+       las = 0
+       )
   sa_plot(paste0(file.path(graphs_dir, regressions$messages[[m]]), ' CUSUM.pdf'))
 
   # plots Fstat stability diagnostics
-  plot(regressions$stab$fstat[[m]])
+  # extract start and end for plotting dates
+  ts_start <- start(regressions$stab$fstat[[m]]$Fstats)[2]
+  ts_end <- end(regressions$stab$fstat[[m]]$Fstats)[2]
+  fstat_ts_names <- names(stab_ts)[ts_start:ts_end]
+  
+  plot(regressions$stab$fstat[[m]], xaxt="n")
   title(main=paste0(regressions$messages[[m]], ': F-stat stability'),
         sub=paste0('Vertical line indicates date of most likely break: ',
                    regressions$stab$fstatpoints[[m]]))
   lines(breakpoints(regressions$stab$fstat[[m]]))
+  axis(side = 1,
+       at = (0:10)/10,
+       labels = fstat_ts_names[
+         floor(
+           seq(from = 1, 
+               to = length(fstat_ts_names),
+               length.out = 11)
+           )
+         ],
+       las = 0
+       )
+  
   sa_plot(paste0(file.path(graphs_dir, regressions$messages[[m]]), ' F-stat.pdf'))
 
   # prints date of most likely break
@@ -145,11 +176,13 @@ reg_call <- function(m){
     print(regressions$mswm$convse[[m]])
 
     # fine tuning plots
-    par(mar=c(1,1,2.85,1), cex.main=.85)
+    par(mar=c(1.5,1.5,2.85,1), cex.main=.85)
     plotProb(regressions$mswm$fit[[m]], which=2)
     title(paste0(n_states, '-state MS regimes for ', regressions$messages[[m]]), line=2.3)
     sa_plot(file.path(graphs_dir,paste0(regressions$messages[[m]], ' ',
                       n_states,'-state MSM.pdf')))
+    axis(side = 1
+         )
 
     # silently setting margins to default values
     invisible(dev.off())

@@ -53,7 +53,7 @@ regressions$formula <- list(
   # 13
     tr_spread_10y_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_aaa + q1 + q2 + q3,
   # 3
-    # tr_spread_oldbaa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa,# + q1 + q2 + q3,
+    tr_spread_oldbaa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa,# + q1 + q2 + q3,
   # 15
     tr_shrate = shffr ~ deflt1 + realtime_gap + shffrb + q1 + q2 + q3
   # # 16
@@ -83,7 +83,7 @@ regressions$messages <- list(
   # 13
   '5 - TR with AAA-10y spread',
   # 3
-  # '6 - TR with BAA spread oldver',
+  '6 - TR with BAA spread oldver',
   # 15
   '7 - Wu-Xia shadow rate'
   # # 16
