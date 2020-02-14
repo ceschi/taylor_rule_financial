@@ -176,13 +176,29 @@ reg_call <- function(m){
     print(regressions$mswm$convse[[m]])
 
     # fine tuning plots
-    par(mar=c(1.5,1.5,2.85,1), cex.main=.85)
+    # extract names of model (ie dates)
+    msm_dates <- names(regressions$mswm$fit[[m]]@model$fitted.values)
+    
+    invisible(dev.off())
+    par(mar=c(1.5,5,5,1.5), cex=.4)
     plotProb(regressions$mswm$fit[[m]], which=2)
     title(paste0(n_states, '-state MS regimes for ', regressions$messages[[m]]), line=2.3)
-    sa_plot(file.path(graphs_dir,paste0(regressions$messages[[m]], ' ',
-                      n_states,'-state MSM.pdf')))
-    axis(side = 1
+    axis(side = 1,
+         at = (0:10)/10,
+         labels = msm_dates[
+           floor(
+             seq(from = 1,
+                 to = length(msm_dates),
+                 length.out = 11)
+           )
+           ],
+         las = 0,
+         pos = -.1
          )
+
+    
+    sa_plot(file.path(graphs_dir,paste0(regressions$messages[[m]], ' ',
+                                        n_states,'-state MSM.pdf')))
 
     # silently setting margins to default values
     invisible(dev.off())
