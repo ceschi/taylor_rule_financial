@@ -733,7 +733,7 @@ reg_print <- function(m){
 
 ##### Packages Loader #####
 
-pkgs <- c('vars', 'glue', 'MSwM', 'lazyeval',
+pkgs <- c('vars', 'glue', 'lazyeval',
           'quantreg', 'tidyverse', 'devtools',
           'tseries', 'dynlm', 'stargazer',
           'dyn', 'strucchange', 'xts', 'httr',
@@ -749,6 +749,7 @@ instant_pkgs(pkgs)
 
 # devtools::install_github('sboysel/fredr')
 devtools::install_github('ceschi/urcabis')
+devtools::install_github('ceschi/MSwMbis')
 # devtools::install_version("readxl", version = "1.0.0")
 # library(urcabis) # for when the package will be duly updated (pull request)
 
