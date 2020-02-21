@@ -480,7 +480,7 @@ shffr <- read_excel(path = file.path(temp_dir,'wuxia_dwnl.xls'),
 
 shffr <- shffr$shffr
 shffr <- as.xts(ts(shffr, frequency = 12, start=c(1960, 1)))
-shffr <- aggregate(shffr, as.yearqtr(as.yearmon(time(shffr))), mean) %>% as.xts()
+shffr <- aggregate(shffr, as.yearqtr(as.yearmon(time(shffr))), xts::last) %>% as.xts()
 
 
 # stitching
@@ -489,6 +489,36 @@ shffr_ext["2007/2015"] <- shffr["2007/2015"]
 
 shffr <- merge(shffr_ext, lag(shffr_ext, 1))
 names(shffr) <- c('shffr', 'shffrb')
+
+
+
+##### Krippner's shadow rate ###################################################
+
+# download xlsx file
+download.file(url = 'https://www.rbnz.govt.nz/-/media/ReserveBank/Files/Publications/Research/additional-research/leo-krippner/us-ea-jp-uk-ssrs-monthly-update.xlsx?la=en&revision=a1d77cad-e95c-47cb-b15d-73b5a6d719fa',
+              destfile = file.path(temp_dir, "krippner_dwnl.xlsx"),
+              mode = "wb",
+              quiet = T)
+
+# read in US data only
+kripp_ffr <- read_excel(path = file.path(temp_dir, 'krippner_dwnl.xlsx'),
+                        sheet = 2,
+                        range = "A7:B303", 
+                        col_names = c('date', 'kripp_shffr'),
+                        col_types = c('date', 'numeric')) %>% 
+  xts(order.by = as.Date(.$date))
+
+kripp_ffr$date <- NULL
+kripp_ffr <- aggregate(kripp_ffr, as.yearqtr(as.yearmon(time(kripp_ffr))), xts::last) %>% xts()
+
+
+
+# stitching
+kripp_ext <- ffr
+kripp_ext["1995/2019-08"] <- kripp_ffr
+
+kripp_ffr <- merge(kripp_ext, lag(kripp_ext, 1))
+names(kripp_ffr) <- c("kripp_ffr", "kripp_ffrb")
 
 
 ##### Un. of Michigan Surveys of Consumers #######
@@ -657,12 +687,6 @@ epu <- merge(epu_aggregate_ts,
              epu_aggregate_comp_ts,
              epu_cat_ts, fill = NA)
 
-#### Quarterly dummies to account for seasonality (JBC)
-
-
-
-
-
 
 #### Merge to dataset ####
 
@@ -676,8 +700,11 @@ db_US <- merge(rates,
                fiscal,
                spf,
                shffr,
-               # SOC_Michigan,
+               kripp_ffr,
+               SOC_Michigan,
                epu)
+
+#### Quarterly dummies to account for seasonality (JBC)
 
 dums <- xts(x = data.frame(q1 = rep(c(1,0,0,0), floor(length(index(db_US)))/4),
                            q2 = rep(c(0,1,0,0), floor(length(index(db_US)))/4),
@@ -693,7 +720,7 @@ write.zoo(x=db_US,
           file=file.path(data_dir, 'US_data.txt'), 
           sep=';', 
           row.names=F, 
-          index.name='time')
+          index.name='date')
 
 
 # this snippet normalises all vars to standard normal
@@ -739,7 +766,7 @@ inizio, fine, surplus.ts, debt_fed,
 debt_fed_share, debt_g, debt_gdp, debt_lev, fiscal,
 surplus_gdp, surplus_season, spf, spf_corecpi,
 spf_corepce, spf_cpi, spf_pce, rev_hist,
-tbill3_ffr, shffr,
+tbill3_ffr, shffr, kripp_ext,
 
 socm_inflation, socm_indexes, socm_indexes, req_fields,
 socm_1y_inflation, socm_5y_inflation, SOC_Michigan,
