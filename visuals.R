@@ -12,13 +12,14 @@ if (flag___singular==1) library(ggplot2, xts)
 invsc <- 1.5
 pdf_width = 14.6/invsc; pdf_height = 8/invsc
 
+db_US <- plotter
 
 # TR variables
 plot_trvars <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
-  geom_line(aes(y=ffr, color='FFR'), size=1)+
-  geom_line(aes(y=rev_defl, color='Act. Infl.'), size=1)+
-  geom_line(aes(y=deflt1, color='Exp. Infl.'), size=1)+
-  geom_line(aes(y=realtime_gap, color='Gap'), size=1)+
+  geom_line(aes(y=ffr, color='FFR'),  alpha = .8)+
+  geom_line(aes(y=rev_defl, color='Act. Infl.'),  alpha = .8)+
+  geom_line(aes(y=deflt1, color='Exp. Infl.'),  alpha = .8)+
+  geom_line(aes(y=realtime_gap, color='Gap'),  alpha = .8)+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('US Taylor rule - main components')+
   scale_y_continuous()+
@@ -74,7 +75,7 @@ plot_slack <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
 if (flag___plot==0) print(plot_slack)
 
 ggsave(plot = plot_slack,
-       filename='output slack.pdf',
+       filename='output_slack.pdf',
        path=graphs_dir,
        device='pdf',
        height = pdf_height, width = pdf_width, units='in')
@@ -95,7 +96,7 @@ plot_nowinf <- ggplot(db_US["1965/2020"], aes(x=index(db_US["1965/2020"])))+
 if (flag___plot==0) print(plot_nowinf)
 
 ggsave(plot = plot_nowinf,
-       filename='inflation nowcast.pdf',
+       filename='inflation_nowcast.pdf',
        path=graphs_dir,
        device='pdf',
        height = pdf_height, width = pdf_width, units='in')
@@ -114,17 +115,17 @@ plot_hinf <- ggplot(db_US["1965/2020"], aes(x=index(db_US["1965/2020"])))+
 if (flag___plot==0) print(plot_hinf)
 
 ggsave(plot = plot_hinf,
-       filename='inflation forecasts.pdf',
+       filename='inflation_forecasts.pdf',
        path=graphs_dir,
        device='pdf',
        height = pdf_height, width = pdf_width, units='in')
 
 # Inflation forecasts coming from SPF
 plot_spf_fore <- ggplot(db_US["1980/2020"], aes(x=index(db_US["1980/2020"])))+
-  geom_line(aes(y=spf_cpi_h1_mean, colour='SPF CPI mean'),size= 1)+
-  geom_line(aes(y=spf_corecpi_h1_mean, colour='SPF core CPI mean'),size= 1)+
-  geom_line(aes(y=spf_pce_h1_mean, colour='SPF PCE mean'),size= 1)+
-  geom_line(aes(y=spf_corepce_h1_mean, colour='SPF core PCE mean'),size= 1)+
+  geom_line(aes(y=spf_cpi_h1_mean, colour='SPF CPI mean'),size = .8)+
+  geom_line(aes(y=spf_corecpi_h1_mean, colour='SPF core CPI mean'),size = .8)+
+  geom_line(aes(y=spf_pce_h1_mean, colour='SPF PCE mean'),size = .8)+
+  geom_line(aes(y=spf_corepce_h1_mean, colour='SPF core PCE mean'),size = .8)+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('One quarter ahead inflation forecasts - SPF cross section means')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
@@ -134,17 +135,17 @@ plot_spf_fore <- ggplot(db_US["1980/2020"], aes(x=index(db_US["1980/2020"])))+
 if (flag___plot==0) print(plot_spf_fore)
 
 ggsave(plot = plot_spf_fore,
-       filename='SPF inf forecasts.pdf',
+       filename='SPF_inf_forecasts.pdf',
        path=graphs_dir,
        device='pdf',
        height = pdf_height, width = pdf_width, units='in')
 
 # Inflation forecast disagreement among SPF
 plot_spf_iqr <- ggplot(db_US["1980/2020"], aes(x=index(db_US["1980/2020"])))+
-  geom_line(aes(y=spf_cpi_h1_iqr, colour='SPF CPI'),size= 1)+
-  geom_line(aes(y=spf_corecpi_h1_iqr, colour='SPF core CPI'),size= 1)+
-  geom_line(aes(y=spf_pce_h1_iqr, colour='SPF PCE'),size= 1)+
-  geom_line(aes(y=spf_corepce_h1_iqr, colour='SPF core PCE'),size= 1)+
+  geom_line(aes(y=spf_cpi_h1_iqr, colour='SPF CPI'),size = .8)+
+  geom_line(aes(y=spf_corecpi_h1_iqr, colour='SPF core CPI'),size = .8)+
+  geom_line(aes(y=spf_pce_h1_iqr, colour='SPF PCE'),size = .8)+
+  geom_line(aes(y=spf_corepce_h1_iqr, colour='SPF core PCE'),size = .8)+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour='IQRs')+
   ggtitle('One quarter ahead inflation forecasts - SPF cross section IQR')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
@@ -154,17 +155,17 @@ plot_spf_iqr <- ggplot(db_US["1980/2020"], aes(x=index(db_US["1980/2020"])))+
 if (flag___plot==0) print(plot_spf_iqr)
 
 ggsave(plot = plot_spf_iqr,
-       filename='disagreement inf forecasts.pdf',
+       filename='disagreement_inf_forecasts.pdf',
        path=graphs_dir,
        device='pdf',
        height = pdf_height, width = pdf_width, units='in')
 
 # Monetary growth rates
 plot_money <- ggplot(db_US["1955/2020"], aes(x=index(db_US["1955/2020"])))+
-  geom_line(aes(y=base_g, colour='Base mon.'),size= 1)+
-  geom_line(aes(y=m1_g, colour='M1'),size= 1)+
-  geom_line(aes(y=m2_g, colour='M2'),size= 1)+
-  geom_line(aes(y=m3_g, colour='M3'),size= 1)+
+  geom_line(aes(y=base_g, colour='Base mon.'), size = .8)+
+  geom_line(aes(y=m1_g, colour='M1'), size = .8)+
+  geom_line(aes(y=m2_g, colour='M2'), size = .8)+
+  geom_line(aes(y=m3_g, colour='M3'), size = .8)+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Monetary aggregates growth rates')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
@@ -184,8 +185,8 @@ plot_spread <- ggplot(db_US["1950/2020"], aes(x=index(db_US["1950/2020"])))+
   geom_line(aes(y=spread_baa, colour='BAA'),size= 1.5)+
   geom_line(aes(y=spread_sp_3m, colour='3m SP'),size= 1)+
   geom_line(aes(y=spread_baa_aaa, colour ='B-A'), size= 1)+
-  geom_line(aes(y=spread_baa_long, colour='BAALONG'), size=1)+
-  geom_line(aes(y=spread_aaa, colour='AAA'), size=1)+
+  geom_line(aes(y=spread_baa_long, colour='BAALONG'),  alpha = .8)+
+  geom_line(aes(y=spread_aaa, colour='AAA'),  alpha = .8)+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Liquidity spreads - financial instability')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
@@ -203,7 +204,7 @@ ggsave(plot = plot_spread,
 
 # Phillips Curve, classic one
 plot_phil <- ggplot(db_US, aes(y = rev_cpi, x = unempl_rate, colour = as.Date(index(db_US))))+
-      geom_path(size=1) + geom_point(size = 2.5)+
+      geom_path(size = .8) + geom_point(size = 2.5)+
       theme_bw()+xlab('Unemployment rate') + ylab('Revised CPI')+labs(colour = 'Years')+
       ggtitle('Phillips Curve')
 
@@ -217,7 +218,7 @@ ggsave(plot = plot_phil,
 
 # Phillips Curve, layoffs
 plot_phil_lay <- ggplot(db_US, aes(y = rev_cpi, x = layoffs, colour = as.Date(index(db_US))))+
-  geom_path(size=1) + geom_point(size = 2.5)+
+  geom_path(size = .8) + geom_point(size = 2.5)+
   theme_bw()+xlab('Layoff rate') + ylab('Revised CPI')+labs(colour = 'Years')+
   ggtitle('Phillips Curve - Layoff rate')
 
@@ -231,7 +232,7 @@ ggsave(plot = plot_phil_lay,
 
 # Phillips Curve, employment fluctuations
 plot_phil_fluct <- ggplot(db_US, aes(y = rev_cpi, x = employment_fluct, colour = as.Date(index(db_US))))+
-  geom_path(size=1) + geom_point(size = 2.5)+
+  geom_path(size = .8) + geom_point(size = 2.5)+
   theme_bw()+xlab('Employment fluctuations') + ylab('Revised CPI')+labs(colour = 'Years')+
   ggtitle('Phillips Curve - Employment Fluctuations around long term rate')
 
@@ -249,7 +250,7 @@ plot_hist_pi <- ggplot(data=db_US)+
   geom_density(aes(x=rev_pce, fill = 'pce'), alpha= .5)+
   geom_density(aes(x=rev_cpi, fill = 'cpi'), alpha = .5)+
   labs(' ')+theme_bw()+
-  scale_fill_manual( values = c("red","blue", "green"), labels = c('Defl.', 'PCE', 'CPI'), name='Hist. series')+
+  scale_fill_viridis_d(labels = c('Defl.', 'PCE', 'CPI'), name='Hist. series')+
   xlab('Inflation rates')+
   ggtitle('Distribution of the inflation rates')
 
@@ -262,15 +263,15 @@ ggsave(plot = plot_hist_pi,
        height = pdf_height, width = pdf_width, units='in')
 
 plot_defl <- ggplot(db_US["1967/2015"], aes(x=index(db_US["1967/2015"])))+
-  geom_line(aes(y = deflt, colour = 't'), size = 1, alpha = .5)+
-  geom_line(aes(y = deflt1, colour = 't+1'), size = 1, alpha = .5)+
-  geom_line(aes(y = deflt2, colour = 't+2'), size = 1, alpha = .5)+
-  geom_line(aes(y = deflt3, colour = 't+3'), size = 1, alpha = .5)+
-  geom_line(aes(y = deflt4, colour = 't+4'), size = 1, alpha = .5)+
-  geom_line(aes(y = deflt5, colour = 't+5'), size = 1, alpha = .5)+
-  geom_line(aes(y = deflt6, colour = 't+6'), size = 1, alpha = .5)+
-  geom_line(aes(y = deflt7, colour = 't+7'), size = 1, alpha = .5)+
-  geom_line(aes(y = deflt8, colour = 't+8'), size = 1, alpha = .5)+
+  geom_line(aes(y = deflt, colour = 't'), size = .8, alpha = .5)+
+  geom_line(aes(y = deflt1, colour = 't+1'), size = .8, alpha = .5)+
+  geom_line(aes(y = deflt2, colour = 't+2'), size = .8, alpha = .5)+
+  geom_line(aes(y = deflt3, colour = 't+3'), size = .8, alpha = .5)+
+  geom_line(aes(y = deflt4, colour = 't+4'), size = .8, alpha = .5)+
+  geom_line(aes(y = deflt5, colour = 't+5'), size = .8, alpha = .5)+
+  geom_line(aes(y = deflt6, colour = 't+6'), size = .8, alpha = .5)+
+  geom_line(aes(y = deflt7, colour = 't+7'), size = .8, alpha = .5)+
+  geom_line(aes(y = deflt8, colour = 't+8'), size = .8, alpha = .5)+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Deflator')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
@@ -286,15 +287,15 @@ ggsave(plot = plot_defl,
 
 
 plot_cpi <- ggplot(db_US["1978/2015"], aes(x=index(db_US["1978/2015"])))+
-  geom_line(aes(y = cpit, colour = 't'), size = 1, alpha = .5)+
-  geom_line(aes(y = cpit1, colour = 't+1'), size = 1, alpha = .5)+
-  geom_line(aes(y = cpit2, colour = 't+2'), size = 1, alpha = .5)+
-  geom_line(aes(y = cpit3, colour = 't+3'), size = 1, alpha = .5)+
-  geom_line(aes(y = cpit4, colour = 't+4'), size = 1, alpha = .5)+
-  geom_line(aes(y = cpit5, colour = 't+5'), size = 1, alpha = .5)+
-  geom_line(aes(y = cpit6, colour = 't+6'), size = 1, alpha = .5)+
-  geom_line(aes(y = cpit7, colour = 't+7'), size = 1, alpha = .5)+
-  geom_line(aes(y = cpit8, colour = 't+8'), size = 1, alpha = .5)+
+  geom_line(aes(y = cpit, colour = 't'), size = .8, alpha = .5)+
+  geom_line(aes(y = cpit1, colour = 't+1'), size = .8, alpha = .5)+
+  geom_line(aes(y = cpit2, colour = 't+2'), size = .8, alpha = .5)+
+  geom_line(aes(y = cpit3, colour = 't+3'), size = .8, alpha = .5)+
+  geom_line(aes(y = cpit4, colour = 't+4'), size = .8, alpha = .5)+
+  geom_line(aes(y = cpit5, colour = 't+5'), size = .8, alpha = .5)+
+  geom_line(aes(y = cpit6, colour = 't+6'), size = .8, alpha = .5)+
+  geom_line(aes(y = cpit7, colour = 't+7'), size = .8, alpha = .5)+
+  geom_line(aes(y = cpit8, colour = 't+8'), size = .8, alpha = .5)+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('CPI')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
@@ -311,15 +312,15 @@ ggsave(plot = plot_cpi,
 
 
 plot_core <- ggplot(db_US["1985/2015"], aes(x=index(db_US["1985/2015"])))+
-  geom_line(aes(y = coret, colour = 't'), size = 1, alpha = .5)+
-  geom_line(aes(y = coret1, colour = 't+1'), size = 1, alpha = .5)+
-  geom_line(aes(y = coret2, colour = 't+2'), size = 1, alpha = .5)+
-  geom_line(aes(y = coret3, colour = 't+3'), size = 1, alpha = .5)+
-  geom_line(aes(y = coret4, colour = 't+4'), size = 1, alpha = .5)+
-  geom_line(aes(y = coret5, colour = 't+5'), size = 1, alpha = .5)+
-  geom_line(aes(y = coret6, colour = 't+6'), size = 1, alpha = .5)+
-  geom_line(aes(y = coret7, colour = 't+7'), size = 1, alpha = .5)+
-  geom_line(aes(y = coret8, colour = 't+8'), size = 1, alpha = .5)+
+  geom_line(aes(y = coret, colour = 't'), size = .8, alpha = .5)+
+  geom_line(aes(y = coret1, colour = 't+1'), size = .8, alpha = .5)+
+  geom_line(aes(y = coret2, colour = 't+2'), size = .8, alpha = .5)+
+  geom_line(aes(y = coret3, colour = 't+3'), size = .8, alpha = .5)+
+  geom_line(aes(y = coret4, colour = 't+4'), size = .8, alpha = .5)+
+  geom_line(aes(y = coret5, colour = 't+5'), size = .8, alpha = .5)+
+  geom_line(aes(y = coret6, colour = 't+6'), size = .8, alpha = .5)+
+  geom_line(aes(y = coret7, colour = 't+7'), size = .8, alpha = .5)+
+  geom_line(aes(y = coret8, colour = 't+8'), size = .8, alpha = .5)+
   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('CORE')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
@@ -333,47 +334,33 @@ ggsave(plot = plot_core,
        device='pdf',
        height = pdf_height, width = pdf_width, units='in')
 
-# # provocative graph...
-# ggplot(db_US["1985/2015"], aes(x=index(db_US["1985/2015"])))+
-#   geom_line(aes(y = coret), size = 1, alpha = .5)+
-#   geom_line(aes(y = coret1), size = 1, alpha = .5)+
-#   geom_line(aes(y = coret2), size = 1, alpha = .5)+
-#   geom_line(aes(y = coret3), size = 1, alpha = .5)+
-#   geom_line(aes(y = coret4), size = 1, alpha = .5)+
-#   geom_line(aes(y = coret5), size = 1, alpha = .5)+
-#   geom_line(aes(y = coret6), size = 1, alpha = .5)+
-#   geom_line(aes(y = coret7), size = 1, alpha = .5)+
-#   geom_line(aes(y = coret8), size = 1, alpha = .5)+
-#   geom_line(aes(y = cpit), size = 1, alpha = .5)+
-#   geom_line(aes(y = cpit1), size = 1, alpha = .5)+
-#   geom_line(aes(y = cpit2), size = 1, alpha = .5)+
-#   geom_line(aes(y = cpit3), size = 1, alpha = .5)+
-#   geom_line(aes(y = cpit4), size = 1, alpha = .5)+
-#   geom_line(aes(y = cpit5), size = 1, alpha = .5)+
-#   geom_line(aes(y = cpit6), size = 1, alpha = .5)+
-#   geom_line(aes(y = cpit7), size = 1, alpha = .5)+
-#   geom_line(aes(y = cpit8), size = 1, alpha = .5)+
-#   geom_line(aes(y = deflt), size = 1, alpha = .5)+
-#   geom_line(aes(y = deflt1), size = 1, alpha = .5)+
-#   geom_line(aes(y = deflt2), size = 1, alpha = .5)+
-#   geom_line(aes(y = deflt3), size = 1, alpha = .5)+
-#   geom_line(aes(y = deflt4), size = 1, alpha = .5)+
-#   geom_line(aes(y = deflt5), size = 1, alpha = .5)+
-#   geom_line(aes(y = deflt6), size = 1, alpha = .5)+
-#   geom_line(aes(y = deflt7), size = 1, alpha = .5)+
-#   geom_line(aes(y = deflt8), size = 1, alpha = .5)+
-#   geom_line(aes(y = rev_cpi), size = 1, alpha = .5)+
-#   geom_line(aes(y = rev_cpi_fe), size = 1, alpha = .5)+
-#   geom_line(aes(y = rev_defl), size = 1, alpha = .5)+
-#   geom_line(aes(y = rev_pce), size = 1, alpha = .5)+
-#   geom_line(aes(y = rev_pce_fe), size = 1, alpha = .5)+
-#   theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
-#   ggtitle('really.')+
-#   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
-#   theme(axis.text.x = element_text(angle = 90))
+##### Shadow rates #############################################################
 
 
-##### LIST OF ADDITIONAL PLOTS #####
+plot_shadow <- ggplot(db_US["1945-01/"], aes(x = index(db_US["1945-01/"])))+
+  geom_hline(aes(yintercept=0, ))+
+  geom_line(aes(y = shffr, colour = 'Wu Xia'), size = 1.2, alpha = .7)+
+  geom_line(aes(y = kripp_shffr, colour = 'Krippner'), size = 1.2, alpha = .7)+
+  theme_minimal()+xlab(' ')+ylab(' ')+ labs(colour = " ")+
+  ggtitle('Shadow rates')+
+  scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+  theme(axis.text.x = element_text(angle = 90))+
+  geom_vline(xintercept = as.yearqtr("1995-01"), linetype = 'dashed') +
+  geom_text(aes(x = as.yearqtr("1996-02"), y = 12), label = 'Krippner starts', angle = 90, size = 4)+
+  geom_vline(xintercept = as.yearqtr("2007-01"), linetype = 'dashed') +
+  geom_text(aes(x = as.yearqtr("2008-02"), y = 12), label = 'WU Xia starts', angle = 90, size = 4)+
+  geom_vline(xintercept = as.yearqtr("2015-01"), linetype = 'dashed') +
+  geom_text(aes(x = as.yearqtr("2016-02"), y = 12), label = 'WU Xia ends', angle = 90, size = 4)
+
+if (flag___plot == 0) print(plot_shadow)
+
+ggsave(plot = plot_shadow,
+       filename='shadow_rates.pdf',
+       path=graphs_dir,
+       device='pdf',
+       height = pdf_height, width = pdf_width, units='in')
+
+##### LIST OF ADDITIONAL PLOTS #################################################
 
 ##### Residuals and results from regressions in USreg.r #####
 ## of course, source the script beforehand
@@ -414,7 +401,8 @@ plots <- list(plot_trvars,
               plot_hist_pi,
               plot_defl,
               plot_cpi,
-              plot_core)
+              plot_core,
+              plot_shadow)
 
 ##### Housekeeping #####
 rm(plot_trvars,
@@ -435,5 +423,6 @@ rm(plot_trvars,
    plot_hist_pi,
    plot_defl,
    plot_cpi,
-   plot_core
+   plot_core,
+   plot_shadow
    )

@@ -47,13 +47,13 @@ regressions$formula <- list(
   # 2
     tr_spread_sp = ffr ~ deflt1 + realtime_gap + ffrb + spread_sp_3m + q1 + q2 + q3,
   # 3
-    tr_spread_10y_baa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_long + q1 + q2 + q3,
+    tr_spread_oldbaa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa + q1 + q2 + q3,
   # 4
     tr_spread_baa_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_aaa + q1 + q2 + q3,
   # 5
     tr_spread_10y_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_aaa + q1 + q2 + q3,
   # 6
-    tr_spread_oldbaa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa,# + q1 + q2 + q3,
+    tr_spread_10y_baa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_long + q1 + q2 + q3,
   # 7
     tr_shrate_WX = shffr ~ deflt1 + realtime_gap + shffrb + q1 + q2 + q3,
   # 8
@@ -67,13 +67,13 @@ regressions$messages <- list(
   # 2
   '2 - TR and 3M spread',
   # 3
-  '3 - TR with BAA spread',
+  '3 - TR with BAA spread oldver',
   # 4
   '4 - TR with BAA-AAA spread',
   # 5
   '5 - TR with AAA-10y spread',
   # 6
-  '6 - TR with BAA spread oldver',
+  '6 - TR with BAA spread',
   # 7
   '7 - Wu-Xia shadow rate',
   # 8
@@ -91,7 +91,10 @@ corr_tab <- db_US %>% xts_tbl() %>% select(ffr, ffrb,
                                  spread_sp_3m, spread_baa_long) %>% na.omit(.) %>% cor(.)
 
 ##### isolate only those variables that are used
+plotter <- db_US
 varss <- rapply(object = regressions$formula, f = base::all.vars) %>% unique()
+
+
 
 db_US <- db_US[, varss]
 
@@ -153,7 +156,7 @@ for (m in 1:length(regressions$formula)){
   if (flag___msm==2) j <- 3
 
   if (flag___msm!=0){
-      regressions$mswm$fit[[m]] <- msmFit(object=regressions$models[[m]],
+      regressions$mswm$fit[[m]] <- MSwM::msmFit(object=regressions$models[[m]],
                                           #data=db_US,
                                           k=j,
                                           sw=rep(T, 1+regressions$formula[[m]] %>% all.vars() %>% length())

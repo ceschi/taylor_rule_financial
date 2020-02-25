@@ -181,20 +181,20 @@ reg_call <- function(m){
     
     invisible(dev.off())
     par(mar=c(1.5,5,5,1.5), cex=.4)
-    plotProb(regressions$mswm$fit[[m]], which=2)
+    MSwM::plotProb(regressions$mswm$fit[[m]], which=2)
     title(paste0(n_states, '-state MS regimes for ', regressions$messages[[m]]), line=2.3)
-    axis(side = 1,
-         at = (0:10)/10,
-         labels = msm_dates[
-           floor(
-             seq(from = 1,
-                 to = length(msm_dates),
-                 length.out = 11)
-           )
-           ],
-         las = 0,
-         pos = -.1
-         )
+    # axis(side = 1,
+    #      at = (0:10)/10,
+    #      labels = msm_dates[
+    #        floor(
+    #          seq(from = 1,
+    #              to = length(msm_dates),
+    #              length.out = 11)
+    #        )
+    #        ],
+    #      las = 0,
+    #      pos = -.1
+    #      )
 
     
     sa_plot(file.path(graphs_dir,paste0(regressions$messages[[m]], ' ',
@@ -733,6 +733,18 @@ reg_print <- function(m){
 
 ##### Packages Loader #####
 
+# remove standard packages with same names
+if ('MSwM' %in% installed.packages()){remove.packages('MSwM')}
+if ('urca' %in% installed.packages()){remove.packages('urca')}
+
+# devtools::install_github('sboysel/fredr')
+devtools::install_github('ceschi/urcabis')
+devtools::install_github('ceschi/MSwMbis')
+# devtools::install_version("readxl", version = "1.0.0")
+# library(urcabis) # for when the package will be duly updated (pull request)
+# in all likelyhood it will never be updated...
+
+
 pkgs <- c('vars', 'glue', 'lazyeval',
           'quantreg', 'tidyverse', 'devtools',
           'tseries', 'dynlm', 'stargazer',
@@ -742,16 +754,13 @@ pkgs <- c('vars', 'glue', 'lazyeval',
           'readr', 'quantmod','broom',
           'devtools', 'lubridate', 'ggridges',
           'readxl', 'VARsignR', 'tbl2xts',
-          'R.matlab', 'matlabr', 'tictoc', 'gmm')
+          'R.matlab', 'matlabr', 'tictoc', 'gmm',
+          'MSwM', 'urca')
 # fill pkgs with names of the packages to install
 
 instant_pkgs(pkgs)
 
-# devtools::install_github('sboysel/fredr')
-devtools::install_github('ceschi/urcabis')
-devtools::install_github('ceschi/MSwMbis')
-# devtools::install_version("readxl", version = "1.0.0")
-# library(urcabis) # for when the package will be duly updated (pull request)
+
 
 
 

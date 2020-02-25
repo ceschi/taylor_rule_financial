@@ -506,9 +506,8 @@ kripp_ffr <- read_excel(path = file.path(temp_dir, 'krippner_dwnl.xlsx'),
                         range = "A7:B303", 
                         col_names = c('date', 'kripp_shffr'),
                         col_types = c('date', 'numeric')) %>% 
-  xts(order.by = as.Date(.$date))
+  xts(x = .$kripp_shffr, order.by = as.Date(.$date))
 
-kripp_ffr$date <- NULL
 kripp_ffr <- aggregate(kripp_ffr, as.yearqtr(as.yearmon(time(kripp_ffr))), xts::last) %>% xts()
 
 
@@ -518,7 +517,7 @@ kripp_ext <- ffr
 kripp_ext["1995/2019-08"] <- kripp_ffr
 
 kripp_ffr <- merge(kripp_ext, lag(kripp_ext, 1))
-names(kripp_ffr) <- c("kripp_ffr", "kripp_ffrb")
+names(kripp_ffr) <- c("kripp_shffr", "kripp_shffrb")
 
 
 ##### Un. of Michigan Surveys of Consumers #######
@@ -766,7 +765,7 @@ inizio, fine, surplus.ts, debt_fed,
 debt_fed_share, debt_g, debt_gdp, debt_lev, fiscal,
 surplus_gdp, surplus_season, spf, spf_corecpi,
 spf_corepce, spf_cpi, spf_pce, rev_hist,
-tbill3_ffr, shffr, kripp_ext,
+tbill3_ffr, shffr, kripp_ext, kripp_ffr,
 
 socm_inflation, socm_indexes, socm_indexes, req_fields,
 socm_1y_inflation, socm_5y_inflation, SOC_Michigan,
