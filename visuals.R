@@ -20,12 +20,14 @@ plot_trvars <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
   geom_line(aes(y=rev_defl, color='Act. Infl.'),  alpha = .8)+
   geom_line(aes(y=deflt1, color='Exp. Infl.'),  alpha = .8)+
   geom_line(aes(y=realtime_gap, color='Gap'),  alpha = .8)+
-  theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('US Taylor rule - main components')+
   scale_y_continuous()+
   scale_x_yearqtr(format='%Y Q%q', n=20)+
   geom_hline(yintercept = 0, colour='black')+
-  theme(axis.text.x = element_text(angle = 90))
+  theme(axis.text.x = element_text(angle = 90), 
+    legend.position = 'bottom') +
+  guides(colour=guide_legend(nrow=1,byrow=TRUE))
 
 if (flag___plot==0) print(plot_trvars)
 
@@ -42,7 +44,7 @@ plot_re_infl <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
   geom_line(aes(y=rev_pce, colour='Rev. PCE'),size= 1)+
   geom_line(aes(y=rev_pce_fe, colour='Rev. PCE no FE'),size= 1)+
   geom_line(aes(y=rev_defl, colour='Rev. Defl.'),size= 1)+
-  theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Measures of historical inflation')+
   scale_y_continuous()+
   scale_x_yearqtr(format='%Y Q%q', n=20)+
@@ -65,7 +67,7 @@ plot_slack <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
   geom_line(aes(y=-employment_fluct, colour='(-)NU gap'),size= 1)+
   geom_line(aes(y=realtime_gap, colour='Realtime gap'),size= 1)+
   geom_line(aes(y=expost_gap, colour='ExPost gap'),size= 1)+
-  theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Measures of slackness')+
   scale_y_continuous()+
   scale_x_yearqtr(format='%Y Q%q', n=20)+
@@ -86,7 +88,7 @@ plot_nowinf <- ggplot(db_US["1965/2020"], aes(x=index(db_US["1965/2020"])))+
   geom_line(aes(y=cpit, colour='CPI'),size= 1)+
   geom_line(aes(y=coret, colour='Core PCE'),size= 1)+
   geom_line(aes(y=deflt, colour='Deflator'),size= 1)+
-  theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Current period inflation forecasts')+
   scale_y_continuous()+
   scale_x_yearqtr(format='%Y Q%q', n=20)+
@@ -106,7 +108,7 @@ plot_hinf <- ggplot(db_US["1965/2020"], aes(x=index(db_US["1965/2020"])))+
   geom_line(aes(y=cpit1, colour='CPI'),size= 1)+
   geom_line(aes(y=coret1, colour='Core PCE'),size= 1)+
   geom_line(aes(y=deflt1, colour='Deflator'),size= 1)+
-  theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('One quarter ahead inflation forecasts')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
   geom_hline(yintercept = 0, colour='black')+
@@ -126,7 +128,7 @@ plot_spf_fore <- ggplot(db_US["1980/2020"], aes(x=index(db_US["1980/2020"])))+
   geom_line(aes(y=spf_corecpi_h1_mean, colour='SPF core CPI mean'),size = .8)+
   geom_line(aes(y=spf_pce_h1_mean, colour='SPF PCE mean'),size = .8)+
   geom_line(aes(y=spf_corepce_h1_mean, colour='SPF core PCE mean'),size = .8)+
-  theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('One quarter ahead inflation forecasts - SPF cross section means')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
   geom_hline(yintercept = 0, colour='black')+
@@ -146,7 +148,7 @@ plot_spf_iqr <- ggplot(db_US["1980/2020"], aes(x=index(db_US["1980/2020"])))+
   geom_line(aes(y=spf_corecpi_h1_iqr, colour='SPF core CPI'),size = .8)+
   geom_line(aes(y=spf_pce_h1_iqr, colour='SPF PCE'),size = .8)+
   geom_line(aes(y=spf_corepce_h1_iqr, colour='SPF core PCE'),size = .8)+
-  theme_bw()+xlab(' ')+ylab(' ')+labs(colour='IQRs')+
+  theme_minimal()+xlab(' ')+ylab(' ')+labs(colour='IQRs')+
   ggtitle('One quarter ahead inflation forecasts - SPF cross section IQR')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
   geom_hline(yintercept = 0, colour='black')+
@@ -166,7 +168,7 @@ plot_money <- ggplot(db_US["1955/2020"], aes(x=index(db_US["1955/2020"])))+
   geom_line(aes(y=m1_g, colour='M1'), size = .8)+
   geom_line(aes(y=m2_g, colour='M2'), size = .8)+
   geom_line(aes(y=m3_g, colour='M3'), size = .8)+
-  theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Monetary aggregates growth rates')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
   geom_hline(yintercept = 0, colour='black')+
@@ -187,7 +189,7 @@ plot_spread <- ggplot(db_US["1950/2020"], aes(x=index(db_US["1950/2020"])))+
   geom_line(aes(y=spread_baa_aaa, colour ='B-A'), size= 1)+
   geom_line(aes(y=spread_baa_long, colour='BAALONG'),  alpha = .8)+
   geom_line(aes(y=spread_aaa, colour='AAA'),  alpha = .8)+
-  theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Liquidity spreads - financial instability')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
   geom_hline(yintercept = 0, colour='black')+
@@ -205,7 +207,7 @@ ggsave(plot = plot_spread,
 # Phillips Curve, classic one
 plot_phil <- ggplot(db_US, aes(y = rev_cpi, x = unempl_rate, colour = as.Date(index(db_US))))+
       geom_path(size = .8) + geom_point(size = 2.5)+
-      theme_bw()+xlab('Unemployment rate') + ylab('Revised CPI')+labs(colour = 'Years')+
+      theme_minimal()+xlab('Unemployment rate') + ylab('Revised CPI')+labs(colour = 'Years')+
       ggtitle('Phillips Curve')
 
 if (flag___plot == 0) print(plot_phil)
@@ -219,7 +221,7 @@ ggsave(plot = plot_phil,
 # Phillips Curve, layoffs
 plot_phil_lay <- ggplot(db_US, aes(y = rev_cpi, x = layoffs, colour = as.Date(index(db_US))))+
   geom_path(size = .8) + geom_point(size = 2.5)+
-  theme_bw()+xlab('Layoff rate') + ylab('Revised CPI')+labs(colour = 'Years')+
+  theme_minimal()+xlab('Layoff rate') + ylab('Revised CPI')+labs(colour = 'Years')+
   ggtitle('Phillips Curve - Layoff rate')
 
 if (flag___plot == 0) print(plot_phil_lay)
@@ -233,7 +235,7 @@ ggsave(plot = plot_phil_lay,
 # Phillips Curve, employment fluctuations
 plot_phil_fluct <- ggplot(db_US, aes(y = rev_cpi, x = employment_fluct, colour = as.Date(index(db_US))))+
   geom_path(size = .8) + geom_point(size = 2.5)+
-  theme_bw()+xlab('Employment fluctuations') + ylab('Revised CPI')+labs(colour = 'Years')+
+  theme_minimal()+xlab('Employment fluctuations') + ylab('Revised CPI')+labs(colour = 'Years')+
   ggtitle('Phillips Curve - Employment Fluctuations around long term rate')
 
 if (flag___plot == 0) print(plot_phil_fluct)
@@ -249,7 +251,7 @@ plot_hist_pi <- ggplot(data=db_US)+
   geom_density(aes(x=rev_defl, fill = 'defl'), alpha= .5)+
   geom_density(aes(x=rev_pce, fill = 'pce'), alpha= .5)+
   geom_density(aes(x=rev_cpi, fill = 'cpi'), alpha = .5)+
-  labs(' ')+theme_bw()+
+  labs(' ')+theme_minimal()+
   scale_fill_viridis_d(labels = c('Defl.', 'PCE', 'CPI'), name='Hist. series')+
   xlab('Inflation rates')+
   ggtitle('Distribution of the inflation rates')
@@ -272,7 +274,7 @@ plot_defl <- ggplot(db_US["1967/2015"], aes(x=index(db_US["1967/2015"])))+
   geom_line(aes(y = deflt6, colour = 't+6'), size = .8, alpha = .5)+
   geom_line(aes(y = deflt7, colour = 't+7'), size = .8, alpha = .5)+
   geom_line(aes(y = deflt8, colour = 't+8'), size = .8, alpha = .5)+
-  theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Deflator')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
   theme(axis.text.x = element_text(angle = 90))
@@ -296,7 +298,7 @@ plot_cpi <- ggplot(db_US["1978/2015"], aes(x=index(db_US["1978/2015"])))+
   geom_line(aes(y = cpit6, colour = 't+6'), size = .8, alpha = .5)+
   geom_line(aes(y = cpit7, colour = 't+7'), size = .8, alpha = .5)+
   geom_line(aes(y = cpit8, colour = 't+8'), size = .8, alpha = .5)+
-  theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('CPI')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
   theme(axis.text.x = element_text(angle = 90))
@@ -321,7 +323,7 @@ plot_core <- ggplot(db_US["1985/2015"], aes(x=index(db_US["1985/2015"])))+
   geom_line(aes(y = coret6, colour = 't+6'), size = .8, alpha = .5)+
   geom_line(aes(y = coret7, colour = 't+7'), size = .8, alpha = .5)+
   geom_line(aes(y = coret8, colour = 't+8'), size = .8, alpha = .5)+
-  theme_bw()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('CORE')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
   theme(axis.text.x = element_text(angle = 90))
