@@ -201,7 +201,6 @@ plot_spread <- ggplot(db_US["1950/2020"], aes(x=index(db_US["1950/2020"])))+
   geom_line(aes(y=spread_baa, colour='BAA'),size= 1.5)+
   geom_line(aes(y=spread_sp_3m, colour='3m SP'),size= 1)+
   geom_line(aes(y=spread_baa_aaa, colour ='B-A'), size= 1)+
-  geom_line(aes(y=spread_baa_long, colour='BAALONG'),  alpha = .8)+
   geom_line(aes(y=spread_aaa, colour='AAA'),  alpha = .8)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Liquidity spreads - financial instability')+
@@ -370,21 +369,21 @@ ggsave(plot = plot_core,
 
 
 plot_shadow <- ggplot(db_US["1954-01/"], aes(x = index(db_US["1954-01/"])))+
-  geom_hline(aes(yintercept=0, ))+
+  geom_hline(aes(yintercept=0))+
   geom_line(aes(y = shffr, colour = 'Wu Xia'), size = 1.2, alpha = .7)+
   geom_line(aes(y = kripp_shffr, colour = 'Krippner'), size = 1.2, alpha = .7)+
-  theme_minimal()+xlab(' ')+ylab(' ')+ labs(colour = " ")+
+  theme_minimal()+xlab(' ')+ylab(' ')+ labs(colour = "")+
   ggtitle('Shadow rates')+
   scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
   guides(colour=guide_legend(nrow=1, byrow=TRUE)) +
   geom_vline(xintercept = as.yearqtr("1995-01"), linetype = 'dashed') +
-  geom_text(aes(x = as.yearqtr("1996-02"), y = 12), label = 'Krippner starts', angle = 90, size = 4)+
+  geom_text(aes(x = as.yearqtr("1996-02"), y = 12), label = 'Krippner starts', angle = 90, size = 3)+
   geom_vline(xintercept = as.yearqtr("2007-01"), linetype = 'dashed') +
-  geom_text(aes(x = as.yearqtr("2008-02"), y = 12), label = 'WU Xia starts', angle = 90, size = 4)+
+  geom_text(aes(x = as.yearqtr("2008-02"), y = 12), label = 'Wu-Xia starts', angle = 90, size = 3)+
   geom_vline(xintercept = as.yearqtr("2015-4"), linetype = 'dashed') +
-  geom_text(aes(x = as.yearqtr("2016-04"), y = 12), label = 'WU Xia ends', angle = 90, size = 4)
+  geom_text(aes(x = as.yearqtr("2016-04"), y = 12), label = 'Wu-Xia ends', angle = 90, size = 3)
 
 if (flag___plot == 0) print(plot_shadow)
 
@@ -395,6 +394,31 @@ ggsave(plot = plot_shadow,
        height = pdf_height, width = pdf_width, units='in')
 
 ##### LIST OF ADDITIONAL PLOTS #################################################
+
+
+plot_trvars_all <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
+  geom_line(aes(y=ffr, color='FFR'),  alpha = .8)+
+  geom_line(aes(y=rev_defl, color='Act. Infl.'),  alpha = .8)+
+  geom_line(aes(y=deflt1, color='Exp. Infl.'),  alpha = .8)+
+  geom_line(aes(y=realtime_gap, color='Gap'),  alpha = .8)+
+  geom_line(aes(y=spread_baa, color='BAA'),  alpha = .8)+
+  geom_line(aes(y=spread_sp_3m, color='S&P'),  alpha = .8)+
+  theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
+  ggtitle('US Taylor rule - liquidity augmented')+
+  scale_y_continuous()+
+  scale_x_yearqtr(format='%Y Q%q', n=20)+
+  geom_hline(yintercept = 0, colour='black')+
+  theme(axis.text.x = element_text(angle = 45), 
+        legend.position = 'bottom') +
+  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+
+if (flag___plot==0) print(plot_trvars)
+
+ggsave(plot_trvars_all,
+       filename='TRvars_all.pdf',
+       path = graphs_dir, 
+       device='pdf',
+       height = pdf_height, width = pdf_width, units='in')
 
 ##### Residuals and results from regressions in USreg.r #####
 ## of course, source the script beforehand
@@ -436,7 +460,8 @@ plots <- list(plot_trvars,
               plot_defl,
               plot_cpi,
               plot_core,
-              plot_shadow)
+              plot_shadow,
+              plot_trvars_all)
 
 ##### Housekeeping #####
 rm(plot_trvars,
@@ -458,5 +483,7 @@ rm(plot_trvars,
    plot_defl,
    plot_cpi,
    plot_core,
-   plot_shadow
+   plot_shadow,
+   plot_trvars_all,
+   plotter
    )

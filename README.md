@@ -1,6 +1,5 @@
 # Companion code for "Taylor Rules and inflation anchoring
-#### _by Emanuele Franceschi - Paris School of Economics and Paris 1 
-University_
+#### _by Emanuele Franceschi - Paris School of Economics and Paris 1 University_
 
 This repository contains the R programs used in the paper *"Taylor Rules 
 and liquidity in financial markets"* in its latest iteration. The 
@@ -12,4 +11,4 @@ revisions according to the publication requirements of the reference
 paper, which has been submitted in June 2019. As of January 2020 the 
 paper is under revision before resubmitting to the Editor.
 
-This version originates from a richer set of programs and scripts that included inflation persistence analysis, simulations with `Matlab/Dynare`, and extensive econometric investigation. It has been stripped down to reflect the newer version of the paper.
+This version originates from a richer set of programs and scripts that included inflation persistence analysis, simulations with `Matlab/Dynare`, and extensive econometric investigation. It has been stripped down to reflect the newer version of the paper. The former more extended version is currently part of my PhD dissertation and available _for now_ solely upon request.
