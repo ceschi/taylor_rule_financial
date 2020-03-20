@@ -1,4 +1,4 @@
-# Companion code for "Taylor Rules and inflation anchoring
+# Companion code for *"Taylor Rules and inflation anchoring"*
 #### _by Emanuele Franceschi - Paris School of Economics and Paris 1 University_
 
 This repository contains the R programs used in the paper *"Taylor Rules 
