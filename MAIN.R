@@ -16,8 +16,8 @@
 #	those included in the paper are the following:
 #	                      : Number        Name                List number
 #	  - Paper's Spec. I   :   1           tr_standard           1
-#	  - Paper's Spec. II  :   11          tr_spread_10y_baa     3
-#	  - Paper's Spec. III :   4           tr_spread_sp          2
+#	  - Paper's Spec. II  :   2           tr_spread_10y_baa     2
+#	  - Paper's Spec. III :   3           tr_spread_sp          3
 #	  
 #	To obtain the results in the paper, uncomment the last lines of code below
 #
@@ -26,7 +26,7 @@
 # from modifications over time as the paper developed and changed. Higher speed
 # might be easily achieved with vectorisation and parallelisation.
 #
-# v0.94
+# v0.96
 
 ##### I - Flags, libraries, and folders #####
 

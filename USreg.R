@@ -45,9 +45,9 @@ regressions$formula <- list(
   # 1
     tr_standard =  ffr ~ deflt1 + realtime_gap + ffrb + q1 + q2 + q3,
   # 2
-    tr_spread_sp = ffr ~ deflt1 + realtime_gap + ffrb + spread_sp_3m + q1 + q2 + q3,
+    tr_spread_baa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa + q1 + q2 + q3,
   # 3
-    tr_spread_oldbaa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa + q1 + q2 + q3,
+    tr_spread_sp = ffr ~ deflt1 + realtime_gap + ffrb + spread_sp_3m + q1 + q2 + q3,
   # 4
     tr_spread_baa_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_aaa + q1 + q2 + q3,
   # 5
@@ -57,7 +57,13 @@ regressions$formula <- list(
   # 7
     tr_shrate_WX = shffr ~ deflt1 + realtime_gap + shffrb + q1 + q2 + q3,
   # 8
-    tr_shrate_K = kripp_shffr ~ deflt1 + realtime_gap + kripp_shffrb + q1 + q2 + q3
+    tr_shrate_K = kripp_shffr ~ deflt1 + realtime_gap + kripp_shffrb + q1 + q2 + q3,
+  # 1.1
+    tr_standard =  ffr ~ deflt1 + realtime_gap + ffrb,
+  # 2.1
+    tr_spread_baa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa,
+  # 3.1
+    tr_spread_sp = ffr ~ deflt1 + realtime_gap + ffrb + spread_sp_3m
     )
 
 # Strings to indentify models 
@@ -65,19 +71,25 @@ regressions$messages <- list(
   # 1
   '1 - Standard TR',
   # 2
-  '2 - TR and 3M spread',
+  '2 - TR with BAA spread',
   # 3
-  '3 - TR with BAA spread oldver',
+  '3 - TR and 3M spread',
   # 4
   '4 - TR with BAA-AAA spread',
   # 5
   '5 - TR with AAA-10y spread',
   # 6
-  '6 - TR with BAA spread',
+  '6 - TR with BAA spread II',
   # 7
   '7 - Wu-Xia shadow rate',
   # 8
-  '8 - Krippner shadow rate'
+  '8 - Krippner shadow rate',
+  # 1.1
+  '1nq - Standard TR',
+  # 2.1
+  '2nq - TR with BAA spread',
+  # 3.1
+  '3nq - TR and 3M spread'
 )
 
 ### Warm-up ####
@@ -88,7 +100,7 @@ corr_tab <- db_US %>% xts_tbl() %>% select(ffr, ffrb,
                                  cpit, cpit1,
                                  coret, coret1, 
                                  realtime_gap, expost_gap, employment_fluct,
-                                 spread_sp_3m, spread_baa_long) %>% na.omit(.) %>% cor(.)
+                                 spread_sp_3m, spread_baa_long, spread_baa) %>% na.omit(.) %>% cor(.)
 
 ##### isolate only those variables that are used
 plotter <- db_US
