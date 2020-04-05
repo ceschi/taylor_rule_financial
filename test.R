@@ -1,7 +1,7 @@
 
 # little script for testing
 
-require(rutils)
+require(R.utils)
 
 cat('hello world!')
-df <- rnorm(50)
+df_blabla <- rnorm(50)
