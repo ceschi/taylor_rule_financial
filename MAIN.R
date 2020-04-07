@@ -52,11 +52,6 @@ flag___msm = 1
 # Functions
 source('functs.R', verbose=F, echo=F)
 tic('Total time')
-# Directories
-source('directories.R', verbose=F, echo=F)
-
-
-
 
 ##### II - Data scraping, collection, and stocking #####
 # US Data
@@ -70,7 +65,11 @@ source('directories.R', verbose=F, echo=F)
 # 4 for one year ahead
 tic('Data collection')
 ahead <- 1
-source("USdatacoll.R", verbose=F, echo=F)
+download.file(url = 'https://raw.githubusercontent.com/ceschi/us_macro_data/master/USdata_coll.R',
+			destfile = 'temp.R',
+			quiet = T)
+source('temp.R',)
+unlink(x = 'temp.R')
 toc()
 
 

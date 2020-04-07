@@ -2,44 +2,6 @@
 
 # A file to gather all home made functions with relative descriptions
 
-
-instant_pkgs <- function(pkgs) { 
-  ## Function loading or installing packages in
-  ## current R instance.
-  ## Developed by Jaime M. Montana Doncel - V1
-
-  
-  pkgs_miss <- pkgs[which(!pkgs %in% installed.packages()[, 1])]
-  if (length(pkgs_miss) > 0) {
-    install.packages(pkgs_miss)
-  }
-  
-  if (length(pkgs_miss) == 0) {
-    message("\n ...Packages were already installed!\n")
-  }
-  
-  # install packages not already loaded:
-  pkgs_miss <- pkgs[which(!pkgs %in% installed.packages()[, 1])]
-  if (length(pkgs_miss) > 0) {
-    install.packages(pkgs_miss)
-  }
-  
-  # load packages not already loaded:
-  attached <- search()
-  attached_pkgs <- attached[grepl("package", attached)]
-  need_to_attach <- pkgs[which(!pkgs %in% gsub("package:", "", attached_pkgs))]
-  
-  if (length(need_to_attach) > 0) {
-    for (i in 1:length(need_to_attach)) suppressPackageStartupMessages(library(need_to_attach[i], character.only = TRUE))
-  }
-  
-  if (length(need_to_attach) == 0) {
-    message("\n ...Packages were already loaded!\n")
-  }
-}
-
-
-
 reg_call <- function(m){
   # custom function to extract, print and plot 
   # information on estimates of a particular
@@ -272,11 +234,8 @@ rolloop <- function(df, window=8, lags=1){
   # converts and dates the regressions
   regs <- xts(regs, frequency=4, 
               order.by=index(df)[window:length(index(df))])
-  
-return(regs)
+  return(regs)
 }
-
-
 
 make_stars <- function(x){
   # ancillary function for
@@ -344,75 +303,6 @@ repara <- function(x, rho=4){
   
   return(params2)
 }
-
-
-subfilter <- function(df){
-  # function to convert a df with multiple observations per unit
-  # of time in a df with one observation per unit of time,
-  # namely the last one among those previously present
-  
-  
-  indice <- as.character(unique(df$date))
-  len <- length(indice)
-  outp <- matrix(NA, ncol=ncol(df), nrow=len)
-  outp <- data.frame(outp)
-  names(outp) <- names(df)
-  for (i in 1:len){
-    supp <- indice[i]
-    ram <- subset(df, date==supp)
-    outp[i,] <- ram[nrow(ram),]
-    outp[i,1] <- indice[i]
-  }
-  return(outp)
-}
-
-
-subfilter.mean <- function(df){
-  # function to convert a df with multiple observations per unit
-  # of time in a df with one observation per unit of time,
-  # namely the mean of those previously present
-  
-  
-  indice <- as.character(unique(df$date))
-  len <- length(indice)
-  outp <- matrix(NA, ncol=ncol(df), nrow=len)
-  outp <- data.frame(outp)
-  names(outp) <- names(df)
-  for (i in 1:len){
-    supp <- indice[i]
-    ram <- subset(df, date==supp)
-    outp[i,] <- c(0, as.numeric(apply(ram[,-1], 2, mean)))
-  }
-  outp[,1] <- indice
-  return(outp)
-}
-
-
-trendev<-function(mat){
-  # for multiple observation in particular shape, this function
-  # estimates a quadratic trend on the available series and consider
-  # the deviation from the trend in the last observation. This deviation
-  # is put into another time series. The purpose of this function is to
-  # extract real time output gap from Philadelphia dataset.
-  
-  
-  matdat<-mat[,2:ncol(mat)]
-  temp<-1:nrow(mat)
-  temp2<-temp^2
-  regr<-function(x){
-    dta<-data.frame(x, temp, temp2)
-    names(dta)<-c('x', 'temp', 'temp2')
-    model<-lm(x~temp+temp2, data=dta)
-    GAPS<-(model$residuals/(x-model$residuals))
-    gaps<-as.matrix(na.omit(GAPS))
-    gap<-gaps[nrow(gaps)]
-    return(gap)
-  }
-  outcome<-apply(matdat, 2, regr)
-  outcome<-as.matrix(outcome)
-  return(outcome*100)
-}
-
 
 lagger <- function(series, lag, na.cut=F){
   # Takes a time series and creates a matrix with given number
@@ -482,75 +372,6 @@ formula.maker <- function(df, y, intercept = T){
   attr(fomu, which='.Environment') <- .GlobalEnv
   return(fomu)
 }
-
-
-spf_funct <-  function(filnam, typs, ahead=1) {
-  # this function imports the files, reformats,
-  # renames, saves in raw format and produces
-  # aggregate statistics in XTS format
-  
-  # read in xlsx files and reshape w\ spread
-  # this block selects one quarter ahead forecasts
-  # but adjusting 'ahead' parameter below one can
-  # extract other values
-  
-  # ad-hoc function inconsistent w/ external use
-  # typs is one of CPI, CORECPI, PCE, COREPCE
-  
-  
-  # 'ahead' allows to select the horizon of 
-  # forecasts one wishes to extract:
-  # -1 for previous quarter estimates
-  # 0 for nowcast
-  # 1 for one quarter ahead -- default
-  # 2 for two quarters ahead
-  # 3 for three quarters ahead
-  # 4 for one year ahead
-  
-  typ=tolower(typs)
-  
-  colu=c(rep('numeric',3),  # picks year, quarter, ID
-         rep('skip', 2+ahead),	 # skips industry
-         'numeric',				 # moving target picking 'ahead' horizon
-         rep('skip', 7-ahead)	 # skips the rest
-  )
-  
-  df=read_excel(file.path(temp_dir,filnam), 
-                na='#N/A', col_types=colu) %>%
-    spread(ID, paste0(typs,ahead+2)) %>% 
-    ts(start=c(1968, 4), frequency=4) %>%
-    as.xts()
-  
-  pst=paste0(typ,'_')
-  if (ahead==-1){
-    pst=paste0(pst,'b1')
-  } 	else {
-    pst=paste0(pst,'h') %>% paste0(ahead)
-  }
-  
-  names(df)=c('year', 'quarter', paste(pst, (1:(ncol(df)-2)), sep='_'))
-  
-  df$year <- df$quarter <- NULL
-  
-  # saving in txt csv format the raw data
-  write.zoo(df, file.path(data_dir, paste(paste0('SPF_IND_',pst),'txt', sep='.')), sep=';', row.names=F, index.name='time')
-  
-  
-  iqr <- apply(df, 1, IQR, na.rm=TRUE) %>% ts(start=c(1968, 4), frequency=4) %>% as.xts()
-  stand<-apply(df, 1, var, na.rm=T) %>% sqrt()%>% ts(start=c(1968, 4), frequency=4) %>% as.xts()
-  mean<-apply(df, 1, mean, na.rm=T)%>% ts(start=c(1968, 4), frequency=4) %>% as.xts()
-  mean[is.nan(mean)] <- NA
-  
-  lab <- paste0('spf_', pst)
-  
-  df_stat=merge(iqr, stand, mean)
-  names(df_stat)=paste(lab, c('iqr', 'sd', 'mean'), sep='_')
-  
-  
-  return(df_stat)
-}
-
-
 
 ##### TRACKING PERSISTENCE OVER TIME #####
 persistence_ridges <- function(tseries, window = 24, lags = 8){
@@ -629,9 +450,7 @@ persistence_ridges <- function(tseries, window = 24, lags = 8){
                             ) - 1
   
   return(out_fin)
-  
 }
-
 
 standard <- function(x){
   
@@ -646,7 +465,6 @@ standard <- function(x){
   
   return(x_stand)
 }
-
 
 reg_print <- function(m){
   # custom function to solely print 
@@ -742,26 +560,26 @@ devtools::install_github('ceschi/urcabis')
 devtools::install_github('ceschi/MSwMbis')
 # devtools::install_version("readxl", version = "1.0.0")
 # library(urcabis) # for when the package will be duly updated (pull request)
-# in all likelyhood it will never be updated...
+# in all likelyhood it will never be updated.................
 
 
-pkgs <- c('vars', 'glue', 'lazyeval',
-          'quantreg', 'tidyverse', 'devtools',
-          'tseries', 'dynlm', 'stargazer',
-          'dyn', 'strucchange', 'xts', 'httr',
-          'MASS', 'car', 'rvest', 'viridis',
-          'mFilter', 'fredr','ggridges',
-          'readr', 'quantmod','broom',
-          'devtools', 'lubridate', 'ggridges',
-          'readxl', 'VARsignR', 'tbl2xts',
-          'R.matlab', 'matlabr', 'tictoc', 'gmm',
-          'MSwM', 'urca')
+pkgs <- c(
+          'broom',
+          'car',
+          'devtools',
+          'ggridges',
+          'gmm',
+          'httr',
+          'lubridate',
+          'mFilter',
+          'MSwM',
+          'strucchange',
+          'tictoc',
+          'urca',
+          'viridis')
 # fill pkgs with names of the packages to install
 
 instant_pkgs(pkgs)
-
-
-
 
 
 #### housekeeping ####
