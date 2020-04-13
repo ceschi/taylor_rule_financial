@@ -49,14 +49,10 @@ regressions$formula <- list(
   # 3
     tr_spread_sp = ffr ~ deflt1 + realtime_gap + ffrb + spread_sp_3m + q1 + q2 + q3,
   # 4
-    tr_spread_baa_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_aaa + q1 + q2 + q3,
-  # 5
     tr_spread_10y_aaa = ffr ~ deflt1 + realtime_gap + ffrb + spread_aaa + q1 + q2 + q3,
-  # 6
-    tr_spread_10y_baa = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa_long + q1 + q2 + q3,
-  # 7
+  # 5
     tr_shrate_WX = shffr ~ deflt1 + realtime_gap + shffrb + q1 + q2 + q3,
-  # 8
+  # 6
     tr_shrate_K = kripp_shffr ~ deflt1 + realtime_gap + kripp_shffrb + q1 + q2 + q3,
   # 1.1
     tr_standard =  ffr ~ deflt1 + realtime_gap + ffrb,
@@ -75,14 +71,10 @@ regressions$messages <- list(
   # 3
   '3 - TR and 3M spread',
   # 4
-  '4 - TR with BAA-AAA spread',
-  # 5
   '5 - TR with AAA-10y spread',
-  # 6
-  '6 - TR with BAA spread II',
-  # 7
+  # 5
   '7 - Wu-Xia shadow rate',
-  # 8
+  # 6
   '8 - Krippner shadow rate',
   # 1.1
   '1nq - Standard TR',
@@ -100,13 +92,11 @@ corr_tab <- db_US %>% xts_tbl() %>% select(ffr, ffrb,
                                  cpit, cpit1,
                                  coret, coret1, 
                                  realtime_gap, expost_gap, employment_fluct,
-                                 spread_sp_3m, spread_baa_long, spread_baa) %>% na.omit(.) %>% cor(.)
+                                 spread_sp_3m, spread_baa) %>% na.omit(.) %>% cor(.)
 
 ##### isolate only those variables that are used
 plotter <- db_US
 varss <- rapply(object = regressions$formula, f = base::all.vars) %>% unique()
-
-
 
 db_US <- db_US[, varss]
 
