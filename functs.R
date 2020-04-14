@@ -1,5 +1,43 @@
 ##### Specifically designed functions ####
 
+# install/load packages
+instant_pkgs <- function(pkgs) { 
+  ## Function loading or installing packages in
+  ## current R instance.
+  ## Developed by Jaime M. Montana Doncel - V1
+  
+  
+  pkgs_miss <- pkgs[which(!pkgs %in% installed.packages()[, 1])]
+  if (length(pkgs_miss) > 0) {
+    install.packages(pkgs_miss)
+  }
+  
+  if (length(pkgs_miss) == 0) {
+    message("\n ...Packages were already installed!\n")
+  }
+  
+  # install packages not already loaded:
+  pkgs_miss <- pkgs[which(!pkgs %in% installed.packages()[, 1])]
+  if (length(pkgs_miss) > 0) {
+    install.packages(pkgs_miss)
+  }
+  
+  # load packages not already loaded:
+  attached <- search()
+  attached_pkgs <- attached[grepl("package", attached)]
+  need_to_attach <- pkgs[which(!pkgs %in% gsub("package:", "", attached_pkgs))]
+  
+  if (length(need_to_attach) > 0) {
+    for (i in 1:length(need_to_attach))  suppressPackageStartupMessages(library(need_to_attach[i], character.only = TRUE))
+  }
+  
+  if (length(need_to_attach) == 0) {
+    message("\n ...Packages were already loaded!\n")
+  }
+}
+
+
+
 # A file to gather all home made functions with relative descriptions
 
 reg_call <- function(m){
@@ -91,7 +129,8 @@ reg_call <- function(m){
   plot(regressions$stab$fstat[[m]], xaxt="n")
   title(main=paste0(regressions$messages[[m]], ': F-stat stability'),
         sub=paste0('Vertical line indicates date of most likely break: ',
-                   regressions$stab$fstatpoints[[m]]))
+                   regressions$stab$fstatpoints[[m]]),
+        cex.sub = 2)
   lines(breakpoints(regressions$stab$fstat[[m]]))
   axis(side = 1,
        at = (0:10)/10,
@@ -452,19 +491,6 @@ persistence_ridges <- function(tseries, window = 24, lags = 8){
   return(out_fin)
 }
 
-standard <- function(x){
-  
-  # handy fct to standardize
-  # a vector x of draws - 
-  # use base::scale
-  
-  
-  x_mean <- mean(na.omit(x))
-  x_sd <- sd(na.omit(x))
-  x_stand <- (x-x_mean)/x_sd
-  
-  return(x_stand)
-}
 
 reg_print <- function(m){
   # custom function to solely print 
@@ -573,6 +599,7 @@ pkgs <- c(
           'lubridate',
           'mFilter',
           'MSwM',
+          'stargazer',
           'strucchange',
           'tictoc',
           'urca',

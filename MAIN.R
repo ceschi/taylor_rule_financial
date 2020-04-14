@@ -89,8 +89,8 @@ toc()
 # housekeeping
 rm(temp_dir, data_dir, graphs_dir, 
    working_directory, flag___singular,
-   flag___msm, flag___optilag, flag___plot,
-   ahead, k, r, wind, j, m)
+   flag___msm, flag___plot,
+   ahead, j, m)
 toc()
 
 

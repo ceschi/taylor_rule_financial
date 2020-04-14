@@ -5,9 +5,7 @@
 if (flag___singular == 1){
   
   cat('Single file execution')
-  source('directories.R')
   source('functs.R')
-  source('USdatacoll.R')
 }
 
 

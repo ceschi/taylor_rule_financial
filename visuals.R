@@ -200,7 +200,6 @@ ggsave(plot = plot_money,
 plot_spread <- ggplot(db_US["1950/2020"], aes(x=index(db_US["1950/2020"])))+
   geom_line(aes(y=spread_baa, colour='BAA'),size= 1.5)+
   geom_line(aes(y=spread_sp_3m, colour='3m SP'),size= 1)+
-  geom_line(aes(y=spread_baa_aaa, colour ='B-A'), size= 1)+
   geom_line(aes(y=spread_aaa, colour='AAA'),  alpha = .8)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Liquidity spreads - financial instability')+
