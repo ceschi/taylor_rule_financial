@@ -119,10 +119,10 @@ for (m in 1:length(regressions$formula)){
   
   # graphing residuals w/ ggplot2
   regressions$plot[[m]] <- ggplot(data=data.frame(date=residuals(regressions$models[[m]]) %>%
-                                                    names() %>% as.yearqtr('%Y Q%q'),
+                                                    names() %>% as.Date(),
                                                   res=residuals(regressions$models[[m]])),
                                   aes(x=date, y=res)) + 
-    geom_line()+theme_bw()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+    geom_line()+theme_bw()+#scale_x_yearqtr(format='%Y Q%q', n=20)+
     geom_hline(color='red', yintercept=regressions$models[[m]] %>% residuals() %>% sd() %>% `*`(2))+
     geom_hline(color='red', yintercept=regressions$models[[m]] %>% residuals() %>% sd() %>% `*`(-2))+
     xlab(' ') + ylab('Residuals') + ggtitle(regressions$messages[[m]])+
