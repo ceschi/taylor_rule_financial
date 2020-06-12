@@ -26,7 +26,7 @@
 # from modifications over time as the paper developed and changed. Higher speed
 # might be easily achieved with vectorisation and parallelisation.
 #
-# v0.96
+# v1
 
 ##### I - Flags, libraries, and folders #####
 
@@ -100,5 +100,5 @@ toc()
 
 
 # reg_print(1)
-# reg_print(3)
 # reg_print(2)
+# reg_print(3)

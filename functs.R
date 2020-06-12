@@ -578,8 +578,8 @@ reg_print <- function(m){
 ##### Packages Loader #####
 
 # remove standard packages with same names
-if ('MSwM' %in% installed.packages()){remove.packages('MSwM')}
-if ('urca' %in% installed.packages()){remove.packages('urca')}
+# if ('MSwM' %in% installed.packages()){remove.packages('MSwM')}
+# if ('urca' %in% installed.packages()){remove.packages('urca')}
 
 # devtools::install_github('sboysel/fredr')
 devtools::install_github('ceschi/urcabis')
