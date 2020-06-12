@@ -16,18 +16,18 @@ db_US <- plotter
 
 # TR variables
 plot_trvars <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
-  geom_line(aes(y=ffr, color='FFR'),  alpha = .8)+
-  geom_line(aes(y=rev_defl, color='Act. Infl.'),  alpha = .8)+
-  geom_line(aes(y=deflt1, color='Exp. Infl.'),  alpha = .8)+
-  geom_line(aes(y=realtime_gap, color='Gap'),  alpha = .8)+
+  geom_line(aes(y=ffr, color='FFR'),  alpha = .8, linetype = 'solid')+
+  geom_line(aes(y=rev_defl_pch, color='Act. Infl.'),  alpha = .8, linetype = 'dashed')+
+  geom_line(aes(y=deflt1, color='Exp. Infl.'),  alpha = .8, linetype = 'twodash')+
+  geom_line(aes(y=realtime_gap, color='Gap'),  alpha = .8, linetype = 'dotted')+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('US Taylor rule - main components')+
   scale_y_continuous()+
-  scale_x_yearqtr(format='%Y Q%q', n=20)+
+  scale_x_date()+
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
     legend.position = 'bottom') +
-  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) + scale_linetype_manual(values=c('solid', 'dashed', 'twodash', 'dotted'))
 
 if (flag___plot==0) print(plot_trvars)
 
@@ -39,15 +39,15 @@ ggsave(plot_trvars,
 
 # Measures of inflation, revised ones
 plot_re_infl <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
-  geom_line(aes(y=rev_cpi, colour='Rev. Infl.'),size= 1)+
-  geom_line(aes(y=rev_cpi_fe, colour='Rev. Infl. no FE'),size= 1)+
-  geom_line(aes(y=rev_pce, colour='Rev. PCE'),size= 1)+
-  geom_line(aes(y=rev_pce_fe, colour='Rev. PCE no FE'),size= 1)+
-  geom_line(aes(y=rev_defl, colour='Rev. Defl.'),size= 1)+
+  geom_line(aes(y=rev_cpi_pch, colour='Rev. Infl.'),size= 1)+
+  geom_line(aes(y=rev_cpi_fe_pch, colour='Rev. Infl. no FE'),size= 1)+
+  geom_line(aes(y=rev_pce_pch, colour='Rev. PCE'),size= 1)+
+  geom_line(aes(y=rev_pce_fe_pch, colour='Rev. PCE no FE'),size= 1)+
+  geom_line(aes(y=rev_defl_pch, colour='Rev. Defl.'),size= 1)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Measures of historical inflation')+
   scale_y_continuous()+
-  scale_x_yearqtr(format='%Y Q%q', n=20)+
+  scale_x_date()+
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
@@ -72,7 +72,7 @@ plot_slack <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Measures of slackness')+
   scale_y_continuous()+
-  scale_x_yearqtr(format='%Y Q%q', n=20)+
+  scale_x_date()+
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
@@ -95,7 +95,7 @@ plot_nowinf <- ggplot(db_US["1965/2020"], aes(x=index(db_US["1965/2020"])))+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Current period inflation forecasts')+
   scale_y_continuous()+
-  scale_x_yearqtr(format='%Y Q%q', n=20)+
+  scale_x_date()+
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
@@ -116,7 +116,7 @@ plot_hinf <- ggplot(db_US["1965/2020"], aes(x=index(db_US["1965/2020"])))+
   geom_line(aes(y=deflt1, colour='Deflator'),size= 1)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('One quarter ahead inflation forecasts')+
-  scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+  scale_y_continuous()+scale_x_date()+
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
@@ -138,7 +138,7 @@ plot_spf_fore <- ggplot(db_US["1980/2020"], aes(x=index(db_US["1980/2020"])))+
   geom_line(aes(y=spf_corepce_h1_mean, colour='SPF core PCE mean'),size = .8)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('One quarter ahead inflation forecasts - SPF cross section means')+
-  scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+  scale_y_continuous()+scale_x_date()+
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
@@ -160,7 +160,7 @@ plot_spf_iqr <- ggplot(db_US["1980/2020"], aes(x=index(db_US["1980/2020"])))+
   geom_line(aes(y=spf_corepce_h1_iqr, colour='SPF core PCE'),size = .8)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour='IQRs')+
   ggtitle('One quarter ahead inflation forecasts - SPF cross section IQR')+
-  scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+  scale_y_continuous()+scale_x_date()+
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
@@ -182,7 +182,7 @@ plot_money <- ggplot(db_US["1955/2020"], aes(x=index(db_US["1955/2020"])))+
   geom_line(aes(y=m3_g, colour='M3'), size = .8)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Monetary aggregates growth rates')+
-  scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+  scale_y_continuous()+scale_x_date()+
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
@@ -203,7 +203,7 @@ plot_spread <- ggplot(db_US["1950/2020"], aes(x=index(db_US["1950/2020"])))+
   geom_line(aes(y=spread_aaa, colour='AAA'),  alpha = .8)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Liquidity spreads - financial instability')+
-  scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+  scale_y_continuous()+scale_x_date()+
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
@@ -219,7 +219,7 @@ ggsave(plot = plot_spread,
 
 
 # Phillips Curve, classic one
-plot_phil <- ggplot(db_US, aes(y = rev_cpi, x = unempl_rate, colour = as.Date(index(db_US))))+
+plot_phil <- ggplot(db_US, aes(y = rev_cpi_pch, x = unempl_rate, colour = as.Date(index(db_US))))+
       geom_path(size = .8) + geom_point(size = 2.5)+
       theme_minimal()+xlab('Unemployment rate') + ylab('Revised CPI')+labs(colour = 'Years')+
       ggtitle('Phillips Curve') +
@@ -235,7 +235,7 @@ ggsave(plot = plot_phil,
        height = pdf_height, width = pdf_width, units='in')
 
 # Phillips Curve, layoffs
-plot_phil_lay <- ggplot(db_US, aes(y = rev_cpi, x = layoffs, colour = as.Date(index(db_US))))+
+plot_phil_lay <- ggplot(db_US, aes(y = rev_cpi_pch, x = layoffs, colour = as.Date(index(db_US))))+
   geom_path(size = .8) + geom_point(size = 2.5)+
   theme_minimal()+xlab('Layoff rate') + ylab('Revised CPI')+labs(colour = 'Years')+
   ggtitle('Phillips Curve - Layoff rate')+
@@ -251,7 +251,7 @@ ggsave(plot = plot_phil_lay,
        height = pdf_height, width = pdf_width, units='in')
 
 # Phillips Curve, employment fluctuations
-plot_phil_fluct <- ggplot(db_US, aes(y = rev_cpi, x = employment_fluct, colour = as.Date(index(db_US))))+
+plot_phil_fluct <- ggplot(db_US, aes(y = rev_cpi_pch, x = employment_fluct, colour = as.Date(index(db_US))))+
   geom_path(size = .8) + geom_point(size = 2.5)+
   theme_minimal()+xlab('Employment fluctuations') + ylab('Revised CPI')+labs(colour = 'Years')+
   ggtitle('Phillips Curve - Employment Fluctuations around long term rate')+
@@ -268,9 +268,9 @@ ggsave(plot = plot_phil_fluct,
 
 
 plot_hist_pi <- ggplot(data=db_US)+
-  geom_density(aes(x=rev_defl, fill = 'defl'), alpha= .5)+
-  geom_density(aes(x=rev_pce, fill = 'pce'), alpha= .5)+
-  geom_density(aes(x=rev_cpi, fill = 'cpi'), alpha = .5)+
+  geom_density(aes(x=rev_defl_pch, fill = 'defl'), alpha= .5)+
+  geom_density(aes(x=rev_pce_pch, fill = 'pce'), alpha= .5)+
+  geom_density(aes(x=rev_cpi_pch, fill = 'cpi'), alpha = .5)+
   labs(' ')+theme_minimal()+
   scale_fill_viridis_d(labels = c('Defl.', 'PCE', 'CPI'), name='Hist. series')+
   xlab('Inflation rates')+
@@ -298,7 +298,7 @@ plot_defl <- ggplot(db_US["1967/2015"], aes(x=index(db_US["1967/2015"])))+
   geom_line(aes(y = deflt8, colour = 't+8'), size = .8, alpha = .5)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('Deflator')+
-  scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+  scale_y_continuous()+scale_x_date()+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
   guides(colour=guide_legend(nrow=1,byrow=TRUE))
@@ -324,7 +324,7 @@ plot_cpi <- ggplot(db_US["1978/2015"], aes(x=index(db_US["1978/2015"])))+
   geom_line(aes(y = cpit8, colour = 't+8'), size = .8, alpha = .5)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('CPI')+
-  scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+  scale_y_continuous()+scale_x_date()+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
   guides(colour=guide_legend(nrow=1,byrow=TRUE))
@@ -351,7 +351,7 @@ plot_core <- ggplot(db_US["1985/2015"], aes(x=index(db_US["1985/2015"])))+
   geom_line(aes(y = coret8, colour = 't+8'), size = .8, alpha = .5)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('CORE')+
-  scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+  scale_y_continuous()+scale_x_date()+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
   guides(colour=guide_legend(nrow=1,byrow=TRUE))
@@ -373,16 +373,16 @@ plot_shadow <- ggplot(db_US["1954-01/"], aes(x = index(db_US["1954-01/"])))+
   geom_line(aes(y = kripp_shffr, colour = 'Krippner'), size = 1.2, alpha = .7)+
   theme_minimal()+xlab(' ')+ylab(' ')+ labs(colour = "")+
   ggtitle('Shadow rates')+
-  scale_y_continuous()+scale_x_yearqtr(format='%Y Q%q', n=20)+
+  scale_y_continuous()+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
   guides(colour=guide_legend(nrow=1, byrow=TRUE)) +
-  geom_vline(xintercept = as.yearqtr("1995-01"), linetype = 'dashed') +
-  geom_text(aes(x = as.yearqtr("1996-02"), y = 12), label = 'Krippner starts', angle = 90, size = 3)+
-  geom_vline(xintercept = as.yearqtr("2007-01"), linetype = 'dashed') +
-  geom_text(aes(x = as.yearqtr("2008-02"), y = 12), label = 'Wu-Xia starts', angle = 90, size = 3)+
-  geom_vline(xintercept = as.yearqtr("2015-4"), linetype = 'dashed') +
-  geom_text(aes(x = as.yearqtr("2016-04"), y = 12), label = 'Wu-Xia ends', angle = 90, size = 3)
+  geom_vline(xintercept = as.Date("1995-01-01"), linetype = 'dashed') +
+  geom_text(aes(x = as.Date("1996-06-30"), y = 12), label = 'Krippner starts', angle = 90, size = 3)+
+  geom_vline(xintercept = as.Date("2007-01-01"), linetype = 'dashed') +
+  geom_text(aes(x = as.Date("2008-06-30"), y = 12), label = 'Wu-Xia starts', angle = 90, size = 3)+
+  geom_vline(xintercept = as.Date("2015-12-31"), linetype = 'dashed') +
+  geom_text(aes(x = as.Date("2016-12-31"), y = 12), label = 'Wu-Xia ends', angle = 90, size = 3)
 
 if (flag___plot == 0) print(plot_shadow)
 
@@ -396,16 +396,16 @@ ggsave(plot = plot_shadow,
 
 
 plot_trvars_all <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
-  geom_line(aes(y=ffr, color='FFR'),  alpha = .8)+
-  geom_line(aes(y=rev_defl, color='Act. Infl.'),  alpha = .8)+
-  geom_line(aes(y=deflt1, color='Exp. Infl.'),  alpha = .8)+
-  geom_line(aes(y=realtime_gap, color='Gap'),  alpha = .8)+
-  geom_line(aes(y=spread_baa, color='BAA'),  alpha = .8)+
-  geom_line(aes(y=spread_sp_3m, color='S&P'),  alpha = .8)+
+  geom_line(aes(y=ffr, color='FFR'),  alpha = .8, linetype = 'solid')+
+  geom_line(aes(y=rev_defl_pch, color='Act. Infl.'),  alpha = .8, linetype = 'dashed')+
+  geom_line(aes(y=deflt1, color='Exp. Infl.'),  alpha = .8, linetype = 'twodash')+
+  geom_line(aes(y=realtime_gap, color='Gap'),  alpha = .8, linetype = 'dotted')+
+  geom_line(aes(y=spread_baa, color='BAA'),  alpha = .8, linetype = 'dotdash')+
+  geom_line(aes(y=spread_sp_3m, color='S&P'),  alpha = .8, linetype = 'longdash')+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('US Taylor rule - liquidity augmented')+
   scale_y_continuous()+
-  scale_x_yearqtr(format='%Y Q%q', n=20)+
+  scale_x_date()+
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
@@ -486,3 +486,4 @@ rm(plot_trvars,
    plot_trvars_all,
    plotter
    )
+

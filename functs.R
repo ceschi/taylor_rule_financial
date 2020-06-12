@@ -106,7 +106,7 @@ reg_call <- function(m){
   # extract useful ts from object
   stab_ts <- regressions$stab$cusum[[m]]$process
   
-  plot(regressions$stab$cusum[[m]], alpha=.01, boundary=T, xaxt="n")
+  plot(regressions$stab$cusum[[m]], alpha=.01, boundary=T, xaxt="n", lty=6)
   axis(side = 1,
        at = (0:10)/10,
        labels = names(stab_ts)[
@@ -126,7 +126,7 @@ reg_call <- function(m){
   ts_end <- end(regressions$stab$fstat[[m]]$Fstats)[2]
   fstat_ts_names <- names(stab_ts)[ts_start:ts_end]
   
-  plot(regressions$stab$fstat[[m]], xaxt="n")
+  plot(regressions$stab$fstat[[m]], xaxt="n", lty=6)
   title(main=paste0(regressions$messages[[m]], ': F-stat stability'),
         sub=paste0('Vertical line indicates date of most likely break: ',
                    regressions$stab$fstatpoints[[m]]),
@@ -578,14 +578,14 @@ reg_print <- function(m){
 ##### Packages Loader #####
 
 # remove standard packages with same names
-if ('MSwM' %in% installed.packages()){remove.packages('MSwM')}
-if ('urca' %in% installed.packages()){remove.packages('urca')}
+# if ('MSwM' %in% installed.packages()){remove.packages('MSwM')}
+# if ('urca' %in% installed.packages()){remove.packages('urca')}
 
 # devtools::install_github('sboysel/fredr')
 devtools::install_github('ceschi/urcabis')
 devtools::install_github('ceschi/MSwMbis')
 # devtools::install_version("readxl", version = "1.0.0")
-# library(urcabis) # for when the package will be duly updated (pull request)
+# library(urcabis) # for when the package will be duly updated (pull request 2017)
 # in all likelyhood it will never be updated.................
 
 
