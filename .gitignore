@@ -13,12 +13,18 @@ gap_ffr_persistence.R
 gmm_test_fuct.R
 *.pdf
 .Rprofile
-
+./processed_data/*
+./plots/*
+./downloaded_files/*
 
 Downloaded files/
 Plots/
 Processed data/
 todo/
+processed_data/
+plots/
+downloaded_files/
+
 
 simulations_pi/ascardone_pi.mat
 simulations_pi/gali_pi.mat

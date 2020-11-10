@@ -281,7 +281,6 @@ make_stars <- function(x){
   # printing stars alongside
   # with converted parameters
   
-  c
   # pre-allocate 
   signif <- NULL
   

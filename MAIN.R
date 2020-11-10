@@ -65,11 +65,7 @@ tic('Total time')
 # 4 for one year ahead
 tic('Data collection')
 ahead <- 1
-download.file(url = 'https://raw.githubusercontent.com/ceschi/us_macro_data/master/USdata_coll.R',
-			destfile = 'temp.R',
-			quiet = T)
-source('temp.R',)
-unlink(x = 'temp.R')
+source('https://raw.githubusercontent.com/ceschi/us_macro_data/master/USdata_coll.R')
 toc()
 
 
