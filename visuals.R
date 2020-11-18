@@ -538,9 +538,7 @@ plots <- list(plot_trvars,
               plot_cpi,
               plot_core,
               plot_shadow,
-              plot_trvars_all,
-              plot_trvars_col,
-              plot_trvars_all_col)
+              plot_trvars_all)
 
 ##### Housekeeping #####
 rm(plot_trvars,
@@ -565,8 +563,6 @@ rm(plot_trvars,
    plot_shadow,
    plot_trvars_all,
    plotter,
-   plot_trvars_col,
-   plot_trvars_all_col,
    llbls, 
    m,
    trvars,
