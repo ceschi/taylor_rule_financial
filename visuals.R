@@ -32,7 +32,7 @@ plot_trvars <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
 if (flag___plot==0) print(plot_trvars)
 
 ggsave(plot_trvars,
-       filename='TRvars.pdf',
+       filename='TRvars_col.pdf',
        path = graphs_dir, 
        device='pdf',
        height = pdf_height, width = pdf_width, units='in')
@@ -414,7 +414,7 @@ plot_trvars_all <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
 if (flag___plot==0) print(plot_trvars)
 
 ggsave(plot_trvars_all,
-       filename='TRvars_all.pdf',
+       filename='TRvars_all_col.pdf',
        path = graphs_dir, 
        device='pdf',
        height = pdf_height, width = pdf_width, units='in')
@@ -441,6 +441,84 @@ for (m in 1:length(regressions$models)){
 
 
 
+# plots for pub -----------------------------------------------------------
+
+# first off just reshape the db to tidy long format with variables of interest
+
+trvars <- db_US %>% 
+  xts_tbl() %>% 
+  select(date, ffr, rev_defl_pch, deflt1, realtime_gap) %>% 
+  tidyr::pivot_longer(cols = -date, names_to = 'var', values_to = 'val') %>% 
+  na.omit(.)
+
+trvars_all <- db_US %>% 
+  xts_tbl() %>% 
+  select(date, ffr, rev_defl_pch, deflt1, realtime_gap, spread_baa, spread_sp_3m) %>% 
+  tidyr::pivot_longer(cols = -date, names_to = 'var', values_to = 'val') %>% 
+  na.omit(.)
+
+llbls <- c(
+  deflt1 = 'Exp. Infl.',
+  ffr = 'FFR',
+  realtime_gap = 'Gap',
+  rev_defl_pch = 'Act. Infl.',
+  spread_baa = 'BAA',
+  spread_sp_3m = 'S&P'
+)
+
+
+
+# Fig.1
+plot_trvars <- ggplot(trvars, aes(x = date, y = val, colour = var)) +
+  geom_hline(yintercept = 0) +
+  geom_line(aes(linetype = var), size = .5, alpha = 1) +
+  geom_point(aes(shape = var), size = 1, alpha = 1) +
+  theme_minimal() + xlab('') + ylab('') +
+  ggtitle('US Taylor Rule - Main Components') +
+  theme(legend.position = 'bottom', 
+        legend.title = element_blank(),
+        legend.key.size = unit(2, 'cm')) +
+  scale_shape(labels = llbls) +
+  scale_linetype(labels = llbls) +
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) +
+  scale_colour_viridis_d(labels = llbls,
+                         end = .7,
+                         option = 'A')
+
+if (flag___plot==0) print(plot_trvars)
+
+ggsave(plot_trvars,
+       filename='TRvars.pdf',
+       path = graphs_dir, 
+       device='pdf',
+       height = pdf_height, width = pdf_width, units='in')
+
+# Fig.2
+plot_trvars_all <- ggplot(trvars_all, aes(x = date, y = val, colour = var)) +
+  geom_hline(yintercept = 0) +
+  geom_line(aes(linetype = var), size = .5, alpha = 1) +
+  geom_point(aes(shape = var), size = 1, alpha = 1) +
+  theme_minimal() + xlab('') + ylab('') +
+  ggtitle('US Taylor Rule - Main Components') +
+  theme(legend.position = 'bottom', 
+        legend.title = element_blank()) +
+  scale_shape(labels = llbls) +
+  scale_linetype(labels = llbls) +
+  scale_colour_viridis_d(labels = llbls,
+                         end = .7,
+                         option = 'A') +
+  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+
+if (flag___plot==0) print(plot_trvars)
+
+ggsave(plot_trvars_all,
+       filename='TRvars_all.pdf',
+       path = graphs_dir, 
+       device='pdf',
+       height = pdf_height, width = pdf_width, units='in')
+
+
+
 
 ##### Plots collector #####
 plots <- list(plot_trvars,
@@ -460,7 +538,9 @@ plots <- list(plot_trvars,
               plot_cpi,
               plot_core,
               plot_shadow,
-              plot_trvars_all)
+              plot_trvars_all,
+              plot_trvars_col,
+              plot_trvars_all_col)
 
 ##### Housekeeping #####
 rm(plot_trvars,
@@ -484,5 +564,11 @@ rm(plot_trvars,
    plot_core,
    plot_shadow,
    plot_trvars_all,
-   plotter
+   plotter,
+   plot_trvars_col,
+   plot_trvars_all_col,
+   llbls, 
+   m,
+   trvars,
+   trvars_all
    )
