@@ -12,23 +12,26 @@ if (flag___singular==1) library(ggplot2, xts)
 invsc <- 1.5
 pdf_width = 14.6/invsc; pdf_height = 8/invsc
 
-db_US <- plotter
+db_US <- plotter # %>% 
+  # xts_tbl() %>% 
+  # pivot_longer(cols = !date, names_to = 'vars', values_drop_na = T)
 
 # TR variables
-plot_trvars <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
-  geom_line(aes(y=ffr, color='FFR'),  alpha = .8)+
-  geom_line(aes(y=rev_defl_pch, color='Act. Infl.'),  alpha = .8)+
-  geom_line(aes(y=deflt1, color='Exp. Infl.'),  alpha = .8)+
-  geom_line(aes(y=realtime_gap, color='Gap'),  alpha = .8)+
+plot_trvars <- ggplot(db_US["1945/2021"], aes(x=index(db_US["1945/2021"])))+
+  geom_line(aes(y=ffr, color='FFR'),  alpha = .8, size = 1)+
+  geom_line(aes(y=rev_defl_pch, color='Act. Infl.'),  alpha = .8, size = 1)+
+  geom_line(aes(y=deflt1, color='Exp. Infl.'),  alpha = .8, size = 1)+
+  geom_line(aes(y=realtime_gap, color='Gap'),  alpha = .8, size = 1)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
-  ggtitle('US Taylor rule - main components')+
+  ggtitle('US Taylor Rule - Main Components')+
   scale_y_continuous()+
   scale_x_date() + 
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
     legend.position = 'bottom') +
-  guides(colour=guide_legend(nrow=1,byrow=TRUE))
-
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) + 
+  scale_color_viridis_d(option = 'A', end = .8)
+  
 if (flag___plot==0) print(plot_trvars)
 
 ggsave(plot_trvars,
@@ -38,20 +41,21 @@ ggsave(plot_trvars,
        height = pdf_height, width = pdf_width, units='in')
 
 # Measures of inflation, revised ones
-plot_re_infl <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
-  geom_line(aes(y=rev_cpi_pch, colour='Rev. Infl.'),size= 1)+
-  geom_line(aes(y=rev_cpi_fe_pch, colour='Rev. Infl. no FE'),size= 1)+
+plot_re_infl <- ggplot(db_US["1945/2021"], aes(x=index(db_US["1945/2021"])))+
+  geom_line(aes(y=rev_cpi_pch, colour='Rev. CPI'),size= 1)+
+  geom_line(aes(y=rev_cpi_fe_pch, colour='Rev. Core CPI'),size= 1)+
   geom_line(aes(y=rev_pce_pch, colour='Rev. PCE'),size= 1)+
-  geom_line(aes(y=rev_pce_fe_pch, colour='Rev. PCE no FE'),size= 1)+
-  geom_line(aes(y=rev_defl_pch, colour='Rev. Defl.'),size= 1)+
+  geom_line(aes(y=rev_pce_fe_pch, colour='Rev. core PCE'),size= 1)+
+  geom_line(aes(y=rev_defl_pch, colour='Rev. GDP Deflator'),size= 1)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
-  ggtitle('Measures of historical inflation')+
+  ggtitle('Revised Inflation')+
   scale_y_continuous()+
   scale_x_date() + 
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
-  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) + 
+  scale_color_viridis_d(option = 'A', end = .8)
   
 if (flag___plot==0) print(plot_re_infl)
 
@@ -64,19 +68,20 @@ ggsave(plot = plot_re_infl,
 
 
 # Measures of slackness in the economy
-plot_slack <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
+plot_slack <- ggplot(db_US["1945/2019"], aes(x=index(db_US["1945/2019"])))+
   geom_line(aes(y=-layoffs, colour='(-)Layoff rate'),size= 1)+
   geom_line(aes(y=-employment_fluct, colour='(-)NU gap'),size= 1)+
   geom_line(aes(y=realtime_gap, colour='Realtime gap'),size= 1)+
   geom_line(aes(y=expost_gap, colour='ExPost gap'),size= 1)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
-  ggtitle('Measures of slackness')+
+  ggtitle('Economic Slackness')+
   scale_y_continuous()+
   scale_x_date() + 
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
-  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) + 
+  scale_color_viridis_d(option = 'A', end = .8)
 
 if (flag___plot==0) print(plot_slack)
 
@@ -88,18 +93,19 @@ ggsave(plot = plot_slack,
 
 
 # Inflation forecasts and nowcasts
-plot_nowinf <- ggplot(db_US["1965/2020"], aes(x=index(db_US["1965/2020"])))+
+plot_nowinf <- ggplot(db_US["1965/2016"], aes(x=index(db_US["1965/2016"])))+
   geom_line(aes(y=cpit, colour='CPI'),size= 1)+
-  geom_line(aes(y=coret, colour='Core PCE'),size= 1)+
+  geom_line(aes(y=coret, colour='PCE'),size= 1)+
   geom_line(aes(y=deflt, colour='Deflator'),size= 1)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
-  ggtitle('Current period inflation forecasts')+
+  ggtitle('Inlfation Nowcasts')+
   scale_y_continuous()+
   scale_x_date() + 
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
-  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) + 
+  scale_color_viridis_d(option = 'A', end = .8)
 
 if (flag___plot==0) print(plot_nowinf)
 
@@ -110,17 +116,18 @@ ggsave(plot = plot_nowinf,
        height = pdf_height, width = pdf_width, units='in')
 
 # one quarter ahead inflation forecasts
-plot_hinf <- ggplot(db_US["1965/2020"], aes(x=index(db_US["1965/2020"])))+
+plot_hinf <- ggplot(db_US["1965/2016"], aes(x=index(db_US["1965/2016"])))+
   geom_line(aes(y=cpit1, colour='CPI'),size= 1)+
-  geom_line(aes(y=coret1, colour='Core PCE'),size= 1)+
+  geom_line(aes(y=coret1, colour='PCE'),size= 1)+
   geom_line(aes(y=deflt1, colour='Deflator'),size= 1)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
-  ggtitle('One quarter ahead inflation forecasts')+
+  ggtitle('One Quarter Ahead Inflation Forecasts')+
   scale_y_continuous()+scale_x_date() + 
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
-  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) + 
+  scale_color_viridis_d(option = 'A', end = .8)
 
 if (flag___plot==0) print(plot_hinf)
 
@@ -131,18 +138,19 @@ ggsave(plot = plot_hinf,
        height = pdf_height, width = pdf_width, units='in')
 
 # Inflation forecasts coming from SPF
-plot_spf_fore <- ggplot(db_US["1980/2020"], aes(x=index(db_US["1980/2020"])))+
+plot_spf_fore <- ggplot(db_US["1980/2016"], aes(x=index(db_US["1980/2016"])))+
   geom_line(aes(y=spf_cpi_h1_mean, colour='SPF CPI mean'),size = .8)+
-  geom_line(aes(y=spf_corecpi_h1_mean, colour='SPF core CPI mean'),size = .8)+
+  geom_line(aes(y=spf_corecpi_h1_mean, colour='SPF CPI core mean'),size = .8)+
   geom_line(aes(y=spf_pce_h1_mean, colour='SPF PCE mean'),size = .8)+
-  geom_line(aes(y=spf_corepce_h1_mean, colour='SPF core PCE mean'),size = .8)+
+  geom_line(aes(y=spf_corepce_h1_mean, colour='SPF PCEcore  mean'),size = .8)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
   ggtitle('One quarter ahead inflation forecasts - SPF cross section means')+
   scale_y_continuous()+scale_x_date() + 
   geom_hline(yintercept = 0, colour='black')+
-  theme(axis.text.x = element_text(angle = 45), 
+  theme(axis.text.x = element_text(angle = 0), 
         legend.position = 'bottom') +
-  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) + 
+  scale_color_viridis_d(option = 'A', end = .8)
 
 if (flag___plot==0) print(plot_spf_fore)
 
@@ -153,18 +161,20 @@ ggsave(plot = plot_spf_fore,
        height = pdf_height, width = pdf_width, units='in')
 
 # Inflation forecast disagreement among SPF
-plot_spf_iqr <- ggplot(db_US["1980/2020"], aes(x=index(db_US["1980/2020"])))+
+plot_spf_iqr <- ggplot(db_US["1980/2021"], aes(x=index(db_US["1980/2021"])))+
   geom_line(aes(y=spf_cpi_h1_iqr, colour='SPF CPI'),size = .8)+
-  geom_line(aes(y=spf_corecpi_h1_iqr, colour='SPF core CPI'),size = .8)+
+  geom_line(aes(y=spf_corecpi_h1_iqr, colour='SPF CPI core'),size = .8)+
   geom_line(aes(y=spf_pce_h1_iqr, colour='SPF PCE'),size = .8)+
-  geom_line(aes(y=spf_corepce_h1_iqr, colour='SPF core PCE'),size = .8)+
+  geom_line(aes(y=spf_corepce_h1_iqr, colour='SPF PCE core'),size = .8)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour='IQRs')+
-  ggtitle('One quarter ahead inflation forecasts - SPF cross section IQR')+
+  ggtitle('One Quarter Ahead Inflation Forecasts - SPF Cross Section IQR')+
   scale_y_continuous()+scale_x_date() + 
   geom_hline(yintercept = 0, colour='black')+
-  theme(axis.text.x = element_text(angle = 45), 
+  theme(axis.text.x = element_text(angle = 0), 
         legend.position = 'bottom') +
-  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) + 
+  scale_color_viridis_d(option = 'A', end = .8)
+
 
 if (flag___plot==0) print(plot_spf_iqr)
 
@@ -175,18 +185,20 @@ ggsave(plot = plot_spf_iqr,
        height = pdf_height, width = pdf_width, units='in')
 
 # Monetary growth rates
-plot_money <- ggplot(db_US["1955/2020"], aes(x=index(db_US["1955/2020"])))+
-  geom_line(aes(y=base_g, colour='Base mon.'), size = .8)+
+plot_money <- ggplot(db_US["1955/2021"], aes(x=index(db_US["1955/2021"])))+
+  geom_line(aes(y=base_g, colour='Base Money'), size = .8)+
   geom_line(aes(y=m1_g, colour='M1'), size = .8)+
   geom_line(aes(y=m2_g, colour='M2'), size = .8)+
   geom_line(aes(y=m3_g, colour='M3'), size = .8)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
-  ggtitle('Monetary aggregates growth rates')+
+  ggtitle('Monetary Aggregates Growth Rates')+
   scale_y_continuous()+scale_x_date() + 
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
-  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) + 
+  scale_color_viridis_d(option = 'A', end = .8)
+
 
 if (flag___plot==0) print(plot_money)
 
@@ -197,17 +209,19 @@ ggsave(plot = plot_money,
        height = pdf_height, width = pdf_width, units='in')
 
 # spreads
-plot_spread <- ggplot(db_US["1950/2020"], aes(x=index(db_US["1950/2020"])))+
-  geom_line(aes(y=spread_baa, colour='BAA'),size= 1.5)+
-  geom_line(aes(y=spread_sp_3m, colour='3m SP'),size= 1)+
-  geom_line(aes(y=spread_aaa, colour='AAA'),  alpha = .8)+
+plot_spread <- ggplot(db_US["1950/2021"], aes(x=index(db_US["1950/2021"])))+
+  geom_line(aes(y=spread_baa, colour='BAA'),size= 1)+
+  geom_line(aes(y=spread_sp_3m, colour='3m S&P500'),size= 1)+
+  geom_line(aes(y=spread_aaa, colour='AAA'),  alpha = .8, size = 1)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
-  ggtitle('Liquidity spreads - financial instability')+
+  ggtitle('Liquidity Spreads - Financial Liquidity')+
   scale_y_continuous()+scale_x_date() + 
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
-  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) + 
+  scale_color_viridis_d(option = 'A', end = .8)
+
 
 if (flag___plot==0) print(plot_spread)
 
@@ -221,7 +235,7 @@ ggsave(plot = plot_spread,
 # Phillips Curve, classic one
 plot_phil <- ggplot(db_US, aes(y = rev_cpi_pch, x = unempl_rate, colour = as.Date(index(db_US))))+
       geom_path(size = .8) + geom_point(size = 2.5)+
-      theme_minimal()+xlab('Unemployment rate') + ylab('Revised CPI')+labs(colour = 'Years')+
+      theme_minimal()+xlab('Unemployment Rate') + ylab('Revised CPI')+labs(colour = 'Years')+
       ggtitle('Phillips Curve') +
       theme(legend.position = 'bottom') +
       guides(colour=guide_legend(nrow=1,byrow=TRUE))
@@ -272,9 +286,12 @@ plot_hist_pi <- ggplot(data=db_US)+
   geom_density(aes(x=rev_pce_pch, fill = 'pce'), alpha= .5)+
   geom_density(aes(x=rev_cpi_pch, fill = 'cpi'), alpha = .5)+
   labs(' ')+theme_minimal()+
-  scale_fill_viridis_d(labels = c('Defl.', 'PCE', 'CPI'), name='Hist. series')+
-  xlab('Inflation rates')+
-  ggtitle('Distribution of the inflation rates')+
+  scale_fill_viridis_d(labels = c('Defl.', 'PCE', 'CPI'), 
+                       name='Hist. series', 
+                       end = .7,
+                       option = 'A')+
+  xlab('Inflation Rates')+
+  ggtitle('Inflation Rates Distribution')+
   theme(legend.position = 'bottom') +
   guides(colour=guide_legend(nrow=1,byrow=TRUE))
 
@@ -286,7 +303,7 @@ ggsave(plot = plot_hist_pi,
        device='pdf',
        height = pdf_height, width = pdf_width, units='in')
 
-plot_defl <- ggplot(db_US["1967/2015"], aes(x=index(db_US["1967/2015"])))+
+plot_defl <- ggplot(db_US["1967/2016"], aes(x=index(db_US["1967/2016"])))+
   geom_line(aes(y = deflt, colour = 't'), size = .8, alpha = .5)+
   geom_line(aes(y = deflt1, colour = 't+1'), size = .8, alpha = .5)+
   geom_line(aes(y = deflt2, colour = 't+2'), size = .8, alpha = .5)+
@@ -297,11 +314,13 @@ plot_defl <- ggplot(db_US["1967/2015"], aes(x=index(db_US["1967/2015"])))+
   geom_line(aes(y = deflt7, colour = 't+7'), size = .8, alpha = .5)+
   geom_line(aes(y = deflt8, colour = 't+8'), size = .8, alpha = .5)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
-  ggtitle('Deflator')+
+  ggtitle('GDP Deflator - All Forecast Horizons')+
   scale_y_continuous()+scale_x_date() + 
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
-  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) + 
+  scale_color_viridis_d(option = 'A', end = .8)
+
 
 if (flag___plot == 0) print(plot_defl)
 
@@ -312,7 +331,7 @@ ggsave(plot = plot_defl,
        height = pdf_height, width = pdf_width, units='in')
 
 
-plot_cpi <- ggplot(db_US["1978/2015"], aes(x=index(db_US["1978/2015"])))+
+plot_cpi <- ggplot(db_US["1978/2016"], aes(x=index(db_US["1978/2016"])))+
   geom_line(aes(y = cpit, colour = 't'), size = .8, alpha = .5)+
   geom_line(aes(y = cpit1, colour = 't+1'), size = .8, alpha = .5)+
   geom_line(aes(y = cpit2, colour = 't+2'), size = .8, alpha = .5)+
@@ -323,11 +342,13 @@ plot_cpi <- ggplot(db_US["1978/2015"], aes(x=index(db_US["1978/2015"])))+
   geom_line(aes(y = cpit7, colour = 't+7'), size = .8, alpha = .5)+
   geom_line(aes(y = cpit8, colour = 't+8'), size = .8, alpha = .5)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
-  ggtitle('CPI')+
+  ggtitle('CPI - All Forecast Horizons')+
   scale_y_continuous()+scale_x_date() + 
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
-  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) + 
+  scale_color_viridis_d(option = 'A', end = .8)
+
 
 if (flag___plot == 0) print(plot_cpi)
 
@@ -339,7 +360,7 @@ ggsave(plot = plot_cpi,
 
 
 
-plot_core <- ggplot(db_US["1985/2015"], aes(x=index(db_US["1985/2015"])))+
+plot_core <- ggplot(db_US["1985/2016"], aes(x=index(db_US["1985/2016"])))+
   geom_line(aes(y = coret, colour = 't'), size = .8, alpha = .5)+
   geom_line(aes(y = coret1, colour = 't+1'), size = .8, alpha = .5)+
   geom_line(aes(y = coret2, colour = 't+2'), size = .8, alpha = .5)+
@@ -350,11 +371,13 @@ plot_core <- ggplot(db_US["1985/2015"], aes(x=index(db_US["1985/2015"])))+
   geom_line(aes(y = coret7, colour = 't+7'), size = .8, alpha = .5)+
   geom_line(aes(y = coret8, colour = 't+8'), size = .8, alpha = .5)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
-  ggtitle('CORE')+
+  ggtitle('PCE - All Forecasts Horizons')+
   scale_y_continuous()+scale_x_date() + 
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
-  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) + 
+  scale_color_viridis_d(option = 'A', end = .8)
+
 
 if (flag___plot == 0) print(plot_core)
 
@@ -378,11 +401,13 @@ plot_shadow <- ggplot(db_US["1954-01/"], aes(x = index(db_US["1954-01/"])))+
         legend.position = 'bottom') +
   guides(colour=guide_legend(nrow=1, byrow=TRUE)) +
   geom_vline(xintercept = as.Date("1995-01-01"), linetype = 'dashed') +
-  geom_text(aes(x = as.Date("1996-06-30"), y = 12), label = 'Krippner starts', angle = 90, size = 3)+
+  geom_text(aes(x = as.Date("1996-06-30"), y = 12), label = 'Krippner starts', angle = 90, size = 4.5)+
   geom_vline(xintercept = as.Date("2007-01-01"), linetype = 'dashed') +
-  geom_text(aes(x = as.Date("2008-06-30"), y = 12), label = 'Wu-Xia starts', angle = 90, size = 3)+
+  geom_text(aes(x = as.Date("2008-06-30"), y = 12), label = 'Wu-Xia starts', angle = 90, size = 4.5)+
   geom_vline(xintercept = as.Date("2015-12-31"), linetype = 'dashed') +
-  geom_text(aes(x = as.Date("2016-12-31"), y = 12), label = 'Wu-Xia ends', angle = 90, size = 3)
+  geom_text(aes(x = as.Date("2016-12-31"), y = 12), label = 'Wu-Xia ends', angle = 90, size = 4.5) + 
+  scale_color_viridis_d(option = 'A', end = .8)
+
 
 if (flag___plot == 0) print(plot_shadow)
 
@@ -395,21 +420,23 @@ ggsave(plot = plot_shadow,
 ##### LIST OF ADDITIONAL PLOTS #################################################
 
 
-plot_trvars_all <- ggplot(db_US["1945/2020"], aes(x=index(db_US["1945/2020"])))+
-  geom_line(aes(y=ffr, color='FFR'),  alpha = .8)+
-  geom_line(aes(y=rev_defl_pch, color='Act. Infl.'),  alpha = .8)+
-  geom_line(aes(y=deflt1, color='Exp. Infl.'),  alpha = .8)+
-  geom_line(aes(y=realtime_gap, color='Gap'),  alpha = .8)+
-  geom_line(aes(y=spread_baa, color='BAA'),  alpha = .8)+
-  geom_line(aes(y=spread_sp_3m, color='S&P'),  alpha = .8)+
+plot_trvars_all <- ggplot(db_US["1945/2021"], aes(x=index(db_US["1945/2021"])))+
+  geom_line(aes(y=ffr, color='FFR'),  alpha = .8, size = 1)+
+  geom_line(aes(y=rev_defl_pch, color='Act. Infl.'),  alpha = .8, size = 1)+
+  geom_line(aes(y=deflt1, color='Exp. Infl.'),  alpha = .8, size = 1)+
+  geom_line(aes(y=realtime_gap, color='Gap'),  alpha = .8, size = 1)+
+  geom_line(aes(y=spread_baa, color='BAA'),  alpha = .8, size = 1)+
+  geom_line(aes(y=spread_sp_3m, color='S&P500'),  alpha = .8, size = 1)+
   theme_minimal()+xlab(' ')+ylab(' ')+labs(colour=' ')+
-  ggtitle('US Taylor rule - liquidity augmented')+
+  ggtitle('US Taylor Rule - Liquidity Augmented')+
   scale_y_continuous()+
   scale_x_date() + 
   geom_hline(yintercept = 0, colour='black')+
   theme(axis.text.x = element_text(angle = 45), 
         legend.position = 'bottom') +
-  guides(colour=guide_legend(nrow=1,byrow=TRUE))
+  guides(colour=guide_legend(nrow=1,byrow=TRUE)) + 
+  scale_color_viridis_d(option = 'A', end = .8)
+
 
 if (flag___plot==0) print(plot_trvars)
 
@@ -471,8 +498,8 @@ llbls <- c(
 # Fig.1
 plot_trvars <- ggplot(trvars, aes(x = date, y = val, colour = var)) +
   geom_hline(yintercept = 0) +
-  geom_line(aes(linetype = var), size = .5, alpha = 1) +
-  geom_point(aes(shape = var), size = 1, alpha = 1) +
+  geom_line(aes(linetype = var), size = 1.5, alpha = 1) +
+  # geom_point(aes(shape = var), size = 1, alpha = 1) +
   theme_minimal() + xlab('') + ylab('') +
   ggtitle('US Taylor Rule - Main Components') +
   theme(legend.position = 'bottom', 
@@ -496,8 +523,8 @@ ggsave(plot_trvars,
 # Fig.2
 plot_trvars_all <- ggplot(trvars_all, aes(x = date, y = val, colour = var)) +
   geom_hline(yintercept = 0) +
-  geom_line(aes(linetype = var), size = .5, alpha = 1) +
-  geom_point(aes(shape = var), size = 1, alpha = 1) +
+  geom_line(aes(linetype = var), size = 1.5, alpha = 1) +
+  # geom_point(aes(shape = var), size = 1, alpha = 1) +
   theme_minimal() + xlab('') + ylab('') +
   ggtitle('US Taylor Rule - Main Components') +
   theme(legend.position = 'bottom', 

@@ -57,7 +57,9 @@ regressions$formula <- list(
   # 2.1
     tr_spread_baa  = ffr ~ deflt1 + realtime_gap + ffrb + spread_baa,
   # 3.1
-    tr_spread_sp = ffr ~ deflt1 + realtime_gap + ffrb + spread_sp_3m
+    tr_spread_sp = ffr ~ deflt1 + realtime_gap + ffrb + spread_sp_3m,
+  # 3.2
+    tr_spread_sp = ffr ~ deflt1 + realtime_gap + ffrb + spread_sp_3m + spread_baa + q1 + q2 + q3
     )
 
 # Strings to indentify models 
@@ -79,7 +81,9 @@ regressions$messages <- list(
   # 2.1
   '2nq - TR with BAA spread',
   # 3.1
-  '3nq - TR and 3M spread'
+  '3nq - TR and 3M spread',
+  # 3.2
+  'Full Spreads'
 )
 
 ### Warm-up ####
